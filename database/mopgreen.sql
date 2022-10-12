@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Okt 2022 pada 03.42
+-- Waktu pembuatan: 12 Okt 2022 pada 04.14
 -- Versi server: 10.4.21-MariaDB
 -- Versi PHP: 8.0.10
 
@@ -38,7 +38,8 @@ CREATE TABLE `level_detail` (
 
 INSERT INTO `level_detail` (`id_level`, `level`) VALUES
 (1, 'admin'),
-(2, 'user');
+(2, 'user'),
+(3, 'Guest');
 
 -- --------------------------------------------------------
 
@@ -55,6 +56,13 @@ CREATE TABLE `user_detail` (
   `password` varchar(25) NOT NULL,
   `level` tinyint(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `user_detail`
+--
+
+INSERT INTO `user_detail` (`id`, `nama_depan`, `nama_belakang`, `email`, `username`, `password`, `level`) VALUES
+(1, 'akbar', 'firdaus', 'andre.ariaz26@gmail.com', 'akbar123', 'akbar123', 1);
 
 --
 -- Indexes for dumped tables

@@ -1,3 +1,50 @@
+<?php 
+require('koneksi.php');
+session_start();
+
+if(isset($_POST['submit'])){
+  $email = $_POST['txt_email'];
+  $pass = $_POST['txt_pass'];
+
+  if(!empty(trim($email)) && !empty(trim($pass))){
+    $query = "SELECT * FROM user_detail WHERE email='$email'";
+    $result = mysqli_query($koneksi,$query);
+    $num = mysqli_num_rows($result);
+
+    while ($row = mysqli_fetch_array($result)){
+      $id = $row['id'];
+      $namaDepan = $row['nama_depan'];
+      $namaBelakang =$row['nama_belakang'];
+      $logEmail = $row['email'];
+      $username = $row['username'];
+      $password = $row['password'];
+      $lvl = $row['level'];
+    }
+
+    if($num != 0){
+      if($logEmail==$email && $password==$pass){
+                // header('Location: dashboard.php?user_fullname='.urlencode($username));
+        $_SESSION['id'] = $id;
+        $_SESSION['nama_depan'] = $namaDepan;
+        $_SESSION['nama_belakang'] = $namaBelakang;
+        $_SESSION['username'] = $username;
+        $_SESSION['level'] = $lvl;
+        header('Location:admin/home.php');
+      }else{
+        $error = 'user atau password salah!!';
+        header('Location:index.php');
+      }
+    }else{
+      $error = 'user tidak ditemukan!!';
+      header('Location:index.php');
+    }
+  }else{
+    $error = 'Data tidak boleh kosong!!';
+    echo $error;
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,17 +61,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
   <!-- MDB -->
   <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
-  <style>
-    body{
-      margin: 0;
-    }
-    .gradient-custom {
-      background: #527724;
-    }
-    .text-login-mop{
-      color: #527724;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -38,30 +75,30 @@
             <div class="card-body p-5 text-center">
               <img style="margin-left: 3px;" src="img/MOP Green 1.png">
               <div class="mb-md-4 mt-md-2">
+                <form action="index.php" method="POST">
+                  <h2 class="fw-bold mb-2 text-uppercase">Login to <span class="text-login-mop">MOP Green</span></h2>
+                  <p class="text-white-50 mb-4">Masukkan Email dan Password Dibawah !</p>
 
-                <h2 class="fw-bold mb-2 text-uppercase">Login to <span class="text-login-mop">MOP Green</span></h2>
-                <p class="text-white-50 mb-4">Masukkan Email dan Password Dibawah !</p>
+                  <div class="form-outline form-white mb-4">
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" />
+                    <label class="form-label" for="typeEmailX">Email</label>
+                  </div>
 
-                <div class="form-outline form-white mb-4">
-                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typeEmailX">Email</label>
+                  <div class="form-outline form-white mb-4">
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" />
+                    <label class="form-label" for="typePasswordX">Password</label>
+                  </div>
+
+                  <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
+
+                  <button class="btn btn-outline-light btn-lg px-5" type="submit" name="submit">Login</button>
                 </div>
 
-                <div class="form-outline form-white mb-4">
-                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                  <label class="form-label" for="typePasswordX">Password</label>
+                <div>
+                  <p class="mb-3">Hanya Pengunjung ? <a href="#!" class="text-white-50 fw-bold">Guest Mode</a></p>
+                  <p class="mb-0">Tidak Punya Akun ? <a href="register.php" class="text-white-50 fw-bold">Sign Up</a></p>
                 </div>
-
-                <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
-                
-                <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-              </div>
-
-              <div>
-                <p class="mb-3">Hanya Pengunjung ? <a href="#!" class="text-white-50 fw-bold">Guest Mode</a></p>
-                <p class="mb-0">Tidak Punya Akun ? <a href="register.php" class="text-white-50 fw-bold">Sign Up</a></p>
-              </div>
-
+              </form>
             </div>
           </div>
         </div>
