@@ -57,46 +57,45 @@
                       <label class="form-label" for="typeEmailX">Nama Belakang</label>
                     </div>
                   </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                    <label class="form-label" for="typeEmailX">Email</label>
-                  </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                    <label class="form-label" for="typePasswordX">Password</label>
-                  </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                    <label class="form-label" for="typePasswordX">Confirm Password</label>
-                  </div>
-
                 </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <label class="form-label" for="typeEmailX">Email</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  <label class="form-label" for="typePasswordX">Password</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  <label class="form-label" for="typePasswordX">Confirm Password</label>
+                </div>
+
+                
 
                 <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
 
                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               </div>
 
-              
-                <p class="mb-3">Hanya Pengunjung ? <a href="#!" class="text-white-50 fw-bold">Guest Mode</a></p>
-                <p class="mb-0">Tidak Punya Akun ? <a href="#!" class="text-white-50 fw-bold">Sign Up</a></p>
-              </div>
-
+              <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign Up</a></p>
             </div>
+
           </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- End your project here-->
+  </div>
+</section>
+<!-- End your project here-->
 
-  <!-- MDB -->
-  <script type="text/javascript" src="js/mdb.min.js"></script>
-  <!-- Custom scripts -->
-  <script type="text/javascript"></script>
+<!-- MDB -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript"></script>
 </body>
 
 </html>
