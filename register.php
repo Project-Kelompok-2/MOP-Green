@@ -14,17 +14,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
   <!-- MDB -->
   <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
-  <style>
-    body{
-      margin: 0;
-    }
-    .gradient-custom {
-      background: #527724;
-    }
-    .text-login-mop{
-      color: #527724;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -61,6 +51,11 @@
 
                 <div class="form-outline form-white mb-4">
                   <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  <label class="form-label" for="typeEmailX">Username</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="email" id="typeEmailX" class="form-control form-control-lg" />
                   <label class="form-label" for="typeEmailX">Email</label>
                 </div>
 
@@ -73,11 +68,7 @@
                   <input type="password" id="typePasswordX" class="form-control form-control-lg" />
                   <label class="form-label" for="typePasswordX">Confirm Password</label>
                 </div>
-
                 
-
-                <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
-
                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               </div>
 

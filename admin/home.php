@@ -1,3 +1,17 @@
+<?php 
+require("../koneksi.php");
+
+session_start();
+
+if(!isset($_SESSION['id'])){
+    $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
+    header('Location:../index.php');
+}
+$sesID = $_SESSION['id'];
+$sesName = $_SESSION['username'];
+$sesLvl = $_SESSION['level'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,8 +30,12 @@
 </head>
 <body>
 
-
-
+    <div class="text-center">
+        <p>
+           WELCOME ! <?=$sesName?>
+        </p>
+        <a href="../logout.php">logout</a>
+    </div>
     <script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>
