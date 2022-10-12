@@ -81,7 +81,7 @@
                 <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
               </div>
 
-              <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign Up</a></p>
+              <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign In</a></p>
             </div>
 
           </div>
