@@ -52,7 +52,7 @@ if(isset($_POST['submit'])){
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>MOP Green</title>
+  <title>MOP Green | Login Page</title>
   <!-- MDB icon -->
   <link rel="icon" href="img/MOP Green 1.png" type="image/x-icon" />
   <!-- Font Awesome -->
@@ -61,13 +61,34 @@ if(isset($_POST['submit'])){
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
   <!-- MDB -->
   <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <style type="text/css">
+    .bg-img{
+      background-image: url("img/bg2.jpg");
+      /*filter: blur(8px);*/
+      /*-webkit-filter: blur(8px);*/
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    body{
+      margin: 0;
+    }
+    .text-login-mop{
+      color: #527724;
+    }
+    .btn-outline-light:hover{
+      color: black;
+      background: white;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
   <!-- Start your project here-->
   
-  <section class="gradient-custom">
+  <section class="bg-img">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -80,22 +101,22 @@ if(isset($_POST['submit'])){
                   <p class="text-white-50 mb-4">Masukkan Email dan Password Dibawah !</p>
 
                   <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" />
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" required />
                     <label class="form-label" for="typeEmailX">Email</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" />
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" required />
                     <label class="form-label" for="typePasswordX">Password</label>
                   </div>
 
-                  <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password ?</a></p>
+                  <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="reset_password.php">Forgot password ?</a></p>
 
                   <button class="btn btn-outline-light btn-lg px-5" type="submit" name="submit">Login</button>
                 </div>
 
                 <div>
-                  <p class="mb-3">Hanya Pengunjung ? <a href="#!" class="text-white-50 fw-bold">Guest Mode</a></p>
+                  <p class="mb-3">Hanya Pengunjung ? <a href="admin/map.php" class="text-white-50 fw-bold">Guest Mode</a></p>
                   <p class="mb-0">Tidak Punya Akun ? <a href="register.php" class="text-white-50 fw-bold">Sign Up</a></p>
                 </div>
               </form>

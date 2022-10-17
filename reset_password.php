@@ -1,15 +1,12 @@
-<?php 
-require ('koneksi.php');
-if (isset($_POST['register'])) {
-  $userFN = $_POST['txt_nama_depan'];
-  $userLN = $_POST['txt_nama_belakang'];
-  $username = $_POST['txt_username'];
-  $userEmail = $_POST['txt_email'];
-  $userPass = $_POST['txt_pass'];
+<?php
+include 'koneksi.php'; 
+if(isset($_POST["update"])){
 
-  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userEmail', '$username', '$$userPass', 2)";
-  $result = mysqli_query($koneksi, $query);
-  header('location:index.php');
+    $username = $_POST['txt_username'];
+    $userPass = $_POST['txt_password'];
+
+    $query = mysqli_query($koneksi, "UPDATE user_detail SET password='$userPass' WHERE username='$username'");
+    echo '<script>window.location.href = "reset_password.php"</script>';
 }
 ?>
 <!DOCTYPE html>
@@ -61,28 +58,11 @@ if (isset($_POST['register'])) {
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
               <img style="margin-left: 3px;" src="img/MOP Green 1.png">
-              <form onsubmit="return validate();" action="register.php" method="POST">
+              <form onsubmit="return validate();" action="reset_password.php" method="POST">
                 <div class="mb-md-4 mt-md-2">
 
-                  <h4 class="fw-bold mb-4 text-uppercase">Register to <span class="text-login-mop">MOP Green</span>
+                  <h4 class="fw-bold mb-4 text-uppercase">FORGOT PASSWORD
                   </h4>
-
-                  <div class="row">
-
-                    <div class="col">
-                      <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
-                        <label class="form-label" for="typeNamaDepan">Nama Depan</label>
-                      </div>
-                    </div>
-
-                    <div class="col">
-                      <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" required />
-                        <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
-                      </div>
-                    </div>
-                  </div>
 
                   <div class="form-outline form-white mb-4">
                     <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
@@ -90,13 +70,8 @@ if (isset($_POST['register'])) {
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" />
-                    <label class="form-label" for="typeEmailX">Email</label>
-                  </div>
-
-                  <div class="form-outline form-white mb-4">
                     <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" required />
-                    <label class="form-label" for="typePasswordX">Password</label>
+                    <label class="form-label" for="typePasswordX">New Password</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
@@ -104,11 +79,11 @@ if (isset($_POST['register'])) {
                     <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
                   </div>
 
-                  <button class="btn btn-outline-light btn-lg px-5" type="submit" name="register">Register</button>
+                  <button class="btn btn-outline-light btn-lg px-5" type="submit" name="update">Update</button>
                 </div>
               </form>
 
-              <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign In</a></p>
+              <p class="mb-0">Balik Ke Halaman Login ? <a href="index.php" class="text-white-50 fw-bold">Back</a></p>
             </div>
 
           </div>
