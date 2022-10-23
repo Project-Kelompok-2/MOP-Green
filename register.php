@@ -21,7 +21,7 @@ if (isset($_POST['register'])) {
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>MOP Green | Register Page</title>
   <!-- MDB icon -->
-  <link rel="icon" href="img/MOP Green 1.png" type="image/x-icon" />
+  <link rel="icon" href="img/logo2.png" type="image/x-icon" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
   <!-- Google Fonts Roboto -->
@@ -42,7 +42,7 @@ if (isset($_POST['register'])) {
       margin: 0;
     }
     .text-login-mop{
-      color: #527724;
+      color: #007443;
     }
     .btn-outline-light:hover{
       color: black;
@@ -60,11 +60,11 @@ if (isset($_POST['register'])) {
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-              <img style="margin-left: 3px;" src="img/MOP Green 1.png">
+              <img style="margin-left: 3px; height: 130px; width: 140px; margin-top: -20px;" src="img/logo2.png">
               <form onsubmit="return validate();" action="register.php" method="POST">
                 <div class="mb-md-4 mt-md-2">
-
-                  <h4 class="fw-bold mb-4 text-uppercase">Register to <span class="text-login-mop">MOP Green</span>
+                  <h3 class="fw-bold mb-2 text-uppercase">Register to</h3>
+                  <h2 class="text-login-mop text-uppercase">MOP Green</h2>
                   </h4>
 
                   <div class="row">

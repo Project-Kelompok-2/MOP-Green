@@ -1,17 +1,3 @@
-<?php 
-require("../koneksi.php");
-
-session_start();
-
-if(!isset($_SESSION['id'])){
-    $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
-    header('Location:../index.php');
-}
-$sesID = $_SESSION['id'];
-$sesName = $_SESSION['username'];
-$sesLvl = $_SESSION['level'];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -81,7 +67,7 @@ $sesLvl = $_SESSION['level'];
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <h8><?=$sesName?></h8>
+                  <h8>Guest Mode</h8>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
@@ -104,7 +90,7 @@ $sesLvl = $_SESSION['level'];
           <ul class="navbar-nav">
             <li><hr class="dropdown-divider bg-light" /></li>
             <li>
-              <a href="home.php" class="nav-link px-3">
+              <a href="home.php" class="nav-link px-3 disabled">
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                 <span>Dashboard</span>
               </a>
@@ -122,25 +108,25 @@ $sesLvl = $_SESSION['level'];
               </a>
             </li>
             <li>
-              <a href="#" class="nav-link px-3">
+              <a href="#" class="nav-link px-3 disabled">
                 <span class="me-2"><i class="bi bi-cpu"></i></span>
                 <span>Monitoring</span>
               </a>
             </li>
             <li>
-              <a href="#" class="nav-link px-3">
+              <a href="#" class="nav-link px-3 disabled">
                 <span class="me-2"><i class="bi bi-view-list"></i></span>
                 <span>Log View</span>
               </a>
             </li>
             <li>
-              <a href="#" class="nav-link px-3">
+              <a href="#" class="nav-link px-3 disabled">
                 <span class="me-2"><i class="bi bi-table"></i></span>
                 <span>Production</span>
               </a>
             </li>
             <li>
-              <a href="#" class="nav-link px-3">
+              <a href="#" class="nav-link px-3 disabled">
                 <span class="me-2"><i class="bi bi-camera"></i></span>
                 <span>CCTV Controling</span>
               </a>

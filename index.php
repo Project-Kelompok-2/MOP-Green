@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <title>MOP Green | Login Page</title>
   <!-- MDB icon -->
-  <link rel="icon" href="img/MOP Green 1.png" type="image/x-icon" />
+  <link rel="icon" href="img/logo2.png" type="image/x-icon" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
   <!-- Google Fonts Roboto -->
@@ -75,7 +75,7 @@ if(isset($_POST['submit'])){
       margin: 0;
     }
     .text-login-mop{
-      color: #527724;
+      color: #007443;
     }
     .btn-outline-light:hover{
       color: black;
@@ -94,11 +94,12 @@ if(isset($_POST['submit'])){
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-              <img style="margin-left: 3px;" src="img/MOP Green 1.png">
+              <img style="margin-left: 3px; height: 130px; width: 140px; margin-top: -20px;" src="img/logo2.png">
               <div class="mb-md-4 mt-md-2">
                 <form action="index.php" method="POST">
-                  <h2 class="fw-bold mb-2 text-uppercase">Login to <span class="text-login-mop">MOP Green</span></h2>
-                  <p class="text-white-50 mb-4">Masukkan Email dan Password Dibawah !</p>
+                  <h3 class="fw-bold mb-2 text-uppercase">Log in to</h3>
+                  <h2 class="text-login-mop text-uppercase">MOP Green</h2>
+                  <p class="text-white-50 mb-4">Silahkan Masukkan Email dan Password !</p>
 
                   <div class="form-outline form-white mb-4">
                     <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" required />
@@ -116,7 +117,7 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div>
-                  <p class="mb-3">Hanya Pengunjung ? <a href="admin/map.php" class="text-white-50 fw-bold">Guest Mode</a></p>
+                  <p class="mb-3">Hanya Pengunjung ? <a href="admin/map_guest.php" class="text-white-50 fw-bold">Guest Mode</a></p>
                   <p class="mb-0">Tidak Punya Akun ? <a href="register.php" class="text-white-50 fw-bold">Sign Up</a></p>
                 </div>
               </form>
