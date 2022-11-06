@@ -86,8 +86,8 @@ if(isset($_POST['submit'])){
 </head>
 
 <body>
-  <!-- Start your project here-->
   
+  <!-- Start your project here-->
   <section class="bg-img">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -111,7 +111,7 @@ if(isset($_POST['submit'])){
                     <label class="form-label" for="typePasswordX">Password</label>
                   </div>
 
-                  <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="reset_password.php">Forgot password ?</a></p>
+                  <!-- <p class="text-end small mb-3 pb-lg-2"><a class="text-white-50" href="reset_password.php">Forgot password ?</a></p> -->
 
                   <button class="btn btn-outline-light btn-lg px-5" type="submit" name="submit">Login</button>
                 </div>
