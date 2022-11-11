@@ -3,11 +3,14 @@ require ('koneksi.php');
 if (isset($_POST['register'])) {
   $userFN = $_POST['txt_nama_depan'];
   $userLN = $_POST['txt_nama_belakang'];
+  $userAsalInstitusi = $_POST['txt_asal_institusi'];
+  $userKegiatan = $_POST['txt_kegiatan'];
   $username = $_POST['txt_username'];
   $userEmail = $_POST['txt_email'];
-  $userPass = $_POST['txt_pass'];
+  $userPass = $_POST['txt_password'];
 
-  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userEmail', '$username', '$$userPass', 2)";
+
+  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$username', '$userPass', 2)";
   $result = mysqli_query($koneksi, $query);
   header('location:index.php');
 }
@@ -65,58 +68,68 @@ if (isset($_POST['register'])) {
                 <div class="mb-md-4 mt-md-2">
                   <h3 class="fw-bold mb-2 text-uppercase">Register to</h3>
                   <h2 class="text-login-mop text-uppercase">MOP Green</h2>
-                  </h4>
+                </h4>
 
-                  <div class="row">
+                <div class="row">
 
-                    <div class="col">
-                      <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
-                        <label class="form-label" for="typeNamaDepan">Nama Depan</label>
-                      </div>
-                    </div>
-
-                    <div class="col">
-                      <div class="form-outline form-white mb-4">
-                        <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" required />
-                        <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
-                      </div>
+                  <div class="col">
+                    <div class="form-outline form-white mb-4">
+                      <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
+                      <label class="form-label" for="typeNamaDepan">Nama Depan</label>
                     </div>
                   </div>
 
-                  <div class="form-outline form-white mb-4">
-                    <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
-                    <label class="form-label" for="typeUsername">Username</label>
+                  <div class="col">
+                    <div class="form-outline form-white mb-4">
+                      <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
+                    </div>
                   </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" />
-                    <label class="form-label" for="typeEmailX">Email</label>
-                  </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" required />
-                    <label class="form-label" for="typePasswordX">Password</label>
-                  </div>
-
-                  <div class="form-outline form-white mb-4">
-                    <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
-                    <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
-                  </div>
-
-                  <button class="btn btn-outline-light btn-lg px-5" type="submit" name="register">Register</button>
                 </div>
-              </form>
 
-              <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign In</a></p>
-            </div>
+                <div class="form-outline form-white mb-4">
+                  <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" required />
+                  <label class="form-label" for="typeUsername">Asal Institusi</label>
+                </div>
 
+                <div class="form-outline form-white mb-4">
+                  <input type="text" id="typeKegiatan" name="txt_kegiatan" class="form-control form-control-lg" required />
+                  <label class="form-label" for="typeUsername">Kegiatan</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
+                  <label class="form-label" for="typeUsername">Username</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" required />
+                  <label class="form-label" for="typeEmailX">Email</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern=".{6,}" title="Password Harus Memiliki 6 Karakter" required />
+                  <label class="form-label" for="typePasswordX">Password</label>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
+                  <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
+                </div>
+
+                <button class="btn btn-outline-light btn-lg px-5" type="submit" name="register">Register</button>
+              </div>
+            </form>
+
+            <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign In</a></p>
           </div>
-          
+
         </div>
+
       </div>
     </div>
   </div>
+</div>
 
 </section>
 <!-- End your project here-->

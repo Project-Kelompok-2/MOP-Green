@@ -1,0 +1,7 @@
+.DS_Store
+.idea
+.vscode/
+bower.json
+dist/
+node_modules/
+*.swp

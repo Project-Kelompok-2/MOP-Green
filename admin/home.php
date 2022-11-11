@@ -36,9 +36,12 @@ $sesLvl = $_SESSION['level'];
       color: #FF0000;
       font-weight: bold;
     }
+    body{
+      background-color: #2e3338;
+    }
   </style>
 </head>
-<body onload="display_ct();">
+<body >
   <!-- top navigation bar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
@@ -119,12 +122,12 @@ id="sidebar"
         </a>
       </li>
       <?php if ($sesLvl==1): ?>
-      <li>
-        <a href="controlling.php" class="nav-link px-3">
-          <span class="me-2"><i class="bi bi-cpu"></i></span>
-          <span>Controlling</span>
-        </a>
-      </li>
+        <li>
+          <a href="controlling.php" class="nav-link px-3">
+            <span class="me-2"><i class="bi bi-cpu"></i></span>
+            <span>Controlling</span>
+          </a>
+        </li>
       <?php endif ?>
       <li>
         <a href="logview.php" class="nav-link px-3">
@@ -138,6 +141,14 @@ id="sidebar"
           <span>CCTV Controling</span>
         </a>
       </li>
+      <?php if ($sesLvl==1): ?>
+      <li>
+        <a href="manage_user.php" class="nav-link px-3">
+          <span class="me-2"><i class="bi bi-gear"></i></span>
+          <span>Manage User</span>
+        </a>
+      </li>
+      <?php endif ?>
     </ul>
   </nav>
 </div>
@@ -146,22 +157,22 @@ id="sidebar"
 <main class="mt-5 pt-3">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 text-white">
         <h4>Dashboard</h4>
       </div>
       <div class="col-md-6">
-        <h5 class="text-end" id="time"></h5>
+        <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
-    <div class="card col-lg-3 col-md-3 col-sm-3">
+    <div class="card col-lg-3 col-md-3 col-sm-3 bg-dark">
       <div class="card-body">
-        <div class="row">
+        <div class="row text-white">
           <div class="col-md-6 col-sm-6 col-12 sht">
-            <h6>Suhu</h6>
+            <strong>Suhu</strong>
             <h3>51&deg;</h3>
           </div>
-          <div class="col-md-6 col-sm-6  col-12 klt">
-            <h6>Kelembapan</h6>
+          <div class="col-md-6 col-sm-6 col-12 klt">
+            <strong>Kelembapan</strong>
             <h3>51 <span>HR</span></h3>
           </div>
         </div>
@@ -170,7 +181,7 @@ id="sidebar"
     <br>
     <div class="row">
       <div class="col-sm-3">
-        <select class="btn btn-light" id="listRoom" onchange="getSelectedValue();">
+        <select class="btn btn-dark text-start" id="listRoom" onchange="getSelectedValue();">
           <option value="Room 1">Room 1</option>
           <option value="Room 2">Room 2</option>
           <option value="Room 3">Room 3</option>
@@ -179,69 +190,104 @@ id="sidebar"
     </div>
     <br>
     <div class="row">
-      <div class="col-lg-9 col-md-6 col-sm-6 col-6 mb-8">
-        <div class="card h-100">
-          <div class="card-header">
-            <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
-            Chart Data Room 1
-          </div>
-          <div class="card-body">
-            <div id="chartContainer" style="height: 100%; width: 100%;"></div>
+      <div class="col-md-12">
+       <div class="alert alert-primary alert-dismissible">
+        <h5><strong>Status Koneksi Broker MQTT</strong></h5>
+        <div id="messages"></div>
+      </div>      
+    </div>          
+  </div>
+  <div class="row">
+    <div class="col-lg-9 col-md-6 col-sm-6 col-6 mb-8">
+      <div class="card h-100 bg-dark text-white">
+        <div class="card-header">
+          <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+          Chart Data Room 1
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <p class="text-center">
+                <strong>Suhu</strong>
+              </p>
+              <div class="chart">                      
+                <canvas id="chartTEMP" height="180" style="height: 180px;"></canvas>            
+              </div>                    
+            </div>
+            <div class="col-sm-6">
+              <p class="text-center">
+                <strong>Kelembapan</strong>
+              </p>
+              <div class="chart">                      
+                <canvas id="chartHUM" height="180" style="height: 180px;"></canvas>           
+              </div>                    
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 col-6 mb-4">
-        <div class="card h-100">
-          <div class="card-header">
-            <!-- <span class="me-2"><i class="bi bi-speedometer"></i></span> -->
-            <h4 class="text-center" style="margin-bottom: -4px;">TODAY</h4>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mb-4">
+      <div class="card h-100 bg-dark text-white">
+        <div class="card-header">
+          <!-- <span class="me-2"><i class="bi bi-speedometer"></i></span> -->
+          <h4 class="text-center" style="margin-bottom: -4px; font-weight: bold;">TODAY</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h6>Suhu Tertinggi</h6>
+              <h3>51&deg;</h3>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h6>Kelembapan Tertinggi</h6>
+              <h3>51 <span>HR</span></h3>
+            </div>
           </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6 text-center sht">
-                <h6>Suhu Tertinggi</h6>
-                <h3>51&deg;</h3>
-              </div>
-              <div class="col-md-6 text-center klt">
-                <h6>Kelembapan Tertinggi</h6>
-                <h3>51 <span>HR</span></h3>
-              </div>
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h6>Suhu Terendah</h6>
+              <h3>51&deg;</h3>
             </div>
-            <div class="row">
-              <div class="col-md-6 text-center sht">
-                <h6>Suhu Terendah</h6>
-                <h3>51&deg;</h3>
-              </div>
-              <div class="col-md-6 text-center klt">
-                <h6>Kelembapan Terendah</h6>
-                <h3>51 <span>HR</span></h3>
-              </div>
+            <div class="col-md-6 text-center klt">
+              <h6>Kelembapan Terendah</h6>
+              <h3>51 <span>HR</span></h3>
             </div>
-            <div class="row">
-              <div class="col-md-6 text-center sht">
-                <h6>Rata - Rata Suhu</h6>
-                <h3>51&deg;</h3>
-              </div>
-              <div class="col-md-6 text-center klt">
-                <h6>Rata - Rata Kelembapan</h6>
-                <h3>51 <span>HR</span></h3>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h6>Rata - Rata Suhu</h6>
+              <h3>51&deg;</h3>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h6>Rata - Rata Kelembapan</h6>
+              <h3>51 <span>HR</span></h3>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </main>
 <script src="js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
 <script src="js/jquery-3.5.1.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap5.min.js"></script>
 <script src="js/script.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<!-- Chart timeseries -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.9.0"></script>
+<!-- Chart Speed DHT11 -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>  
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>  
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<!-- Paho MQTT Client -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- <script src="../canvasjs.min.js"></script> -->
+<script src="../canvasjs.min.js"></script> -->
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
   function refreshTime() {
@@ -253,125 +299,435 @@ id="sidebar"
   setInterval(refreshTime, 1000);
 </script>
 <script>
-  window.onload = function () {
+/*-----------------------------------------------------
+  BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
+  -----------------------------------------------------*/   
+// Menentuan alamat IP dan PORT message broker
+var host = "192.168.1.1";  
+var port = 9001; 
 
-    var dataPoints1 = [];
-    var dataPoints2 = []; // dataPoints
-    var chart = new CanvasJS.Chart("chartContainer", {
-      zoomEnabled: true,
-      title: {
-        text: "Data Real Time Green House"
-      },
-      axisX: {
-        title: "updates every 3 secs"
-      },
-      axisY:{
-        prefix: ""
-      }, 
-      toolTip: {
-        shared: true
-      },
-      legend: {
-        cursor:"pointer",
-        verticalAlign: "top",
-        fontSize: 22,
-        fontColor: "dimGrey",
-        itemclick : toggleDataSeries
-      },
-      data: [{ 
-        type: "line",
-        xValueType: "dateTime",
-        yValueFormatString: "####.00",
-        xValueFormatString: "hh:mm:ss TT",
-        showInLegend: true,
-        name: "SH1",
-        dataPoints: dataPoints1
-      },
-      {               
-        type: "line",
-        xValueType: "dateTime",
-        yValueFormatString: "####.00",
-        showInLegend: true,
-        name: "HD1" ,
-        dataPoints: dataPoints2
-      }]
-    });
+// Konstruktor koneksi antara client dan message broker
+var client = new Paho.MQTT.Client(host, port, "/ws",
+  "myclientid_" + parseInt(Math.random() * 100, 10));   
 
-    function toggleDataSeries(e) {
-      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-        e.dataSeries.visible = false;
-      }
-      else {
-        e.dataSeries.visible = true;
-      }
-      chart.render();
-    }
+// Menjalin koneksi antara client dan message broker
+client.onConnectionLost = function (responseObject) {            
+  document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+};
 
-    var yValue1 = 600; 
-    var yValue2 = 605;
+// variabel global data sensor IoT Development Board
+// website berposisi sebagai subscriber
+var humi = 0;
+var temp = 0;
+var sr04 = 0;
+var ldr = 0;
+var keypad = "";
 
-    var time = new Date;
-// starting at 9.30 am
-time.setHours(9);
-time.setMinutes(30);
-time.setSeconds(00);
-time.setMilliseconds(00);
-var updateInterval = 1000;
-var dataLength = 300; // number of dataPoints visible at any point
-
-function updateChart(count) {
-  count = count || 1;
-  var deltaY1, deltaY2;
-  for (var i = 0; i < count; i++) {
-    time.setTime(time.getTime()+ updateInterval);
-    deltaY1 = .5 + Math.random() *(-.5-.5);
-    deltaY2 = .5 + Math.random() *(-.5-.5);
-
-    // adding random value and rounding it to two digits. 
-    yValue1 = Math.round((yValue1 + deltaY1)*100)/100;
-    yValue2 = Math.round((yValue2 + deltaY2)*100)/100;
-
-    // pushing the new values
-    dataPoints1.push({
-      x: time.getTime(),
-      y: yValue1
-    });
-    dataPoints2.push({
-      x: time.getTime(),
-      y: yValue2
-    });
+// Mendapatkan payload dari transimisi data IoT Development Board
+// kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
+client.onMessageArrived = function (message) {    
+  if (message.destinationName == "/ldr") {
+    ldr = message.payloadString;
+  } else if (message.destinationName == "/sr04") {
+    sr04 = message.payloadString;
+  } else if (message.destinationName == "/dht") {
+    var dht = JSON.parse(message.payloadString);
+    humi = dht.kelembaban;
+    temp = dht.suhu;
+  } else if (message.destinationName == "/remoteir") {
+    keypad = message.payloadString;
   }
+  
+  document.getElementById("hitTEMP").innerHTML = temp + " °C";
+  document.getElementById("hitHUM").innerHTML = humi + " H";
+  document.getElementById("hitLDR").innerHTML = ldr + " Lux";
+  document.getElementById("hitSR04").innerHTML = sr04 + " cm";  
+  document.getElementById("kodekeypad").innerHTML = keypad; 
+};
 
-    // updating legend text with  updated with y Value 
-    chart.options.data[0].legendText = " SH1 " + yValue1;
-    chart.options.data[1].legendText = " HD1 " + yValue2; 
-    chart.render();
-  }
+// Option mqtt dengan mode subscribe dan qos diset 1
+var options = {
+  timeout: 3,
+  keepAliveInterval: 30,
+  onSuccess: function () {
+    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";       
+    client.subscribe("/dht", {qos: 1});
+    client.subscribe("/ldr", {qos: 1});
+    client.subscribe("/sr04", {qos: 1});
+    client.subscribe("/remoteir", {qos: 1});
+  },
 
-// var updateChart = function (count) {
+  onFailure: function (message) {
+    document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";                
+  },
 
-//     count = count || 1;
+  userName:"AdminMQTT",
+  password:"pwd123"
+};
 
-//     for (var j = 0; j < count; j++) {
-//         yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-//         dps.push({
-//             x: xVal,
-//             y: yVal
-//         });
-//         xVal++;
-//     }
-
-//     if (dps.length > dataLength) {
-//         dps.shift();
-//     }
-
-//     chart.render();
-// };
-
-updateChart(dataLength);
-setInterval(function(){updateChart()}, updateInterval);
-
+if (location.protocol == "https:") {
+  options.useSSL = true;
 }
+
+document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+client.connect(options);
+</script>
+<script>
+  /*------------------------------------------------------------
+  BAGIAN CHART CANVAS
+  https://nagix.github.io/chartjs-plugin-streaming/latest/
+  ------------------------------------------------------------*/  
+// Enumerasi tipe warna  
+var chartColors = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
+var color = Chart.helpers.color;
+var saiki = new Date();
+var dinoiki = saiki.toString();
+
+/*--------------------------
+  CHART TEMPERATUR DHT11
+  --------------------------*/ 
+// Update data sensor dht11
+function onRefreshTEMP(chart) {
+  chart.data.datasets[0].data.push({
+    x: Date.now(),
+    y: temp
+  });
+}
+
+var configTEMP = {
+  type: 'line',
+  data: {
+    datasets: [     
+    {
+      label: 'Temperatur (°C)',
+      backgroundColor: color(chartColors.red).alpha(0.6).rgbString(),
+      borderColor: chartColors.red,
+      borderWidth: 1,     
+      data: []
+    }]
+  },
+  
+  options: {
+    title: {
+      display: true,
+      text: dinoiki
+    },
+
+    scales: {
+      xAxes: [{
+        type: 'realtime',
+        realtime: {
+          duration: 10000,
+          refresh: 1500,
+          delay: 2000,
+          onRefresh: onRefreshTEMP
+        }
+      }],
+
+      yAxes: [{
+       type: 'linear',
+       display: true,
+       scaleLabel: {
+         display: true,
+         labelString: 'value'
+       }
+     }]
+   },
+
+   tooltips: {
+     mode: 'nearest',
+     intersect: false
+   },
+
+   hover: {
+     mode: 'nearest',
+     intersect: false
+   }      
+ }
+};
+
+/*--------------------------
+  CHART KELEMBABAN DHT11
+  --------------------------*/ 
+// Update data sensor dht11
+function onRefreshHUM(chart) {
+  chart.data.datasets[0].data.push({
+    x: Date.now(),
+    y: humi
+  });
+}
+
+var configHUM = {
+  type: 'bar',
+  data: {
+    datasets: [     
+    {
+      label: 'Kelembaban (H)',
+      backgroundColor: color(chartColors.blue).alpha(0.6).rgbString(),
+      borderColor: chartColors.blue,
+      borderWidth: 1,     
+      data: []
+    }]
+  },
+  
+  options: {
+    title: {
+      display: true,
+      text: dinoiki
+    },
+
+    scales: {
+      xAxes: [{
+        type: 'realtime',
+        realtime: {
+          duration: 10000,
+          refresh: 1500,
+          delay: 2000,
+          onRefresh: onRefreshHUM
+        }
+      }],
+
+      yAxes: [{
+       type: 'linear',
+       display: true,
+       scaleLabel: {
+         display: true,
+         labelString: 'value'
+       }
+     }]
+   },
+
+   tooltips: {
+     mode: 'nearest',
+     intersect: false
+   },
+
+   hover: {
+     mode: 'nearest',
+     intersect: false
+   }      
+ }
+};
+window.onload = function() {
+  // onload chart temperatur sensor DHT11
+  var ctxTEMP = document.getElementById('chartTEMP').getContext('2d');
+  window.chartTEMP = new Chart(ctxTEMP, configTEMP);
+  
+  // onload chart kelembaban sensor DHT11
+  var ctxHUM = document.getElementById('chartHUM').getContext('2d');
+  window.chartHUM = new Chart(ctxHUM, configHUM);
+};
+</script>
+<script>
+/*----------------------------
+  BAGIAN SPEED CHART DHT11
+  ----------------------------*/
+  am4core.ready(function() {
+
+  // Themes begin
+  am4core.useTheme(am4themes_dataviz);
+  am4core.useTheme(am4themes_animated);
+  // Themes end
+  
+  //------------------------------------------
+  //                Temperature
+  //------------------------------------------
+  
+  // create chart
+  var charttemp = am4core.create("chartdivtemp", am4charts.GaugeChart);
+  charttemp.innerRadius = am4core.percent(82);
+  
+  /**
+   * Normal axis
+   */
+
+   var axistemp = charttemp.xAxes.push(new am4charts.ValueAxis());
+   axistemp.min = 0;
+   axistemp.max = 100;
+   axistemp.strictMinMax = true;
+   axistemp.renderer.radius = am4core.percent(80);
+   axistemp.renderer.inside = true;
+   axistemp.renderer.line.strokeOpacity = 1;
+   axistemp.renderer.ticks.template.disabled = false
+   axistemp.renderer.ticks.template.strokeOpacity = 1;
+   axistemp.renderer.ticks.template.length = 10;
+   axistemp.renderer.grid.template.disabled = true;
+   axistemp.renderer.labels.template.radius = 40;
+   axistemp.renderer.labels.template.adapter.add("text", function(text) {
+     return text + "°C";
+   })
+
+  /**
+   * Axis for ranges
+   */
+
+   var colorSet = new am4core.ColorSet();
+
+   var axis2temp = charttemp.xAxes.push(new am4charts.ValueAxis());
+   axis2temp.min = 0;
+   axis2temp.max = 100;
+   axis2temp.strictMinMax = true;
+   axis2temp.renderer.labels.template.disabled = true;
+   axis2temp.renderer.ticks.template.disabled = true;
+   axis2temp.renderer.grid.template.disabled = true;
+
+   var range0temp = axis2temp.axisRanges.create();
+   range0temp.value = 0;
+   range0temp.endValue = 50;
+   range0temp.axisFill.fillOpacity = 1;
+   range0temp.axisFill.fill = colorSet.getIndex(0);
+
+   var range1temp = axis2temp.axisRanges.create();
+   range1temp.value = 50;
+   range1temp.endValue = 100;
+   range1temp.axisFill.fillOpacity = 1;
+   range1temp.axisFill.fill = colorSet.getIndex(2);
+
+  /**
+   * Label
+   */
+
+   var labeltemp = charttemp.radarContainer.createChild(am4core.Label);
+   labeltemp.isMeasured = false;
+   labeltemp.fontSize = 45;
+   labeltemp.x = am4core.percent(50);
+   labeltemp.y = am4core.percent(100);
+   labeltemp.horizontalCenter = "middle";
+   labeltemp.verticalCenter = "bottom";
+   labeltemp.text = "50%";
+
+
+  /**
+   * Hand
+   */
+
+   var handtemp = charttemp.hands.push(new am4charts.ClockHand());
+   handtemp.axis = axis2temp;
+   handtemp.innerRadius = am4core.percent(20);
+   handtemp.startWidth = 10;
+   handtemp.pin.disabled = true;
+   handtemp.value = 50;
+
+   handtemp.events.on("propertychanged", function(ev) {
+     range0temp.endValue = ev.target.value;
+     range1temp.value = ev.target.value;
+     labeltemp.text = axis2temp.positionToValue(handtemp.currentPosition).toFixed(1);
+     axis2temp.invalidate();
+   });
+
+  //------------------------------------------
+  //                Humidity
+  //------------------------------------------  
+
+  // create chart
+  var charthumi = am4core.create("chartdivhumi", am4charts.GaugeChart);
+  charthumi.innerRadius = am4core.percent(82);
+  
+  /**
+   * Normal axis
+   */
+
+   var axishumi = charthumi.xAxes.push(new am4charts.ValueAxis());
+   axishumi.min = 0;
+   axishumi.max = 100;
+   axishumi.strictMinMax = true;
+   axishumi.renderer.radius = am4core.percent(80);
+   axishumi.renderer.inside = true;
+   axishumi.renderer.line.strokeOpacity = 1;
+   axishumi.renderer.ticks.template.disabled = false
+   axishumi.renderer.ticks.template.strokeOpacity = 1;
+   axishumi.renderer.ticks.template.length = 10;
+   axishumi.renderer.grid.template.disabled = true;
+   axishumi.renderer.labels.template.radius = 40;
+   axishumi.renderer.labels.template.adapter.add("text", function(text) {
+     return text + "H";
+   })
+
+  /**
+   * Axis for ranges
+   */ 
+
+   var axis2humi = charthumi.xAxes.push(new am4charts.ValueAxis());
+   axis2humi.min = 0;
+   axis2humi.max = 100;
+   axis2humi.strictMinMax = true;
+   axis2humi.renderer.labels.template.disabled = true;
+   axis2humi.renderer.ticks.template.disabled = true;
+   axis2humi.renderer.grid.template.disabled = true;
+
+   var range0humi = axis2humi.axisRanges.create();
+   range0humi.value = 0;
+   range0humi.endValue = 50;
+   range0humi.axisFill.fillOpacity = 1;
+   range0humi.axisFill.fill = colorSet.getIndex(0);
+
+   var range1humi = axis2humi.axisRanges.create();
+   range1humi.value = 50;
+   range1humi.endValue = 100;
+   range1humi.axisFill.fillOpacity = 1;
+   range1humi.axisFill.fill = colorSet.getIndex(2);
+
+  /**
+   * Label
+   */
+
+   var labelhumi = charthumi.radarContainer.createChild(am4core.Label);
+   labelhumi.isMeasured = false;
+   labelhumi.fontSize = 45;
+   labelhumi.x = am4core.percent(50);
+   labelhumi.y = am4core.percent(100);
+   labelhumi.horizontalCenter = "middle";
+   labelhumi.verticalCenter = "bottom";
+   labelhumi.text = "50%";
+
+
+  /**
+   * Hand
+   */
+
+   var handhumi = charthumi.hands.push(new am4charts.ClockHand());
+   handhumi.axis = axis2humi;
+   handhumi.innerRadius = am4core.percent(20);
+   handhumi.startWidth = 10;
+   handhumi.pin.disabled = true;
+   handhumi.value = 50;
+
+   handhumi.events.on("propertychanged", function(ev) {
+     range0humi.endValue = ev.target.value;
+     range1humi.value = ev.target.value;
+     labelhumi.text = axis2humi.positionToValue(handhumi.currentPosition).toFixed(1);
+     axis2humi.invalidate();
+   });
+
+  //------------------------------------------
+  //             Animasi & Data
+  //------------------------------------------
+  setInterval(function() {    
+   var valuetemp = Math.round(temp);
+   var valuehumi = Math.round(humi);
+
+   var animationtemp = new am4core.Animation(handtemp, {
+    property: "value",
+    to: valuetemp
+  }, 1000, am4core.ease.cubicOut).start();
+
+   var animationhumi = new am4core.Animation(handhumi, {
+    property: "value",
+    to: valuehumi
+  }, 1000, am4core.ease.cubicOut).start();
+
+ }, 1500);
+  
+});   
 </script>
 <script type="text/javascript">
   function getSelectedValue(){

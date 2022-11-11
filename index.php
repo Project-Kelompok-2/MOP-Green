@@ -15,6 +15,8 @@ if(isset($_POST['submit'])){
       $id = $row['id'];
       $namaDepan = $row['nama_depan'];
       $namaBelakang =$row['nama_belakang'];
+      $asalInstitusi = $row['asal_institusi'];
+      $kegiatan = $row['kegiatan'];
       $logEmail = $row['email'];
       $username = $row['username'];
       $password = $row['password'];
@@ -86,7 +88,7 @@ if(isset($_POST['submit'])){
 </head>
 
 <body>
-  
+
   <!-- Start your project here-->
   <section class="bg-img">
     <div class="container py-5 h-100">
@@ -107,6 +109,8 @@ if(isset($_POST['submit'])){
                   </div>
 
                   <div class="form-outline form-white mb-4">
+                    
+                    <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
                     <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" required />
                     <label class="form-label" for="typePasswordX">Password</label>
                   </div>
@@ -132,7 +136,18 @@ if(isset($_POST['submit'])){
   <!-- MDB -->
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <!-- Custom scripts -->
-  <script type="text/javascript"></script>
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#typePasswordX');
+
+    togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
 </body>
 
 </html>

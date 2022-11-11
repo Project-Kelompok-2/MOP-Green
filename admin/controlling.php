@@ -99,10 +99,14 @@ $sesLvl = $_SESSION['level'];
     .water1{
       width: 130px;
       height: 130px;
+      
     }
     .water2{
       width: 130px;
       height: 130px;
+    }
+    body{
+      background-color: #2e3338;
     }
   </style>
 </head>
@@ -201,7 +205,7 @@ $sesLvl = $_SESSION['level'];
         </li>
         <?php if ($sesLvl==1): ?>
           <li>
-            <a href="controlling.php" class="nav-link px-3">
+            <a href="controlling.php" class="nav-link px-3 active">
               <span class="me-2"><i class="bi bi-cpu"></i></span>
               <span>Controlling</span>
             </a>
@@ -219,6 +223,14 @@ $sesLvl = $_SESSION['level'];
             <span>CCTV Controling</span>
           </a>
         </li>
+        <?php if ($sesLvl==1): ?>
+          <li>
+            <a href="manage_user.php" class="nav-link px-3">
+              <span class="me-2"><i class="bi bi-gear"></i></span>
+              <span>Manage User</span>
+            </a>
+          </li>
+        <?php endif ?>
       </ul>
     </nav>
   </div>
@@ -227,8 +239,11 @@ $sesLvl = $_SESSION['level'];
 <main class="mt-5 pt-3">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6 text-white">
         <h4>Controlling</h4>
+      </div>
+      <div class="col-md-6">
+        <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
     <div class="row">
@@ -437,6 +452,16 @@ $sesLvl = $_SESSION['level'];
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="js/water.js"></script>
 <script src="js/script.js"></script>
+<script type="text/javascript">
+  var timeDisplay = document.getElementById("time");
+  function refreshTime() {
+    var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
+    var formattedString = dateString.replace(", ", " - ");
+    timeDisplay.innerHTML = formattedString;
+  }
+
+  setInterval(refreshTime, 1000);
+</script>
 <script>
   var loadingEle = $(".water1");
   var loading_width = loadingEle.width(),
@@ -520,19 +545,10 @@ $sesLvl = $_SESSION['level'];
   const kotak5 = document.getElementById("kotak5");
   const kotak6 = document.getElementById("kotak6");
   const kotak7 = document.getElementById("kotak7");
-  const kotak8 = document.getElementById("kotak8");
-  const kotak9 = document.getElementById("kotak9");
 
-  // switch1.addEventListener("change",()=>{
-  //   // kotak.style.backgroundColor=switch1.checked===true?"green":"red";
-  // })
   switch2.addEventListener("change",()=>{
     kotak7.style.backgroundColor=switch2.checked===true?"green":"red";
   })
-  // switch3.addEventListener("change",()=>{
-  //   kotak8.style.backgroundColor=switch3.checked===true?"green":"red";
-  //   kotak9.style.backgroundColor=switch3.checked===true?"green":"red";
-  // })
   switch4.addEventListener("change",()=>{
     kotak.style.backgroundColor=switch4.checked===true?"green":"red";
   })

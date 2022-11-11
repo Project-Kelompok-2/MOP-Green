@@ -27,6 +27,11 @@ $sesLvl = $_SESSION['level'];
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="../img/logo2.png" type="image/x-icon" />
   <title>MOP Green | Map Page</title>
+  <style type="text/css">
+    body{
+      background-color: #2e3338;
+    }
+  </style>
 </head>
 <body>
   <!-- top navigation bar -->
@@ -141,6 +146,14 @@ $sesLvl = $_SESSION['level'];
             <span>CCTV Controling</span>
           </a>
         </li>
+        <?php if ($sesLvl==1): ?>
+          <li>
+            <a href="manage_user.php" class="nav-link px-3">
+              <span class="me-2"><i class="bi bi-gear"></i></span>
+              <span>Manage User</span>
+            </a>
+          </li>
+        <?php endif ?>
       </ul>
     </nav>
   </div>
@@ -150,13 +163,13 @@ $sesLvl = $_SESSION['level'];
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <h4>Map Dan Lokasi Sensor</h4>
+        <h4 class="text-white">Map Dan Lokasi Sensor</h4>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12 mb-3">
-        <div class="card">
-          <div class="card-header">
+        <div class="card bg-dark">
+          <div class="card-header text-white">
             <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
             Area Chart
           </div>
