@@ -1,3 +1,9 @@
+
+    section{
+      justify-content: center;
+      min-height: 100vh;
+      width: 100%;
+    }
 <div id="chartContainer" style="height: 100%; width: 100%;"></div>
 <script type="text/javascript">
   var loadingEle = $("water1");

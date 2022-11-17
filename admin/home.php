@@ -5,7 +5,7 @@ session_start();
 
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
-  header('Location:../index.php');
+  header('Location:../login.php');
 }
 $sesID = $_SESSION['id'];
 $sesName = $_SESSION['username'];

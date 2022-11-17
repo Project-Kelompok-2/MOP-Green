@@ -12,7 +12,7 @@ if (isset($_POST['register'])) {
 
   $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$username', '$userPass', 2)";
   $result = mysqli_query($koneksi, $query);
-  header('location:index.php');
+  header('location:login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -108,7 +108,7 @@ if (isset($_POST['register'])) {
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern=".{6,}" title="Password Harus Memiliki 6 Karakter" required />
+                  <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
                   <label class="form-label" for="typePasswordX">Password</label>
                 </div>
 
@@ -121,7 +121,7 @@ if (isset($_POST['register'])) {
               </div>
             </form>
 
-            <p class="mb-0">Sudah Punya Akun ? <a href="index.php" class="text-white-50 fw-bold">Sign In</a></p>
+            <p class="mb-0">Sudah Punya Akun ? <a href="login.php" class="text-white-50 fw-bold">Sign In</a></p>
           </div>
 
         </div>
