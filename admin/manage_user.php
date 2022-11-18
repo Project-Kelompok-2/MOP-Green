@@ -28,7 +28,7 @@ $sesLvl = $_SESSION['level'];
   <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="../img/logo2.png" type="image/x-icon" />
-  <title>MOP Green | Map Page</title>
+  <title>MOP Green | Manage User Page</title>
   <style type="text/css">
     body{
       background-color: #2e3338;
@@ -104,7 +104,7 @@ $sesLvl = $_SESSION['level'];
                 <h8><?=$sesName?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -134,12 +134,6 @@ $sesLvl = $_SESSION['level'];
           <div class="text-muted small fw-bold text-uppercase px-2 mb-1">
             Menu
           </div>
-        </li>
-        <li>
-          <a href="map.php" class="nav-link px-3">
-            <span class="me-2"><i class="bi bi-map"></i></span>
-            <span>Map Dan Lokasi Sensor</span>
-          </a>
         </li>
         <?php if ($sesLvl==1): ?>
           <li>
@@ -184,6 +178,95 @@ $sesLvl = $_SESSION['level'];
         <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
+
+    <div class="row mb-2">
+      <div class="text-end">
+        <button class="btn btn-success" type="button" data-bs-toggle='modal' data-bs-target='#tmbh'>
+          <i class="fa fa-plus-circle"></i>
+        </button>
+        <!-- <a href='#tmbh' data-bs-target='#tmbh' id='tmbh' data-bs-toggle='modal' data-id="tmbh" class="btn btn-success"><strong>Tambah</strong></a> -->
+      </div>
+    </div>
+    <!-- Modal Tambah -->
+    <div class="modal" id="tmbh">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title"><i class="bi bi-people"></i> Tambah User</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form onsubmit="return validate();" action="manage_user.php" method="POST">
+              <div class="row">
+
+                <div class="col">
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeNamaDepan">Nama Depan</label>
+                    <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
+                  </div>
+                </div>
+
+                <div class="col">
+                  <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
+                    <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeUsername">Asal Institusi</label>
+                <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" required />
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeUsername">Kegiatan</label>
+                <input type="text" id="typeKegiatan" name="txt_kegiatan" class="form-control form-control-lg" required />
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeUsername">Username</label>
+                <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeEmailX">Email</label>
+                <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" required />
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typePasswordX">Password</label>
+                <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
+                <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
+              </div>
+              <div class="mt-4 mb-0">
+                <div class="d-grid">
+                  <button type="submit" name="tmbh" class="btn btn-primary btn-block">
+                    Add User
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- End Modal Tambah -->
+
     <div class="row">
       <div class="col-md-12 mb-3">
         <div class="card bg-dark">
@@ -244,7 +327,7 @@ $sesLvl = $_SESSION['level'];
                     <td>
                       <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                          <a href="../delete_user.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin..?');"><i class="bi bi-trash" style="cursor: pointer; color: black;"></i></a>
+                          <a href="delete_user.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin..?');"><i class="bi bi-trash" style="cursor: pointer; color: black;"></i></a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                           <a href='#editlogin' data-bs-target='#editlogin<?php echo $row['id'];?>' id='<?php echo $row['id'];?>' data-bs-toggle='modal' data-id="<?php echo $row['id'];?>" class="btn btn-info btn-sm"><i class="bi bi-pencil" style="cursor: pointer;"></i></a>
@@ -310,7 +393,7 @@ $sesLvl = $_SESSION['level'];
 
                             <div class="form-outline form-white mb-4">
                               <label class="form-label" for="typePasswordX">Password</label>
-                              <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern=".{6,}" title="Password Harus Memiliki 6 Karakter" value="<?=$row['password'];?>" required />
+                              <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" value="<?=$row['password'];?>" required />
                             </div>
 
                             <div class="form-outline form-white mb-4">
@@ -319,7 +402,7 @@ $sesLvl = $_SESSION['level'];
                             </div>
                             <div class="mt-4 mb-0">
                               <div class="d-grid">
-                                <button type="submit" name="update" class="btn btn-primary btn-block">
+                                <button type="submit" name="tmbh" class="btn btn-primary btn-block">
                                   Confirm
                                 </button>
                               </div>
@@ -396,6 +479,17 @@ $sesLvl = $_SESSION['level'];
    }
  }
 </script>
+<script>
+  function validate(){
+
+    var a = document.getElementById("typePasswordX").value;
+    var b = document.getElementById("typeConfirmPassword").value;
+    if (a!=b) {
+     alert("Passwords Harus Sama");
+     return false;
+   }
+ }
+</script>
 </body>
 <?php 
 if(isset($_POST["update"])){
@@ -409,6 +503,23 @@ if(isset($_POST["update"])){
   $userPass = $_POST['txt_password'];
   $query = mysqli_query($koneksi, "UPDATE user_detail SET nama_depan='$userFN', nama_belakang='$userLN', asal_institusi='$userAsalInstitusi', kegiatan='$userKegiatan', email='$userEmail', username='$username', password='$userPass' WHERE id='$userId'");
   echo '<script>window.location.href = "manage_user.php"</script>';
+}
+?>
+<?php
+
+if (isset($_POST['tmbh'])) {
+  $userFN = $_POST['txt_nama_depan'];
+  $userLN = $_POST['txt_nama_belakang'];
+  $userAsalInstitusi = $_POST['txt_asal_institusi'];
+  $userKegiatan = $_POST['txt_kegiatan'];
+  $username = $_POST['txt_username'];
+  $userEmail = $_POST['txt_email'];
+  $userPass = $_POST['txt_password'];
+
+
+  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$username', '$userPass', 2)";
+  $result = mysqli_query($koneksi, $query);
+  header('location:manage_user.php');
 }
 ?>
 </html>

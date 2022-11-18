@@ -217,13 +217,13 @@
 			}
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(window).scroll(function(){
 			var scroll = $(window).scrollTop();
 			$('.banner-image').css({
 				filter: "blur("+ (scroll/50) +"px)"
 			})
 		})
-	</script>
+	</script> -->
 </body>
 </html>

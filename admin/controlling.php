@@ -96,6 +96,12 @@ $sesLvl = $_SESSION['level'];
       background-color: red;
       /*box-shadow: 0px 0px 10px 0.5px #FF0000;*/
     }
+    .kotak10{
+      margin-left: -5px;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+    }
     .water1{
       width: 130px;
       height: 130px;
@@ -166,7 +172,7 @@ $sesLvl = $_SESSION['level'];
                 <h8><?=$sesName?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -196,12 +202,6 @@ $sesLvl = $_SESSION['level'];
           <div class="text-muted small fw-bold text-uppercase px-2 mb-1">
             Menu
           </div>
-        </li>
-        <li>
-          <a href="map.php" class="nav-link px-3">
-            <span class="me-2"><i class="bi bi-map"></i></span>
-            <span>Map Dan Lokasi Sensor</span>
-          </a>
         </li>
         <?php if ($sesLvl==1): ?>
           <li>
@@ -428,6 +428,14 @@ $sesLvl = $_SESSION['level'];
                 <h4 class="">Pompa N2</h4>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-1 col-sm-1 col-1">
+                <input class="kotak10" id="kotak10" disabled></input>
+              </div>
+              <div class="col-md-10 col-sm-10 col-10">
+                <h4 class="">Fresh Water</h4>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -545,9 +553,13 @@ $sesLvl = $_SESSION['level'];
   const kotak5 = document.getElementById("kotak5");
   const kotak6 = document.getElementById("kotak6");
   const kotak7 = document.getElementById("kotak7");
+  const kotak10 = document.getElementById("kotak10");
 
   switch2.addEventListener("change",()=>{
-    kotak7.style.backgroundColor=switch2.checked===true?"green":"red";
+    kotak10.style.backgroundColor=switch2.checked===true?"green":"red";
+  })
+  switch3.addEventListener("change",()=>{
+    kotak7.style.backgroundColor=switch3.checked===true?"green":"red";
   })
   switch4.addEventListener("change",()=>{
     kotak.style.backgroundColor=switch4.checked===true?"green":"red";

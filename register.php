@@ -1,5 +1,6 @@
 <?php 
 require ('koneksi.php');
+
 if (isset($_POST['register'])) {
   $userFN = $_POST['txt_nama_depan'];
   $userLN = $_POST['txt_nama_belakang'];

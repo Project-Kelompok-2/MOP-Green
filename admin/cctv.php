@@ -26,7 +26,7 @@ $sesLvl = $_SESSION['level'];
   <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="../img/logo2.png" type="image/x-icon" />
-  <title>MOP Green | Map Page</title>
+  <title>MOP Green | CCTV Page</title>
   <style type="text/css">
     body{
       background-color: #2e3338;
@@ -89,7 +89,7 @@ $sesLvl = $_SESSION['level'];
                 <h8><?=$sesName?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -119,12 +119,6 @@ $sesLvl = $_SESSION['level'];
           <div class="text-muted small fw-bold text-uppercase px-2 mb-1">
             Menu
           </div>
-        </li>
-        <li>
-          <a href="map.php" class="nav-link px-3">
-            <span class="me-2"><i class="bi bi-map"></i></span>
-            <span>Map Dan Lokasi Sensor</span>
-          </a>
         </li>
         <?php if ($sesLvl==1): ?>
           <li>

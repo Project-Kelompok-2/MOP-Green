@@ -89,7 +89,7 @@ $sesLvl = $_SESSION['level'];
                 <h8><?=$sesName?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+                <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
               </ul>
             </li>
           </ul>
