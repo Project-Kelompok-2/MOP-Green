@@ -11,13 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $temp = $data["temp"];
   $hum = $data["humadity"];
   $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp', '$hum', '$hum')";
-    mysqli_query($koneksi, $sql);
+  mysqli_query($koneksi, $sql);
   // result
-     header('Content-type: application/json');
-     echo json_encode([]);
-     die();
-   }
-
+  header('Content-type: application/json');
+  echo json_encode([]);
+  die();
+}
 session_start();
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
@@ -26,8 +25,6 @@ if(!isset($_SESSION['id'])){
 $sesID = $_SESSION['id'];
 $sesName = $_SESSION['username'];
 $sesLvl = $_SESSION['level'];
-
-
 ?>
 
 <!DOCTYPE html>
@@ -154,12 +151,12 @@ id="sidebar"
         </a>
       </li>
       <?php if ($sesLvl==1): ?>
-      <li>
-        <a href="manage_user.php" class="nav-link px-3">
-          <span class="me-2"><i class="bi bi-gear"></i></span>
-          <span>Manage User</span>
-        </a>
-      </li>
+        <li>
+          <a href="manage_user.php" class="nav-link px-3">
+            <span class="me-2"><i class="bi bi-gear"></i></span>
+            <span>Manage User</span>
+          </a>
+        </li>
       <?php endif ?>
     </ul>
   </nav>
@@ -282,10 +279,10 @@ id="sidebar"
 </div>
 </main>
 <script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/jquery-3.5.1.js"></script>
+<!-- <script src="js/jquery-3.5.1.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap5.min.js"></script>
-<script src="js/script.js"></script>
+<script src="js/dataTables.bootstrap5.min.js"></script> -->
+<!-- <script src="js/script.js"></script> -->
 <!-- Chart timeseries -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
@@ -313,36 +310,40 @@ id="sidebar"
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-    var host = "20.20.0.245";
-    var port = 9001;
+  var host = "20.20.0.245";
+  var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
-    var client = new Paho.MQTT.Client(host, port, "/ws",
-      "myclientid_" + parseInt(Math.random() * 100, 10));
+  var client = new Paho.MQTT.Client(host, port, "/ws",
+    "myclientid_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
-    client.onConnectionLost = function (responseObject) {
-      document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Putus - " + responseObject+errorMessage + "<br/>";
-    };
+  client.onConnectionLost = function (responseObject) {
+    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Putus - " + responseObject+errorMessage + "<br/>";
+  };
 
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
-    var humadity = 0;
-    var temp = 0;
-    var sr04 = 0;
-    var ldr = 0;
-    var keypad = "";
+  var humadity1 = 0;
+  var temp1 = 0;
+  var humadity2 = 0;
+  var temp2 = 0;
+  var sr04 = 0;
+  var ldr = 0;
+  var keypad = "";
 
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-    client.onMessageArrived = function (message) {
-      console.log(message)
-      if (message.destinationName == "sensor") {
-               console.log(message.payloadString)
-         const data = JSON.parse(message.payloadString)
-         humadity = data["humadity"]
-         temp = data["temp"]
-      }
+  client.onMessageArrived = function (message) {
+    console.log(message)
+    if (message.destinationName == "sensor") {
+     console.log(message.payloadString)
+     const data = JSON.parse(message.payloadString)
+     humadity1 = data["humadity1"]
+     temp1 = data["temp1"]
+     humadity2 = data["humadity2"]
+     temp2 = data["temp2"]
+   }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
       // } else if (message.destinationName == "sr04") {
@@ -353,23 +354,23 @@ id="sidebar"
       // //   temp = dht.suhu;
       // } else if (message.destinationName == "temp") {
       //  temp = message.payloadString;
-        
-        
+   
+   
       // } else if (message.destinationName == "humadity") {
       //  humadity = message.payloadString;
       // }
-      
+   
       // else if (message.destinationName == "/remoteir") {
       //  keypad = message.payloadString;
-       
+   
 
-      document.getElementById("hitTEMP").innerHTML = temp + " °C";
-      document.getElementById("hitHUM").innerHTML = humadity + " HR";
-      document.getElementById("hitLDR").innerHTML = ldr + " Lux";
-      document.getElementById("hitSR04").innerHTML = sr04 + " cm";
-      document.getElementById("kodekeypad").innerHTML = keypad;
+   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+   document.getElementById("hitHUM").innerHTML = humadity1 + " H";
+   document.getElementById("hitLDR").innerHTML = temp2 + " °C";
+   document.getElementById("hitSR04").innerHTML = humadity2 + " H";
+   document.getElementById("kodekeypad").innerHTML = keypad;
       //document.write(temp);
-      console.log(temp);
+      //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
       //now = {"temp&humadity": [
       //{"temp": "25", "humadity": "45"},
@@ -380,19 +381,21 @@ id="sidebar"
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-      var obj = {"temp":temp, "humadity":humadity};
-      console.log(obj);
+   var obj = {"temp1":temp1, "humadity1":humadity1, "temp2":temp2, "humadity2":humadity2};
+   console.log(obj);
       //const data = { username: 'example' };
 
-            fetch('home.php', {
+   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
             //   },
               body: JSON.stringify(obj),
-            })+then((response) => response.json())+then((data) => {
-                console.log('Success:', data);
-              })
+            })
+   .then((response) => response.json())
+   .then((data) => {
+    console.log('Success:', data);
+  })
             //   .catch((error) => {
             //     console.error('Error:', error);
             //   });
@@ -411,341 +414,341 @@ id="sidebar"
               //log("writing file..");
               //file.writeline(datas);
               //file.close();
-            };
+ };
     // Option mqtt dengan mode subscribe dan qos diset 1
-    var options = {
-      timeout: 60,
-      keepAliveInterval: 30,
-      onSuccess: function () {
-        document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-        client.subscribe("temp", {
-          qos: 1
-        });client.subscribe("humadity", {
-          qos: 1
-        });
-        client.subscribe("sensor", {
-          qos: 1
-        });
-        client.subscribe("ldr", {
-          qos: 1
-        });
-        client.subscribe("sr04", {
-          qos: 1
-        });
-        client.subscribe("/remoteir", {
-          qos: 1
-        });
-      },
+ var options = {
+  timeout: 60,
+  keepAliveInterval: 30,
+  onSuccess: function () {
+    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+    client.subscribe("temp", {
+      qos: 1
+    });client.subscribe("humadity", {
+      qos: 1
+    });
+    client.subscribe("sensor", {
+      qos: 1
+    });
+    client.subscribe("ldr", {
+      qos: 1
+    });
+    client.subscribe("sr04", {
+      qos: 1
+    });
+    client.subscribe("/remoteir", {
+      qos: 1
+    });
+  },
 
-      onFailure: function (message) {
-        document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message
-          .errorMessage + "<br/>";
-      },
+  onFailure: function (message) {
+    document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message
+    .errorMessage + "<br/>";
+  },
 
-      userName: "",
-      password: ""
-    };
+  userName: "",
+  password: ""
+};
 
-    if (location.protocol == "https:") {
-      options.useSSL = true;
-    }
+if (location.protocol == "https:") {
+  options.useSSL = true;
+}
 
-    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-    client.connect(options);
-  </script>
+document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+client.connect(options);
+</script>
 
-  <script>
+<script>
     /*------------------------------------------------------------
   BAGIAN CHART CANVAS
   https://nagix.github.io/chartjs-plugin-streaming/latest/
   ------------------------------------------------------------*/
     // Enumerasi tipe warna  
-    var chartColors = {
-      red: 'rgb(255, 99, 132)',
-      orange: 'rgb(255, 159, 64)',
-      yellow: 'rgb(255, 205, 86)',
-      green: 'rgb(75, 192, 192)',
-      blue: 'rgb(54, 162, 235)',
-      purple: 'rgb(153, 102, 255)',
-      grey: 'rgb(201, 203, 207)'
-    };
+  var chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+  };
 
-    var color = Chart.helpers.color;
-    var saiki = new Date();
-    var dinoiki = saiki.toString();
+  var color = Chart.helpers.color;
+  var saiki = new Date();
+  var dinoiki = saiki.toString();
 
     /*--------------------------
       CHART TEMPERATUR DHT11
       --------------------------*/
     // Update data sensor dht11
-    function onRefreshTEMP(chart) {
-      chart.data.datasets[0].data.push({
-        x: Date.now(),
-        y: temp
-      });
-    }
+  function onRefreshTEMP(chart) {
+    chart.data.datasets[0].data.push({
+      x: Date.now(),
+      y: temp1
+    });
+  }
 
-    var configTEMP = {
-      type: 'line',
-      data: {
-        datasets: [{
-          label: 'Temperatur (°C)',
-          backgroundColor: color(chartColors.red).alpha(0.6).rgbString(),
-          borderColor: chartColors.red,
-          borderWidth: 1,
-          data: []
+  var configTEMP = {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Temperatur (°C)',
+        backgroundColor: color(chartColors.red).alpha(0.6).rgbString(),
+        borderColor: chartColors.red,
+        borderWidth: 1,
+        data: []
+      }]
+    },
+
+    options: {
+      title: {
+        display: true,
+        text: dinoiki
+      },
+
+      scales: {
+        xAxes: [{
+          type: 'realtime',
+          realtime: {
+            duration: 10000,
+            refresh: 1500,
+            delay: 2000,
+            onRefresh: onRefreshTEMP
+          }
+        }],
+
+        yAxes: [{
+          type: 'linear',
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'value'
+          }
         }]
       },
 
-      options: {
-        title: {
-          display: true,
-          text: dinoiki
-        },
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
 
-        scales: {
-          xAxes: [{
-            type: 'realtime',
-            realtime: {
-              duration: 10000,
-              refresh: 1500,
-              delay: 2000,
-              onRefresh: onRefreshTEMP
-            }
-          }],
-
-          yAxes: [{
-            type: 'linear',
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'value'
-            }
-          }]
-        },
-
-        tooltips: {
-          mode: 'nearest',
-          intersect: false
-        },
-
-        hover: {
-          mode: 'nearest',
-          intersect: false
-        }
+      hover: {
+        mode: 'nearest',
+        intersect: false
       }
-    };
+    }
+  };
 
     /*--------------------------
       CHART KELEMBABAN DHT11
       --------------------------*/
     // Update data sensor dht11
-    function onRefreshHUM(chart) {
-      chart.data.datasets[0].data.push({
-        x: Date.now(),
-        y: humadity
-      });
-    }
+  function onRefreshHUM(chart) {
+    chart.data.datasets[0].data.push({
+      x: Date.now(),
+      y: humadity1
+    });
+  }
 
-    var configHUM = {
-      type: 'line',
-      data: {
-        datasets: [{
-          label: 'Kelembaban (H)',
-          backgroundColor: color(chartColors.blue).alpha(0.6).rgbString(),
-          borderColor: chartColors.blue,
-          borderWidth: 1,
-          data: []
+  var configHUM = {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Kelembaban (H)',
+        backgroundColor: color(chartColors.blue).alpha(0.6).rgbString(),
+        borderColor: chartColors.blue,
+        borderWidth: 1,
+        data: []
+      }]
+    },
+
+    options: {
+      title: {
+        display: true,
+        text: dinoiki
+      },
+
+      scales: {
+        xAxes: [{
+          type: 'realtime',
+          realtime: {
+            duration: 10000,
+            refresh: 1500,
+            delay: 2000,
+            onRefresh: onRefreshHUM
+          }
+        }],
+
+        yAxes: [{
+          type: 'linear',
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'value'
+          }
         }]
       },
 
-      options: {
-        title: {
-          display: true,
-          text: dinoiki
-        },
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
 
-        scales: {
-          xAxes: [{
-            type: 'realtime',
-            realtime: {
-              duration: 10000,
-              refresh: 1500,
-              delay: 2000,
-              onRefresh: onRefreshHUM
-            }
-          }],
-
-          yAxes: [{
-            type: 'linear',
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'value'
-            }
-          }]
-        },
-
-        tooltips: {
-          mode: 'nearest',
-          intersect: false
-        },
-
-        hover: {
-          mode: 'nearest',
-          intersect: false
-        }
+      hover: {
+        mode: 'nearest',
+        intersect: false
       }
-    };
+    }
+  };
 
 
     /*--------------------------------------
       CHART INTENSITAS CAHAYA SENSOR LDR
       --------------------------------------*/
     // Update data sensor LDR
-    function onRefreshLDR(chart) {
-      chart.data.datasets[0].data.push({
-        x: Date.now(),
-        y: ldr
-      });
-    }
+  function onRefreshLDR(chart) {
+    chart.data.datasets[0].data.push({
+      x: Date.now(),
+      y: temp2
+    });
+  }
 
     // Chart canvas & konfigurasi
     // Mode line sensor LDR
-    var configLDR = {
-      type: 'line',
-      data: {
-        datasets: [{
-          label: 'Level Cahaya (Lux)',
-          backgroundColor: color(chartColors.yellow).alpha(0.5).rgbString(),
-          borderColor: chartColors.yellow,
-          fill: false,
-          lineTension: 0,
-          borderDash: [8, 4],
-          data: []
+  var configLDR = {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Level Cahaya (Lux)',
+        backgroundColor: color(chartColors.yellow).alpha(0.5).rgbString(),
+        borderColor: chartColors.yellow,
+        fill: false,
+        lineTension: 0,
+        borderDash: [8, 4],
+        data: []
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: dinoiki
+      },
+      scales: {
+        xAxes: [{
+          type: 'realtime',
+          realtime: {
+            duration: 10000,
+            refresh: 300,
+            delay: 500,
+            onRefresh: onRefreshLDR
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'value'
+          }
         }]
       },
-      options: {
-        title: {
-          display: true,
-          text: dinoiki
-        },
-        scales: {
-          xAxes: [{
-            type: 'realtime',
-            realtime: {
-              duration: 10000,
-              refresh: 300,
-              delay: 500,
-              onRefresh: onRefreshLDR
-            }
-          }],
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: 'value'
-            }
-          }]
-        },
-        tooltips: {
-          mode: 'nearest',
-          intersect: false
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: false
-        }
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: false
       }
-    };
+    }
+  };
 
     /*-----------------------------------------
       CHART JARAK SENSOR ULTRASONIC HC-SR04
       -----------------------------------------*/
     // Update data sensor ultrasnic HC-SR04  
-    function onRefreshsr04(chart) {
-      chart.data.datasets[0].data.push({
-        x: Date.now(),
-        y: sr04
-      });
-    }
+  function onRefreshsr04(chart) {
+    chart.data.datasets[0].data.push({
+      x: Date.now(),
+      y: humadity2
+    });
+  }
 
     // Chart canvas & konfigurasi
     // Mode line sensor HC-SR04  
-    var configSR04 = {
-      type: 'line',
-      data: {
-        datasets: [{
-          label: 'Jarak (cm)',
-          backgroundColor: color(chartColors.purple).alpha(0.5).rgbString(),
-          borderColor: chartColors.purple,
-          fill: false,
-          cubicInterpolationMode: 'monotone',
-          data: []
+  var configSR04 = {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Jarak (cm)',
+        backgroundColor: color(chartColors.purple).alpha(0.5).rgbString(),
+        borderColor: chartColors.purple,
+        fill: false,
+        cubicInterpolationMode: 'monotone',
+        data: []
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: dinoiki
+      },
+      scales: {
+        xAxes: [{
+          type: 'realtime',
+          realtime: {
+            duration: 10000,
+            refresh: 500,
+            delay: 2000,
+            onRefresh: onRefreshsr04
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'value'
+          }
         }]
       },
-      options: {
-        title: {
-          display: true,
-          text: dinoiki
-        },
-        scales: {
-          xAxes: [{
-            type: 'realtime',
-            realtime: {
-              duration: 10000,
-              refresh: 500,
-              delay: 2000,
-              onRefresh: onRefreshsr04
-            }
-          }],
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: 'value'
-            }
-          }]
-        },
-        tooltips: {
-          mode: 'nearest',
-          intersect: false
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: false
-        }
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: false
       }
-    };
+    }
+  };
 
     //Onload semua Chart
-    window.onload = function () {
+  window.onload = function () {
       // onload chart temperatur sensor DHT11
-      var ctxTEMP = document.getElementById('chartTEMP').getContext('2d');
-      window.chartTEMP = new Chart(ctxTEMP, configTEMP);
+    var ctxTEMP = document.getElementById('chartTEMP').getContext('2d');
+    window.chartTEMP = new Chart(ctxTEMP, configTEMP);
 
       // onload chart kelembaban sensor DHT11
-      var ctxHUM = document.getElementById('chartHUM').getContext('2d');
-      window.chartHUM = new Chart(ctxHUM, configHUM);
+    var ctxHUM = document.getElementById('chartHUM').getContext('2d');
+    window.chartHUM = new Chart(ctxHUM, configHUM);
 
       // onload chart intensitas cahaya sensor LDR
-      var ctxLDR = document.getElementById('chartLDR').getContext('2d');
-      window.chartLDR = new Chart(ctxLDR, configLDR);
+    var ctxLDR = document.getElementById('chartLDR').getContext('2d');
+    window.chartLDR = new Chart(ctxLDR, configLDR);
 
       // onload chart jarak penghalang sensor Ultrasonic
-      var ctxSR04 = document.getElementById('chartUltrasonic').getContext('2d');
-      window.chartUltrasonic = new Chart(ctxSR04, configSR04);
-    };
-    
-  </script>
+    var ctxSR04 = document.getElementById('chartUltrasonic').getContext('2d');
+    window.chartUltrasonic = new Chart(ctxSR04, configSR04);
+  };
+  
+</script>
 
-  <script>
+<script>
     /*----------------------------
   BAGIAN SPEED CHART DHT11
   ----------------------------*/
-    am4core.ready(function () {
+  am4core.ready(function () {
 
       // Themes begin
-      am4core.useTheme(am4themes_dataviz);
-      am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_dataviz);
+    am4core.useTheme(am4themes_animated);
       // Themes end
 
       //------------------------------------------
@@ -753,194 +756,194 @@ id="sidebar"
       //------------------------------------------
 
       // create chart
-      var charttemp = am4core.create("chartdivtemp", am4charts.GaugeChart);
-      charttemp.innerRadius = am4core.percent(82);
+    var charttemp = am4core.create("chartdivtemp", am4charts.GaugeChart);
+    charttemp.innerRadius = am4core.percent(82);
 
       /**
        * Normal axis
        */
 
-      var axistemp = charttemp.xAxes.push(new am4charts.ValueAxis());
-      axistemp.min = 0;
-      axistemp.max = 100;
-      axistemp.strictMinMax = true;
-      axistemp.renderer.radius = am4core.percent(80);
-      axistemp.renderer.inside = true;
-      axistemp.renderer.line.strokeOpacity = 1;
-      axistemp.renderer.ticks.template.disabled = false
-      axistemp.renderer.ticks.template.strokeOpacity = 1;
-      axistemp.renderer.ticks.template.length = 10;
-      axistemp.renderer.grid.template.disabled = true;
-      axistemp.renderer.labels.template.radius = 40;
-      axistemp.renderer.labels.template.adapter.add("text", function (text) {
-        return text + "°C";
-      })
+    var axistemp = charttemp.xAxes.push(new am4charts.ValueAxis());
+    axistemp.min = 0;
+    axistemp.max = 100;
+    axistemp.strictMinMax = true;
+    axistemp.renderer.radius = am4core.percent(80);
+    axistemp.renderer.inside = true;
+    axistemp.renderer.line.strokeOpacity = 1;
+    axistemp.renderer.ticks.template.disabled = false
+    axistemp.renderer.ticks.template.strokeOpacity = 1;
+    axistemp.renderer.ticks.template.length = 10;
+    axistemp.renderer.grid.template.disabled = true;
+    axistemp.renderer.labels.template.radius = 40;
+    axistemp.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "°C";
+    })
 
       /**
        * Axis for ranges
        */
 
-      var colorSet = new am4core.ColorSet();
+    var colorSet = new am4core.ColorSet();
 
-      var axis2temp = charttemp.xAxes.push(new am4charts.ValueAxis());
-      axis2temp.min = 0;
-      axis2temp.max = 100;
-      axis2temp.strictMinMax = true;
-      axis2temp.renderer.labels.template.disabled = true;
-      axis2temp.renderer.ticks.template.disabled = true;
-      axis2temp.renderer.grid.template.disabled = true;
+    var axis2temp = charttemp.xAxes.push(new am4charts.ValueAxis());
+    axis2temp.min = 0;
+    axis2temp.max = 100;
+    axis2temp.strictMinMax = true;
+    axis2temp.renderer.labels.template.disabled = true;
+    axis2temp.renderer.ticks.template.disabled = true;
+    axis2temp.renderer.grid.template.disabled = true;
 
-      var range0temp = axis2temp.axisRanges.create();
-      range0temp.value = 0;
-      range0temp.endValue = 50;
-      range0temp.axisFill.fillOpacity = 1;
-      range0temp.axisFill.fill = colorSet.getIndex(0);
+    var range0temp = axis2temp.axisRanges.create();
+    range0temp.value = 0;
+    range0temp.endValue = 50;
+    range0temp.axisFill.fillOpacity = 1;
+    range0temp.axisFill.fill = colorSet.getIndex(0);
 
-      var range1temp = axis2temp.axisRanges.create();
-      range1temp.value = 50;
-      range1temp.endValue = 100;
-      range1temp.axisFill.fillOpacity = 1;
-      range1temp.axisFill.fill = colorSet.getIndex(2);
+    var range1temp = axis2temp.axisRanges.create();
+    range1temp.value = 50;
+    range1temp.endValue = 100;
+    range1temp.axisFill.fillOpacity = 1;
+    range1temp.axisFill.fill = colorSet.getIndex(2);
 
       /**
        * Label
        */
 
-      var labeltemp = charttemp.radarContainer.createChild(am4core.Label);
-      labeltemp.isMeasured = false;
-      labeltemp.fontSize = 45;
-      labeltemp.x = am4core.percent(50);
-      labeltemp.y = am4core.percent(100);
-      labeltemp.horizontalCenter = "middle";
-      labeltemp.verticalCenter = "bottom";
-      labeltemp.text = "50%";
+    var labeltemp = charttemp.radarContainer.createChild(am4core.Label);
+    labeltemp.isMeasured = false;
+    labeltemp.fontSize = 45;
+    labeltemp.x = am4core.percent(50);
+    labeltemp.y = am4core.percent(100);
+    labeltemp.horizontalCenter = "middle";
+    labeltemp.verticalCenter = "bottom";
+    labeltemp.text = "50%";
 
 
       /**
        * Hand
        */
 
-      var handtemp = charttemp.hands.push(new am4charts.ClockHand());
-      handtemp.axis = axis2temp;
-      handtemp.innerRadius = am4core.percent(20);
-      handtemp.startWidth = 10;
-      handtemp.pin.disabled = true;
-      handtemp.value = 50;
+    var handtemp = charttemp.hands.push(new am4charts.ClockHand());
+    handtemp.axis = axis2temp;
+    handtemp.innerRadius = am4core.percent(20);
+    handtemp.startWidth = 10;
+    handtemp.pin.disabled = true;
+    handtemp.value = 50;
 
-      handtemp.events.on("propertychanged", function (ev) {
-        range0temp.endValue = ev.target.value;
-        range1temp.value = ev.target.value;
-        labeltemp.text = axis2temp.positionToValue(handtemp.currentPosition).toFixed(1);
-        axis2temp.invalidate();
-      });
+    handtemp.events.on("propertychanged", function (ev) {
+      range0temp.endValue = ev.target.value;
+      range1temp.value = ev.target.value;
+      labeltemp.text = axis2temp.positionToValue(handtemp.currentPosition).toFixed(1);
+      axis2temp.invalidate();
+    });
 
       //------------------------------------------
       //                Humidity
       //------------------------------------------  
 
       // create chart
-      var charthumi = am4core.create("chartdivhumi", am4charts.GaugeChart);
-      charthumi.innerRadius = am4core.percent(82);
+    var charthumi = am4core.create("chartdivhumi", am4charts.GaugeChart);
+    charthumi.innerRadius = am4core.percent(82);
 
       /**
        * Normal axis
        */
 
-      var axishumi = charthumi.xAxes.push(new am4charts.ValueAxis());
-      axishumi.min = 0;
-      axishumi.max = 100;
-      axishumi.strictMinMax = true;
-      axishumi.renderer.radius = am4core.percent(80);
-      axishumi.renderer.inside = true;
-      axishumi.renderer.line.strokeOpacity = 1;
-      axishumi.renderer.ticks.template.disabled = false
-      axishumi.renderer.ticks.template.strokeOpacity = 1;
-      axishumi.renderer.ticks.template.length = 10;
-      axishumi.renderer.grid.template.disabled = true;
-      axishumi.renderer.labels.template.radius = 40;
-      axishumi.renderer.labels.template.adapter.add("text", function (text) {
-        return text + "H";
-      })
+    var axishumi = charthumi.xAxes.push(new am4charts.ValueAxis());
+    axishumi.min = 0;
+    axishumi.max = 100;
+    axishumi.strictMinMax = true;
+    axishumi.renderer.radius = am4core.percent(80);
+    axishumi.renderer.inside = true;
+    axishumi.renderer.line.strokeOpacity = 1;
+    axishumi.renderer.ticks.template.disabled = false
+    axishumi.renderer.ticks.template.strokeOpacity = 1;
+    axishumi.renderer.ticks.template.length = 10;
+    axishumi.renderer.grid.template.disabled = true;
+    axishumi.renderer.labels.template.radius = 40;
+    axishumi.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "H";
+    })
 
       /**
        * Axis for ranges
        */
 
-      var axis2humi = charthumi.xAxes.push(new am4charts.ValueAxis());
-      axis2humi.min = 0;
-      axis2humi.max = 100;
-      axis2humi.strictMinMax = true;
-      axis2humi.renderer.labels.template.disabled = true;
-      axis2humi.renderer.ticks.template.disabled = true;
-      axis2humi.renderer.grid.template.disabled = true;
+    var axis2humi = charthumi.xAxes.push(new am4charts.ValueAxis());
+    axis2humi.min = 0;
+    axis2humi.max = 100;
+    axis2humi.strictMinMax = true;
+    axis2humi.renderer.labels.template.disabled = true;
+    axis2humi.renderer.ticks.template.disabled = true;
+    axis2humi.renderer.grid.template.disabled = true;
 
-      var range0humi = axis2humi.axisRanges.create();
-      range0humi.value = 0;
-      range0humi.endValue = 50;
-      range0humi.axisFill.fillOpacity = 1;
-      range0humi.axisFill.fill = colorSet.getIndex(0);
+    var range0humi = axis2humi.axisRanges.create();
+    range0humi.value = 0;
+    range0humi.endValue = 50;
+    range0humi.axisFill.fillOpacity = 1;
+    range0humi.axisFill.fill = colorSet.getIndex(0);
 
-      var range1humi = axis2humi.axisRanges.create();
-      range1humi.value = 50;
-      range1humi.endValue = 100;
-      range1humi.axisFill.fillOpacity = 1;
-      range1humi.axisFill.fill = colorSet.getIndex(2);
+    var range1humi = axis2humi.axisRanges.create();
+    range1humi.value = 50;
+    range1humi.endValue = 100;
+    range1humi.axisFill.fillOpacity = 1;
+    range1humi.axisFill.fill = colorSet.getIndex(2);
 
       /**
        * Label
        */
 
-      var labelhumi = charthumi.radarContainer.createChild(am4core.Label);
-      labelhumi.isMeasured = false;
-      labelhumi.fontSize = 45;
-      labelhumi.x = am4core.percent(50);
-      labelhumi.y = am4core.percent(100);
-      labelhumi.horizontalCenter = "middle";
-      labelhumi.verticalCenter = "bottom";
-      labelhumi.text = "50%";
+    var labelhumi = charthumi.radarContainer.createChild(am4core.Label);
+    labelhumi.isMeasured = false;
+    labelhumi.fontSize = 45;
+    labelhumi.x = am4core.percent(50);
+    labelhumi.y = am4core.percent(100);
+    labelhumi.horizontalCenter = "middle";
+    labelhumi.verticalCenter = "bottom";
+    labelhumi.text = "50%";
 
 
       /**
        * Hand
        */
 
-      var handhumi = charthumi.hands.push(new am4charts.ClockHand());
-      handhumi.axis = axis2humi;
-      handhumi.innerRadius = am4core.percent(20);
-      handhumi.startWidth = 10;
-      handhumi.pin.disabled = true;
-      handhumi.value = 50;
+    var handhumi = charthumi.hands.push(new am4charts.ClockHand());
+    handhumi.axis = axis2humi;
+    handhumi.innerRadius = am4core.percent(20);
+    handhumi.startWidth = 10;
+    handhumi.pin.disabled = true;
+    handhumi.value = 50;
 
-      handhumi.events.on("propertychanged", function (ev) {
-        range0humi.endValue = ev.target.value;
-        range1humi.value = ev.target.value;
-        labelhumi.text = axis2humi.positionToValue(handhumi.currentPosition).toFixed(1);
-        axis2humi.invalidate();
-      });
+    handhumi.events.on("propertychanged", function (ev) {
+      range0humi.endValue = ev.target.value;
+      range1humi.value = ev.target.value;
+      labelhumi.text = axis2humi.positionToValue(handhumi.currentPosition).toFixed(1);
+      axis2humi.invalidate();
+    });
 
       //------------------------------------------
       //             Animasi & Data
       //------------------------------------------
-      setInterval(function () {
-        var valuetemp = Math.round(temp);
-        var valuehumi = Math.round(humadity);
+    setInterval(function () {
+      var valuetemp = Math.round(temp);
+      var valuehumi = Math.round(humadity);
 
-        var animationtemp = new am4core.Animation(handtemp, {
-          property: "value",
-          to: valuetemp
-        }, 1000, am4core.ease.cubicOut).start();
+      var animationtemp = new am4core.Animation(handtemp, {
+        property: "value",
+        to: valuetemp
+      }, 1000, am4core.ease.cubicOut).start();
 
-        var animationhumi = new am4core.Animation(handhumi, {
-          property: "value",
-          to: valuehumi
-        }, 1000, am4core.ease.cubicOut).start();
+      var animationhumi = new am4core.Animation(handhumi, {
+        property: "value",
+        to: valuehumi
+      }, 1000, am4core.ease.cubicOut).start();
 
-      }, 1500);
+    }, 1500);
 
-    });
-  </script>
+  });
+</script>
 
-  <script>
+<script>
     /*---------------------------
   BAGIAN KONTROL AKTUATOR
   ---------------------------*/
@@ -948,160 +951,160 @@ id="sidebar"
     /*----------------------------------------
       MENGAKTIFKAN DAN MENONAKTIFKAN LED X9
       ----------------------------------------*/
-    $(".sliderLED").ionRangeSlider({
-      onFinish: function (data) {
-        var valled = data.from;
-        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math
-          .random() * 100, 10));
+  $(".sliderLED").ionRangeSlider({
+    onFinish: function (data) {
+      var valled = data.from;
+      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math
+        .random() * 100, 10));
 
-        var optionsPub = {
-          userName: "AdminMQTT",
-          password: "pwd123",
-          timeout: 3,
-          keepAliveInterval: 30,
-          onSuccess: function () {
-            ledanimPub = new Paho.MQTT.Message(valled.toString());
-            ledanimPub.destinationName = "/ledanim";
-            clientPub.send(ledanimPub);
-            clientPub.disconnect();
-          },
-        };
-        clientPub.connect(optionsPub);
-      },
-    });
+      var optionsPub = {
+        userName: "AdminMQTT",
+        password: "pwd123",
+        timeout: 3,
+        keepAliveInterval: 30,
+        onSuccess: function () {
+          ledanimPub = new Paho.MQTT.Message(valled.toString());
+          ledanimPub.destinationName = "/ledanim";
+          clientPub.send(ledanimPub);
+          clientPub.disconnect();
+        },
+      };
+      clientPub.connect(optionsPub);
+    },
+  });
 
     /*------------------------------------
       MENGATUR KECEPATAN PUTAR FAN-PWM
       ------------------------------------*/
-    $(".sliderFAN").ionRangeSlider({
-      onFinish: function (data) {
-        var valfan = data.from;
-        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math
-          .random() * 100, 10));
+  $(".sliderFAN").ionRangeSlider({
+    onFinish: function (data) {
+      var valfan = data.from;
+      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math
+        .random() * 100, 10));
 
-        var optionsPub = {
-          userName: "AdminMQTT",
-          password: "pwd123",
-          timeout: 3,
-          keepAliveInterval: 30,
-          onSuccess: function () {
-            fanpwmPub = new Paho.MQTT.Message(valfan.toString());
-            fanpwmPub.destinationName = "/fanpwm";
-            clientPub.send(fanpwmPub);
-            clientPub.disconnect();
-          },
-        };
-        clientPub.connect(optionsPub);
-      },
-    });
+      var optionsPub = {
+        userName: "AdminMQTT",
+        password: "pwd123",
+        timeout: 3,
+        keepAliveInterval: 30,
+        onSuccess: function () {
+          fanpwmPub = new Paho.MQTT.Message(valfan.toString());
+          fanpwmPub.destinationName = "/fanpwm";
+          clientPub.send(fanpwmPub);
+          clientPub.disconnect();
+        },
+      };
+      clientPub.connect(optionsPub);
+    },
+  });
 
     /*-------------------
       RELAY ON / OFF
       -------------------*/
-    function RelayONOFF(checkbox) {
-      var statusRelay;
-      if (checkbox.checked) {
-        statusRelay = "ON";
-      } else {
-        statusRelay = "OFF";
-      }
-
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "AdminMQTT",
-        password: "pwd123",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          relayPub = new Paho.MQTT.Message(statusRelay);
-          relayPub.destinationName = "relay";
-          clientPub.send(relayPub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
+  function RelayONOFF(checkbox) {
+    var statusRelay;
+    if (checkbox.checked) {
+      statusRelay = "ON";
+    } else {
+      statusRelay = "OFF";
     }
+
+    var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+    var optionsPub = {
+      userName: "AdminMQTT",
+      password: "pwd123",
+      timeout: 3,
+      keepAliveInterval: 30,
+      onSuccess: function () {
+        relayPub = new Paho.MQTT.Message(statusRelay);
+        relayPub.destinationName = "relay";
+        clientPub.send(relayPub);
+        clientPub.disconnect();
+      },
+    };
+    clientPub.connect(optionsPub);
+  }
 
     /*-------------------
     Fan1 ON / OFF
     -------------------*/
-    function Fan1ONOFF(checkbox) {
-      var statusFan1;
-      if (checkbox.checked) {
-        statusFan1 = "0";
-      } else {
-        statusFan1 = "1";
-      }
-
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "AdminMQTT",
-        password: "pwd123",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          Fan1Pub = new Paho.MQTT.Message(statusFan1);
-          Fan1Pub.destinationName = "Fan1";
-          clientPub.send(Fan1Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
+  function Fan1ONOFF(checkbox) {
+    var statusFan1;
+    if (checkbox.checked) {
+      statusFan1 = "0";
+    } else {
+      statusFan1 = "1";
     }
+
+    var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+    var optionsPub = {
+      userName: "AdminMQTT",
+      password: "pwd123",
+      timeout: 3,
+      keepAliveInterval: 30,
+      onSuccess: function () {
+        Fan1Pub = new Paho.MQTT.Message(statusFan1);
+        Fan1Pub.destinationName = "Fan1";
+        clientPub.send(Fan1Pub);
+        clientPub.disconnect();
+      },
+    };
+    clientPub.connect(optionsPub);
+  }
     /*-------------------
     Fan1 ON / OFF
     -------------------*/
-    function Fan2ONOFF(checkbox) {
-      var statusFan2;
-      if (checkbox.checked) {
-        statusFan2 = "0";
-      } else {
-        statusFan2 = "1";
-      }
-
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "AdminMQTT",
-        password: "pwd123",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          Fan2Pub = new Paho.MQTT.Message(statusFan2);
-          Fan2Pub.destinationName = "Fan2";
-          clientPub.send(Fan2Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
+  function Fan2ONOFF(checkbox) {
+    var statusFan2;
+    if (checkbox.checked) {
+      statusFan2 = "0";
+    } else {
+      statusFan2 = "1";
     }
+
+    var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+    var optionsPub = {
+      userName: "AdminMQTT",
+      password: "pwd123",
+      timeout: 3,
+      keepAliveInterval: 30,
+      onSuccess: function () {
+        Fan2Pub = new Paho.MQTT.Message(statusFan2);
+        Fan2Pub.destinationName = "Fan2";
+        clientPub.send(Fan2Pub);
+        clientPub.disconnect();
+      },
+    };
+    clientPub.connect(optionsPub);
+  }
 
     /*------------------
       PIEZO ON / OFF
       ------------------*/
-    function PiezoONOFF(checkbox) {
-      var statusBuzz;
-      if (checkbox.checked) {
-        statusBuzz = "ON";
-      } else {
-        statusBuzz = "OFF";
-      }
-
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "AdminMQTT",
-        password: "pwd123",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          var buzzPub = new Paho.MQTT.Message(statusBuzz);
-          buzzPub.destinationName = "/piezo";
-          clientPub.send(buzzPub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
+  function PiezoONOFF(checkbox) {
+    var statusBuzz;
+    if (checkbox.checked) {
+      statusBuzz = "ON";
+    } else {
+      statusBuzz = "OFF";
     }
-  </script>
+
+    var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+    var optionsPub = {
+      userName: "AdminMQTT",
+      password: "pwd123",
+      timeout: 3,
+      keepAliveInterval: 30,
+      onSuccess: function () {
+        var buzzPub = new Paho.MQTT.Message(statusBuzz);
+        buzzPub.destinationName = "/piezo";
+        clientPub.send(buzzPub);
+        clientPub.disconnect();
+      },
+    };
+    clientPub.connect(optionsPub);
+  }
+</script>
 <script type="text/javascript">
   function getSelectedValue(){
     var selectedValue = document.getElementById("listRoom").value;

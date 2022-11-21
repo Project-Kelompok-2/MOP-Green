@@ -65,7 +65,7 @@ if(isset($_POST['submit'])){
   <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
   <style type="text/css">
     .bg-img{
-      background-image: url("img/bg2.jpg");
+      background-image: url("img/bg3.jpg");
       /*filter: blur(8px);*/
       /*-webkit-filter: blur(8px);*/
       height: 100%;

@@ -29,7 +29,7 @@
 /*			border-radius: 5px;*/
 		}
 		.bg-img{
-			background-image: url("img/bg2.jpg");
+			background-image: url("img/bg3.jpg");
 			/*filter: blur(8px);*/
 			/*-webkit-filter: blur(8px);*/
 			height: 100%;
@@ -73,7 +73,7 @@
 		#about{
 		}
 		.banner-image{
-			background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),url('img/bg2.jpg');
+			background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('img/bg3.jpg');
 			background-size: cover;
 		}
 	</style>
