@@ -247,7 +247,7 @@ $sesLvl = $_SESSION['level'];
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
         <div class="card bg-dark h-100">
           <div class="card-header text-center">
             <h3>Manual Control</h3>
@@ -319,7 +319,7 @@ $sesLvl = $_SESSION['level'];
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
         <div class="card bg-dark h-100">
           <div class="card-header text-center">
             <h3>Pompa Nutrisi</h3>
@@ -350,7 +350,7 @@ $sesLvl = $_SESSION['level'];
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
         <div class="card bg-dark h-100">
           <div class="card-header text-center">
             <h3>Status Akuator</h3>
@@ -439,13 +439,51 @@ $sesLvl = $_SESSION['level'];
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12 mb-2">
         <div class="card bg-dark h-100">
           <div class="card-header text-center">
             <h4>Control Otomatis</h4>
           </div>
           <div class="card-body">
+            <div class="form-check form-switch ">
+              <div class="row">
+                <h5 class="text-start" style="margin-left: -5px;">Otomatis</h5>
 
+                <input class="form-check-input align-items-end" type="checkbox" id="mySwitch12" value="yes" onclick="return confirm('Anda yakin..?')">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <h5 class="text-start">Exhaust ON : Suhu Atas</h5>
+              </div>
+              <div class="col-lg-6 text-end">
+                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <h5 class="text-start">Exhaust OFF : Suhu Bawah</h5>
+              </div>
+              <div class="col-lg-6 text-end">
+                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-lg-6">
+                <h5 class="text-start">Kelembaban Atas - ON</h5>
+              </div>
+              <div class="col-lg-6 text-end">
+                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <h5 class="text-start">Kelembaban Bawah - ON</h5>
+              </div>
+              <div class="col-lg-6 text-end">
+                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              </div>
+            </div>
           </div>
         </div>
       </div>

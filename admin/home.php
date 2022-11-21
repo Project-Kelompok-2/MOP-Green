@@ -1,8 +1,24 @@
 <?php 
 require("../koneksi.php");
+// require("config.php");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $data = json_decode(file_get_contents('php://input'), true);
+  // var_dump($data);
+  // die();
+  if (mysqli_connect_errno()) {
+    echo "Koneksi Gagal :".mysqli_connect_error();
+  }
+  $temp = $data["temp"];
+  $hum = $data["humadity"];
+  $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp', '$hum', '$hum')";
+    mysqli_query($koneksi, $sql);
+  // result
+     header('Content-type: application/json');
+     echo json_encode([]);
+     die();
+   }
 
 session_start();
-
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
   header('Location:../login.php');
@@ -10,6 +26,8 @@ if(!isset($_SESSION['id'])){
 $sesID = $_SESSION['id'];
 $sesName = $_SESSION['username'];
 $sesLvl = $_SESSION['level'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -279,9 +297,7 @@ id="sidebar"
 <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 <!-- Paho MQTT Client -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="../canvasjs.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
   function refreshTime() {
@@ -297,7 +313,7 @@ id="sidebar"
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-    var host = "20.20.0.252";
+    var host = "20.20.0.245";
     var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
@@ -306,8 +322,7 @@ id="sidebar"
 
     // Menjalin koneksi antara client dan message broker
     client.onConnectionLost = function (responseObject) {
-      document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Putus - " + responseObject
-        .errorMessage + "<br/>";
+      document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Putus - " + responseObject+errorMessage + "<br/>";
     };
 
     // variabel global data sensor IoT Development Board
@@ -321,31 +336,82 @@ id="sidebar"
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
     client.onMessageArrived = function (message) {
-      if (message.destinationName == "ldr") {
-        ldr = message.payloadString;
-      } else if (message.destinationName == "sr04") {
-        sr04 = message.payloadString; 
-      // else if (message.destinationName == "dht") {
-      //  var dht = JSON.parse(message.payloadString);
-      //  humi = dht.kelembaban;
-      //  temp = dht.suhu;
-      } else if (message.destinationName == "temp") {
-        temp = message.payloadString;
-      } else if (message.destinationName == "humadity") {
-        humadity = message.payloadString;
+      console.log(message)
+      if (message.destinationName == "sensor") {
+               console.log(message.payloadString)
+         const data = JSON.parse(message.payloadString)
+         humadity = data["humadity"]
+         temp = data["temp"]
       }
+      // if (message.destinationName == "ldr") {
+      //  ldr = message.payloadString;
+      // } else if (message.destinationName == "sr04") {
+      //  sr04 = message.payloadString; 
+      // // else if (message.destinationName == "dht") {
+      // //   var dht = JSON.parse(message.payloadString);
+      // //   humi = dht.kelembaban;
+      // //   temp = dht.suhu;
+      // } else if (message.destinationName == "temp") {
+      //  temp = message.payloadString;
+        
+        
+      // } else if (message.destinationName == "humadity") {
+      //  humadity = message.payloadString;
+      // }
       
-      else if (message.destinationName == "/remoteir") {
-        keypad = message.payloadString;
-      }
+      // else if (message.destinationName == "/remoteir") {
+      //  keypad = message.payloadString;
+       
 
       document.getElementById("hitTEMP").innerHTML = temp + " °C";
-      document.getElementById("hitHUM").innerHTML = humadity + " H";
+      document.getElementById("hitHUM").innerHTML = humadity + " HR";
       document.getElementById("hitLDR").innerHTML = ldr + " Lux";
       document.getElementById("hitSR04").innerHTML = sr04 + " cm";
       document.getElementById("kodekeypad").innerHTML = keypad;
-    };
+      //document.write(temp);
+      console.log(temp);
+      //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
+      //now = {"temp&humadity": [
+      //{"temp": "25", "humadity": "45"},
+      //{"temp": "26", "humadity": "44"}
+        //]};
+      //var x=2; var y='am';
+      //k={"temp":"'+temp+'","humadity":"'+humadity+'"};
+      //now.events.push(k);
+      //console.log(now);
+      //JSONObject.temp = temp;
+      var obj = {"temp":temp, "humadity":humadity};
+      console.log(obj);
+      //const data = { username: 'example' };
 
+            fetch('home.php', {
+              method: 'POST', // or 'PUT'
+            //   headers: {
+            //     'Content-Type': 'application/json',
+            //   },
+              body: JSON.stringify(obj),
+            })+then((response) => response.json())+then((data) => {
+                console.log('Success:', data);
+              })
+            //   .catch((error) => {
+            //     console.error('Error:', error);
+            //   });
+      //require('fs').writeFile('file.json', JSON.stringify(obj), (error) => {
+              //    if (error) {
+                //      throw error;
+                  // }
+              // });
+        //var datas = obj;
+        //var txtFile = "/tmp/test.txt";
+              //var file = new File(txtFile,"write");
+              //var datas = JSON.stringify(JsonExport);
+
+              //log("opening file...");
+              //file.open(); 
+              //log("writing file..");
+              //file.writeline(datas);
+              //file.close();
+            };
     // Option mqtt dengan mode subscribe dan qos diset 1
     var options = {
       timeout: 60,
@@ -355,6 +421,9 @@ id="sidebar"
         client.subscribe("temp", {
           qos: 1
         });client.subscribe("humadity", {
+          qos: 1
+        });
+        client.subscribe("sensor", {
           qos: 1
         });
         client.subscribe("ldr", {
@@ -665,6 +734,7 @@ id="sidebar"
       var ctxSR04 = document.getElementById('chartUltrasonic').getContext('2d');
       window.chartUltrasonic = new Chart(ctxSR04, configSR04);
     };
+    
   </script>
 
   <script>
@@ -853,7 +923,7 @@ id="sidebar"
       //------------------------------------------
       setInterval(function () {
         var valuetemp = Math.round(temp);
-        var valuehumi = Math.round(humi);
+        var valuehumi = Math.round(humadity);
 
         var animationtemp = new am4core.Animation(handtemp, {
           property: "value",
