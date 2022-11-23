@@ -200,7 +200,7 @@ $sesLvl = $_SESSION['level'];
 
           <!-- Modal body -->
           <div class="modal-body">
-            <form onsubmit="return validate();" action="manage_user.php" method="POST">
+            <form onsubmit="return validate();" action="proses_insert_user.php" method="POST">
               <div class="row">
 
                 <div class="col">
@@ -503,23 +503,6 @@ if(isset($_POST["update"])){
   $userPass = $_POST['txt_password'];
   $query = mysqli_query($koneksi, "UPDATE user_detail SET nama_depan='$userFN', nama_belakang='$userLN', asal_institusi='$userAsalInstitusi', kegiatan='$userKegiatan', email='$userEmail', username='$username', password='$userPass' WHERE id='$userId'");
   echo '<script>window.location.href = "manage_user.php"</script>';
-}
-?>
-<?php
-
-if (isset($_POST['tmbh'])) {
-  $userFN = $_POST['txt_nama_depan'];
-  $userLN = $_POST['txt_nama_belakang'];
-  $userAsalInstitusi = $_POST['txt_asal_institusi'];
-  $userKegiatan = $_POST['txt_kegiatan'];
-  $username = $_POST['txt_username'];
-  $userEmail = $_POST['txt_email'];
-  $userPass = $_POST['txt_password'];
-
-
-  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$username', '$userPass', 2)";
-  $result = mysqli_query($koneksi, $query);
-  header('location:manage_user.php');
 }
 ?>
 </html>

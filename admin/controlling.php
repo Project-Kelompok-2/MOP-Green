@@ -338,7 +338,7 @@ $sesLvl = $_SESSION['level'];
             </div>
             <div class="row align-items-center text-center">
               <h5 class="text-center">Nutrisi 2</h5>
-              <div class="water2"></div>
+              <div class="water2 text-center"></div>
             </div>
             <div class="form-check form-switch">
               <div class="row">
@@ -550,7 +550,7 @@ $sesLvl = $_SESSION['level'];
     targetRange: 70
   });
   setTimeout(function() {
-    $(".water2").createWaterBall("updateRange", 100);
+    $(".water2").createWaterBall("updateRange", 20);
   }, 1000);
   const switch10 = document.getElementById("mySwitch10");
   const switch11 = document.getElementById("mySwitch11");
