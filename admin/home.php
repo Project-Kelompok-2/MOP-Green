@@ -10,7 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   $temp = $data["temp1"];
   $hum = $data["humadity1"];
-  $sql = "INSERT INTO data_sensor (temp1, hum1) VALUES ('$temp', '$hum')";
+  $temp2 = $data["temp2"];
+  $hum2 = $data["humadity2"];
+
+  $sql = "INSERT INTO data_sensor (temp1, hum1, temp2, hum2) VALUES ('$temp', '$hum', '$temp2', '$hum2')";
   mysqli_query($koneksi, $sql);
   // result
   header('Content-type: application/json');
@@ -172,16 +175,24 @@ id="sidebar"
         <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
-    <div class="card col-lg-3 col-md-3 col-sm-3 bg-dark">
+    <div class="card col-lg-7 col-md-7 col-sm-7 bg-dark">
       <div class="card-body">
         <div class="row text-white">
-          <div class="col-md-6 col-sm-6 col-12 sht">
-            <strong>Suhu</strong>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
+            <strong>Suhu 1</strong>
             <h3 id="hitTEMP">&deg;</h3>
           </div>
-          <div class="col-md-6 col-sm-6 col-12 klt">
-            <strong>Kelembapan</strong>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12 klt">
+            <strong>Kelembapan 1</strong>
             <h3 id="hitHUM"> <span>HR</span></h3>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
+            <strong>Suhu 2</strong>
+            <h3 id="hitTEMP2">&deg;</h3>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12 klt">
+            <strong>Kelembapan 2</strong>
+            <h3 id="hitHUM2"> <span>HR</span></h3>
           </div>
         </div>
       </div>
@@ -335,6 +346,8 @@ id="sidebar"
      const data = JSON.parse(message.payloadString)
      humadity1 = data["humadity1"]
      temp1 = data["temp1"]
+     humadity2 = data["humadity2"]
+     temp2 = data["temp2"]
    }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
@@ -358,6 +371,8 @@ id="sidebar"
 
    document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
    document.getElementById("hitHUM").innerHTML = humadity1 + " HR";
+   document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
+   document.getElementById("hitHUM2").innerHTML = humadity2 + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -370,7 +385,7 @@ id="sidebar"
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-   var obj = {"temp1":temp1, "humadity1":humadity1};
+   var obj = {"temp1":temp1, "humadity1":humadity1,"temp2":temp2, "humadity2":humadity2};
    console.log(obj);
       //const data = { username: 'example' };
 
