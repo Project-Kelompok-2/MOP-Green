@@ -402,7 +402,11 @@ $sesLvl = $_SESSION['level'];
                             </div>
                             <div class="mt-4 mb-0">
                               <div class="d-grid">
+<<<<<<< HEAD
                                 <button type="submit" name="update" class="btn btn-primary btn-block">
+=======
+                                <button type="submit" name="tmbh" class="btn btn-primary btn-block">
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
                                   Confirm
                                 </button>
                               </div>

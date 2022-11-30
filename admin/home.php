@@ -45,6 +45,7 @@ $sesLvl = $_SESSION['level'];
   <link rel="icon" href="../img/logo2.png" type="image/x-icon" />
   <title>MOP Green | Home Page</title>
   <style type="text/css">
+<<<<<<< HEAD
     .sht h5{
       color: #3751FF;
       font-weight: bold;
@@ -53,6 +54,8 @@ $sesLvl = $_SESSION['level'];
       color: #FF0000;
       font-weight: bold;
     }
+=======
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
     .sht h3{
       color: #3751FF;
       font-weight: bold;
@@ -259,6 +262,7 @@ id="sidebar"
           <!-- <span class="me-2"><i class="bi bi-speedometer"></i></span> -->
           <h4 class="text-center" style="margin-bottom: -4px; font-weight: bold;">TODAY</h4>
         </div>
+<<<<<<< HEAD
         <?php 
         $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(temp2), max(hum1) as hum1max, max(hum2), avg(temp1) as temp1avg, avg(temp2), avg(hum1) as hum1avg, avg(hum2), min(temp1) as temp1min, min(temp2), min(hum1) as hum1min, min(hum2) FROM data_sensor WHERE weekday(waktu)=weekday(current_date)");
         //weekday(waktu)=weekday(current_date)
@@ -271,36 +275,62 @@ id="sidebar"
         // $row2 = $query->fetch_assoc();
         // $hum1avg[''] = isset($row2['hum1avg']) ? $row2['hum1avg'] : '';
         ?>
+=======
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
         <div class="card-body">
           <div class="row">
             <div class="col-md-6 text-center sht">
               <h7>Suhu Tertinggi</h7>
+<<<<<<< HEAD
               <h5><?php echo max($temp1max); ?>&deg;</h5>
             </div>
             <div class="col-md-6 text-center klt">
               <h7>Kelembapan Tertinggi</h7>
               <h5><?php echo max($hum1max); ?> <span>HR</span></h5>
+=======
+              <h3>&deg;</h3>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Kelembapan Tertinggi</h7>
+              <h3>51 <span>HR</span></h3>
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 text-center sht">
               <h7>Suhu Terendah</h7>
+<<<<<<< HEAD
               <h5><?php echo min($temp1min); ?>&deg;</h5>
             </div>
             <div class="col-md-6 text-center klt">
               <h7>Kelembapan Terendah</h7>
               <h5><?php echo min($hum1min); ?> <span>HR</span></h5>
+=======
+              <h3>51&deg;</h3>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Kelembapan Terendah</h7>
+              <h3>51 <span>HR</span></h3>
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 text-center sht">
               <h7>Rata - Rata Suhu</h7>
+<<<<<<< HEAD
               <h5><?php echo $row['temp1avg']; ?>&deg;</h5>
             </div>
             <div class="col-md-6 text-center klt">
               <h7>Rata - Rata Kelembapan</h7>
               <h5>
                 <?php echo $row['hum1avg'];?> <span>HR</span></h5>
+=======
+              <h3>51&deg;</h3>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Rata - Rata Kelembapan</h7>
+              <h3>51 <span>HR</span></h3>
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
             </div>
           </div>
         </div>

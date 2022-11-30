@@ -160,7 +160,11 @@ $sesLvl = $_SESSION['level'];
 <main class="mt-5 pt-3">
   <div class="container-fluid">
     <div class="row">
+<<<<<<< HEAD
       <div class="col-md-6 mb-2">
+=======
+      <div class="col-md-6">
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
         <h4 class="text-white">Log View</h4>
       </div>
       <div class="col-md-6">
@@ -181,7 +185,11 @@ $sesLvl = $_SESSION['level'];
                   <strong>Suhu</strong>
                 </p>
                 <div class="chart">                      
+<<<<<<< HEAD
                   <canvas id="chartTEMP" height="200" style="height: 250px;"></canvas>            
+=======
+                  <canvas id="chartTEMP" height="200" style="height: 200px;"></canvas>            
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
                 </div>                    
               </div>
               <div class="col-sm-6">
@@ -189,7 +197,11 @@ $sesLvl = $_SESSION['level'];
                   <strong>Kelembapan</strong>
                 </p>
                 <div class="chart">                      
+<<<<<<< HEAD
                   <canvas id="chartHUM" height="200" style="height: 250px;"></canvas>           
+=======
+                  <canvas id="chartHUM" height="200" style="height: 200px;"></canvas>           
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
                 </div>                    
               </div>
             </div>
@@ -217,15 +229,22 @@ $sesLvl = $_SESSION['level'];
               </div>
             </div>
             <br>
+<<<<<<< HEAD
             <form method="post">
               
             
+=======
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
             <div class="row">
               <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                 <h5 class="text-start text-white">From</h5>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+<<<<<<< HEAD
                 <input type="date" class="form-control" name="date1" style="cursor: pointer;">
+=======
+                <input type="date" class="form-control" style="cursor: pointer;">
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
               </div>
             </div>
             <br>
@@ -234,12 +253,17 @@ $sesLvl = $_SESSION['level'];
                 <h5 class="text-start text-white">To</h5>
               </div>
               <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+<<<<<<< HEAD
                 <input type="date" class="form-control" name="date2" style="cursor: pointer;">
+=======
+                <input type="date" class="form-control" style="cursor: pointer;">
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
               </div>
             </div>
             <br>
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+<<<<<<< HEAD
                 <button type="submit" class="btn btn-primary text-light" name="button" style="cursor: pointer; ">Button</button>
               </div>
             </div>
@@ -261,6 +285,11 @@ $sesLvl = $_SESSION['level'];
             } 
             ?>
 
+=======
+                <input type="submit" class="btn btn-primary text-light" name="" style="cursor: pointer; " value="BUTTON">
+              </div>
+            </div>
+>>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
           </div>
         </div>
       </div>
