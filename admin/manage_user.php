@@ -5,10 +5,11 @@ session_start();
 
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
-  header('Location:../index.php');
+  header('Location:../login.php');
 }
 $sesID = $_SESSION['id'];
-$sesName = $_SESSION['username'];
+$sesFN = $_SESSION['nama_depan'];
+$sesLN = $_SESSION['nama_belakang'];
 $sesLvl = $_SESSION['level'];
 ?>
 
@@ -101,7 +102,7 @@ $sesLvl = $_SESSION['level'];
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >
-                <h8><?=$sesName?></h8>
+                <h8><?=$sesFN;?> <?=$sesLN;?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
@@ -229,11 +230,6 @@ $sesLvl = $_SESSION['level'];
               </div>
 
               <div class="form-outline form-white mb-4">
-                <label class="form-label" for="typeUsername">Username</label>
-                <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
-              </div>
-
-              <div class="form-outline form-white mb-4">
                 <label class="form-label" for="typeEmailX">Email</label>
                 <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" required />
               </div>
@@ -284,7 +280,6 @@ $sesLvl = $_SESSION['level'];
                   <th>Asal Institusi</th>
                   <th>Kegiatan</th>
                   <th>Email</th>
-                  <th>Username</th>
                   <th>Password</th>
                   <th>Aksi</th>
                 </tr>
@@ -310,7 +305,6 @@ $sesLvl = $_SESSION['level'];
                 $asalInstitusi = $row['asal_institusi'];
                 $kegiatan = $row['kegiatan'];
                 $email = $row['email'];
-                $username = $row['username'];
                 $password = $row['password'];
 
                 ?>
@@ -322,7 +316,6 @@ $sesLvl = $_SESSION['level'];
                     <td><?php echo $asalInstitusi; ?></td>
                     <td><?php echo $kegiatan; ?></td>
                     <td><?php echo $email; ?></td>
-                    <td><?php echo $username; ?></td>
                     <td><input class="inpt-pass text-center" id="inpt-pass" type="password" value="<?php echo $password; ?>" disabled></input></td>
                     <td>
                       <div class="row">
@@ -382,11 +375,6 @@ $sesLvl = $_SESSION['level'];
                             </div>
 
                             <div class="form-outline form-white mb-4">
-                              <label class="form-label" for="typeUsername">Username</label>
-                              <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" value="<?=$row['username'];?>" required />
-                            </div>
-
-                            <div class="form-outline form-white mb-4">
                               <label class="form-label" for="typeEmailX">Email</label>
                               <input type="email" id="typeEmailX" name="txt_email" class="form-control form-control-lg" value="<?=$row['email'];?>" required />
                             </div>
@@ -402,11 +390,7 @@ $sesLvl = $_SESSION['level'];
                             </div>
                             <div class="mt-4 mb-0">
                               <div class="d-grid">
-<<<<<<< HEAD
                                 <button type="submit" name="update" class="btn btn-primary btn-block">
-=======
-                                <button type="submit" name="tmbh" class="btn btn-primary btn-block">
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
                                   Confirm
                                 </button>
                               </div>
@@ -502,10 +486,9 @@ if(isset($_POST["update"])){
   $userLN = $_POST['txt_nama_belakang'];
   $userAsalInstitusi = $_POST['txt_asal_institusi'];
   $userKegiatan = $_POST['txt_kegiatan'];
-  $username = $_POST['txt_username'];
   $userEmail = $_POST['txt_email'];
   $userPass = $_POST['txt_password'];
-  $query = mysqli_query($koneksi, "UPDATE user_detail SET nama_depan='$userFN', nama_belakang='$userLN', asal_institusi='$userAsalInstitusi', kegiatan='$userKegiatan', email='$userEmail', username='$username', password='$userPass' WHERE id='$userId'");
+  $query = mysqli_query($koneksi, "UPDATE user_detail SET nama_depan='$userFN', nama_belakang='$userLN', asal_institusi='$userAsalInstitusi', kegiatan='$userKegiatan', email='$userEmail', password='$userPass' WHERE id='$userId'");
   echo '<script>window.location.href = "manage_user.php"</script>';
 }
 ?>

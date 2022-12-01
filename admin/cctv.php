@@ -5,10 +5,11 @@ session_start();
 
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
-  header('Location:../index.php');
+  header('Location:../login.php');
 }
 $sesID = $_SESSION['id'];
-$sesName = $_SESSION['username'];
+$sesFN = $_SESSION['nama_depan'];
+$sesLN = $_SESSION['nama_belakang'];
 $sesLvl = $_SESSION['level'];
 ?>
 
@@ -86,7 +87,7 @@ $sesLvl = $_SESSION['level'];
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >
-                <h8><?=$sesName?></h8>
+                <h8><?=$sesFN;?> <?=$sesLN;?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>

@@ -6,10 +6,11 @@ session_start();
 
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
-  header('Location:../index.php');
+  header('Location:../login.php');
 }
 $sesID = $_SESSION['id'];
-$sesName = $_SESSION['username'];
+$sesFN = $_SESSION['nama_depan'];
+$sesLN = $_SESSION['nama_belakang'];
 $sesLvl = $_SESSION['level'];
 ?>
 
@@ -27,7 +28,7 @@ $sesLvl = $_SESSION['level'];
   <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="../img/logo2.png" type="image/x-icon" />
-  <title>MOP Green | Map Page</title>
+  <title>MOP Green | Controlling Page</title>
   <style type="text/css">
     main .card {
       color: white;
@@ -106,11 +107,7 @@ $sesLvl = $_SESSION['level'];
     .water1{
       width: 130px;
       height: 130px;
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
     }
     .water2{
       width: 130px;
@@ -174,7 +171,7 @@ $sesLvl = $_SESSION['level'];
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >
-                <h8><?=$sesName?></h8>
+                <h8><?=$sesFN;?> <?=$sesLN;?></h8>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="../logout.php" onclick="return confirm('Anda yakin ingin logout?');">Logout</a></li>
@@ -281,11 +278,7 @@ $sesLvl = $_SESSION['level'];
             </div>
             <div class="form-check form-switch">
               <div class="row">
-<<<<<<< HEAD
        <!-- Switch fan 1 -->
-=======
-			 <!-- Switch fan 1 -->
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
                 <h6 class="text-start">Exhaust Fan 1</h6>
                 <input class="form-check-input align" type="checkbox" id="mySwitch4" value="yes" onclick="return confirm('Anda yakin..?')">
               </div>
@@ -587,7 +580,6 @@ $sesLvl = $_SESSION['level'];
 
   switch10.addEventListener("change",()=>{
     var statusPompaN1 = "0"; 
-<<<<<<< HEAD
 
       // <!-- if (checkbox.checked) {
       // <!-- statusFan1 = "0";
@@ -677,97 +669,6 @@ $sesLvl = $_SESSION['level'];
     }
 
 
-=======
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch10.checked == true){    
-	    statusPompaN1 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-					PompaN1Pub.destinationName = "PompaN1";
-					clientPub.send(PompaN1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak8.style.backgroundColor="green";
-		}if (switch10.checked == false){    
-	    statusPompaN1 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-					PompaN1Pub.destinationName = "PompaN1";
-					clientPub.send(PompaN1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak8.style.backgroundColor="red";
-		}
-   
-    
-  })
-  switch11.addEventListener("change",()=>{
-    var statusPompaN2 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch11.checked == true){    
-	    statusPompaN2 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-					PompaN2Pub.destinationName = "PompaN2";
-					clientPub.send(PompaN2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak9.style.backgroundColor="green";
-		}if (switch11.checked == false){    
-	    statusPompaN2 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-					PompaN2Pub.destinationName = "PompaN2";
-					clientPub.send(PompaN2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak9.style.backgroundColor="red";
-		}
-   
-    
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
   })
   // if(switch11==true)
   //   setTimeout(function() {
@@ -930,7 +831,6 @@ $sesLvl = $_SESSION['level'];
 
   switch2.addEventListener("change",()=>{
     var statusFreshWater = "0"; 
-<<<<<<< HEAD
 
       // <!-- if (checkbox.checked) {
       // <!-- statusFan1 = "0";
@@ -1387,464 +1287,6 @@ $sesLvl = $_SESSION['level'];
 
   // })
 
-=======
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch2.checked == true){    
-	    statusFreshWater = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					FreshWaterPub = new Paho.MQTT.Message(statusFreshWater);
-					FreshWaterPub.destinationName = "FreshWater";
-					clientPub.send(FreshWaterPub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak10.style.backgroundColor="green";
-		}if (switch2.checked == false){    
-	    statusFreshWater = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					FreshWaterPub = new Paho.MQTT.Message(statusFreshWater);
-					FreshWaterPub.destinationName = "FreshWater";
-					clientPub.send(FreshWaterPub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak10.style.backgroundColor="red";
-		}
-    
-    
-  })
-  switch3.addEventListener("change",()=>{
-    var statusPompaMisting = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch3.checked == true){    
-	    statusPompaMisting = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaMistingPub = new Paho.MQTT.Message(statusPompaMisting);
-					PompaMistingPub.destinationName = "PompaMisting";
-					clientPub.send(PompaMistingPub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak7.style.backgroundColor="green";
-		}if (switch3.checked == false){    
-	    statusPompaMisting = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					PompaMistingPub = new Paho.MQTT.Message(statusPompaMisting);
-					PompaMistingPub.destinationName = "PompaMisting";
-					clientPub.send(PompaMistingPub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak7.style.backgroundColor="red";
-		}
-    
-    
-  })
-  switch4.addEventListener("change",()=>{
-	var statusFan1 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-  if (switch4.checked == true){    
-	    statusFan1 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan1Pub = new Paho.MQTT.Message(statusFan1);
-					Fan1Pub.destinationName = "Fan1";
-					clientPub.send(Fan1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak.style.backgroundColor="green";
-		}if (switch4.checked == false){    
-	    statusFan1 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan1Pub = new Paho.MQTT.Message(statusFan1);
-					Fan1Pub.destinationName = "Fan1";
-					clientPub.send(Fan1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak.style.backgroundColor="red";
-		}
-    
-  })
-  switch5.addEventListener("change",()=>{
-    var statusFan2 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch5.checked == true){    
-	    statusFan2 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan2Pub = new Paho.MQTT.Message(statusFan2);
-					Fan2Pub.destinationName = "Fan2";
-					clientPub.send(Fan2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak2.style.backgroundColor="green";
-		}if (switch5.checked == false){    
-	    statusFan2 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan2Pub = new Paho.MQTT.Message(statusFan2);
-					Fan2Pub.destinationName = "Fan2";
-					clientPub.send(Fan2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak2.style.backgroundColor="red";
-		}
-  })
-  switch6.addEventListener("change",()=>{
-    var statusFan3 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch6.checked == true){    
-	    statusFan3 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan3Pub = new Paho.MQTT.Message(statusFan3);
-					Fan3Pub.destinationName = "Fan3";
-					clientPub.send(Fan3Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak3.style.backgroundColor="green";
-		}if (switch6.checked == false){    
-	    statusFan3 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan3Pub = new Paho.MQTT.Message(statusFan3);
-					Fan3Pub.destinationName = "Fan3";
-					clientPub.send(Fan3Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak3.style.backgroundColor="red";
-		}
-   
-    
-  })
-  switch7.addEventListener("change",()=>{
-    var statusFan4 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch7.checked == true){    
-	    statusFan4 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan4Pub = new Paho.MQTT.Message(statusFan4);
-					Fan4Pub.destinationName = "Fan4";
-					clientPub.send(Fan4Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak4.style.backgroundColor="green";
-		}if (switch7.checked == false){    
-	    statusFan4 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					Fan4Pub = new Paho.MQTT.Message(statusFan4);
-					Fan4Pub.destinationName = "Fan4";
-					clientPub.send(Fan4Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak4.style.backgroundColor="red";
-		}
-   
-    
-  })
-  switch8.addEventListener("change",()=>{
-    var statusCoolPad1 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch8.checked == true){    
-	    statusCoolPad1 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					CoolPad1Pub = new Paho.MQTT.Message(statusCoolPad1);
-					CoolPad1Pub.destinationName = "CoolPad1";
-					clientPub.send(CoolPad1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak5.style.backgroundColor="green";
-		}if (switch8.checked == false){    
-	    statusCoolPad1 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					CoolPad1Pub = new Paho.MQTT.Message(statusCoolPad1);
-					CoolPad1Pub.destinationName = "CoolPad1";
-					clientPub.send(CoolPad1Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak5.style.backgroundColor="red";
-		}
-    
-    
-  })
-  switch9.addEventListener("change",()=>{
-    var statusCoolPad2 = "0"; 
-  
-			// <!-- if (checkbox.checked) {
-			// <!--	statusFan1 = "0";
-			// <!--} else {
-			// <!--	statusFan1 = "1";
-			// <!--} -->
-    if (switch9.checked == true){    
-	    statusCoolPad2 = "1";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					CoolPad2Pub = new Paho.MQTT.Message(statusCoolPad2);
-					CoolPad2Pub.destinationName = "CoolPad2";
-					clientPub.send(CoolPad2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak6.style.backgroundColor="green";
-		}if (switch9.checked == false){    
-	    statusCoolPad2 = "0";
-			var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-			var optionsPub = {
-				userName: "",
-				password: "",
-				timeout: 3,
-				keepAliveInterval: 30,
-				onSuccess: function () {
-					CoolPad2Pub = new Paho.MQTT.Message(statusCoolPad2);
-					CoolPad2Pub.destinationName = "CoolPad2";
-					clientPub.send(CoolPad2Pub);
-					clientPub.disconnect();
-				},
-			};
-			clientPub.connect(optionsPub);
-			kotak6.style.backgroundColor="red";
-		}
-    
-    
-  })
-  // switch10.addEventListener("change",()=>{
-  //   var statusPompaN1 = "0"; 
-  
-	// 		// <!-- if (checkbox.checked) {
-	// 		// <!--	statusFan1 = "0";
-	// 		// <!--} else {
-	// 		// <!--	statusFan1 = "1";
-	// 		// <!--} -->
-  //   if (switch10.checked == true){    
-	//     statusPompaN1 = "1";
-	// 		var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-	// 		var optionsPub = {
-	// 			userName: "",
-	// 			password: "",
-	// 			timeout: 3,
-	// 			keepAliveInterval: 30,
-	// 			onSuccess: function () {
-	// 				PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-	// 				PompaN1Pub.destinationName = "PompaN1";
-	// 				clientPub.send(PompaN1Pub);
-	// 				clientPub.disconnect();
-	// 			},
-	// 		};
-	// 		clientPub.connect(optionsPub);
-	// 		kotak8.style.backgroundColor="green";
-	// 	}if (switch10.checked == false){    
-	//     statusPompaN1 = "0";
-	// 		var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-	// 		var optionsPub = {
-	// 			userName: "",
-	// 			password: "",
-	// 			timeout: 3,
-	// 			keepAliveInterval: 30,
-	// 			onSuccess: function () {
-	// 				PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-	// 				PompaN1Pub.destinationName = "PompaN1";
-	// 				clientPub.send(PompaN1Pub);
-	// 				clientPub.disconnect();
-	// 			},
-	// 		};
-	// 		clientPub.connect(optionsPub);
-	// 		kotak8.style.backgroundColor="red";
-	// 	}
-   
-    
-  // })
-  // switch11.addEventListener("change",()=>{
-  //   var statusPompaN2 = "0"; 
-  
-	// 		// <!-- if (checkbox.checked) {
-	// 		// <!--	statusFan1 = "0";
-	// 		// <!--} else {
-	// 		// <!--	statusFan1 = "1";
-	// 		// <!--} -->
-  //   if (switch11.checked == true){    
-	//     statusPompaN2 = "1";
-	// 		var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-	// 		var optionsPub = {
-	// 			userName: "",
-	// 			password: "",
-	// 			timeout: 3,
-	// 			keepAliveInterval: 30,
-	// 			onSuccess: function () {
-	// 				PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-	// 				PompaN2Pub.destinationName = "PompaN2";
-	// 				clientPub.send(PompaN2Pub);
-	// 				clientPub.disconnect();
-	// 			},
-	// 		};
-	// 		clientPub.connect(optionsPub);
-	// 		kotak9.style.backgroundColor="green";
-	// 	}if (switch11.checked == false){    
-	//     statusPompaN2 = "0";
-	// 		var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-	// 		var optionsPub = {
-	// 			userName: "",
-	// 			password: "",
-	// 			timeout: 3,
-	// 			keepAliveInterval: 30,
-	// 			onSuccess: function () {
-	// 				PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-	// 				PompaN2Pub.destinationName = "PompaN2";
-	// 				clientPub.send(PompaN2Pub);
-	// 				clientPub.disconnect();
-	// 			},
-	// 		};
-	// 		clientPub.connect(optionsPub);
-	// 		kotak9.style.backgroundColor="red";
-	// 	}
-   
-    
-  // })
-  
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 </script>
 </body>
 </html>

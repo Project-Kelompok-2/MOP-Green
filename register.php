@@ -6,12 +6,11 @@ if (isset($_POST['register'])) {
   $userLN = $_POST['txt_nama_belakang'];
   $userAsalInstitusi = $_POST['txt_asal_institusi'];
   $userKegiatan = $_POST['txt_kegiatan'];
-  $username = $_POST['txt_username'];
   $userEmail = $_POST['txt_email'];
   $userPass = $_POST['txt_password'];
 
 
-  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$username', '$userPass', 2)";
+  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
   $result = mysqli_query($koneksi, $query);
   header('location:login.php');
 }
@@ -96,11 +95,6 @@ if (isset($_POST['register'])) {
                 <div class="form-outline form-white mb-4">
                   <input type="text" id="typeKegiatan" name="txt_kegiatan" class="form-control form-control-lg" required />
                   <label class="form-label" for="typeUsername">Kegiatan</label>
-                </div>
-
-                <div class="form-outline form-white mb-4">
-                  <input type="text" id="typeUsername" name="txt_username" class="form-control form-control-lg" required />
-                  <label class="form-label" for="typeUsername">Username</label>
                 </div>
 
                 <div class="form-outline form-white mb-4">

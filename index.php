@@ -133,11 +133,7 @@
 		<div class="container">
 		<div class="row text-center text-white">
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-<<<<<<< HEAD
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
-=======
-				<img class="rounded-circle" src="img/bg.jpg" height="100" width="100">
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 				<h2>Akbar Ramadhani Firdaus</h2>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -147,13 +143,8 @@
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-<<<<<<< HEAD
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>David Arrozaqi</h2>
-=======
-				<img class="rounded-circle" src="img/bg.jpg" height="100" width="100">
-				<h2>Akbar Ramadhani Firdaus</h2>
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -162,13 +153,8 @@
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-<<<<<<< HEAD
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Restu Fahimuroid</h2>
-=======
-				<img class="rounded-circle" src="img/bg.jpg" height="100" width="100">
-				<h2>Akbar Ramadhani Firdaus</h2>
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -179,13 +165,8 @@
 		</div>
 		<div class="row text-center text-white">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12">
-<<<<<<< HEAD
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Yunanta Dwi Kristanto</h2>
-=======
-				<img class="rounded-circle" src="img/bg.jpg" height="100" width="100">
-				<h2>Akbar Ramadhani Firdaus</h2>
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -193,15 +174,9 @@
 				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			</div>
-<<<<<<< HEAD
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-3">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Khofifah Ainurrohmah</h2>
-=======
-			<div class="col-lg-6 col-md-6 col-sm-12 col-12">
-				<img class="rounded-circle" src="img/bg.jpg" height="100" width="100">
-				<h2>Akbar Ramadhani Firdaus</h2>
->>>>>>> 9f5e9e17948a8f3c4e8e2cb13a0030a4f2853022
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

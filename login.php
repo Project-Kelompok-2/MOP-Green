@@ -18,7 +18,6 @@ if(isset($_POST['submit'])){
       $asalInstitusi = $row['asal_institusi'];
       $kegiatan = $row['kegiatan'];
       $logEmail = $row['email'];
-      $username = $row['username'];
       $password = $row['password'];
       $lvl = $row['level'];
     }
@@ -29,15 +28,14 @@ if(isset($_POST['submit'])){
         $_SESSION['id'] = $id;
         $_SESSION['nama_depan'] = $namaDepan;
         $_SESSION['nama_belakang'] = $namaBelakang;
-        $_SESSION['username'] = $username;
         $_SESSION['level'] = $lvl;
         header('Location:admin/home.php');
       }else{
-        $error = 'user atau password salah!!';
+        setcookie("message","Maaf, Email Atau Password Salah",time()+1);
         header('Location:login.php');
       }
     }else{
-      $error = 'user tidak ditemukan!!';
+      setcookie("message","Maaf, User Tidak Ditemukan",time()+1);
       header('Location:login.php');
     }
   }else{
@@ -84,6 +82,11 @@ if(isset($_POST['submit'])){
       background: white;
       font-weight: bold;
     }
+    .text-error{
+      color: red;
+      font-weight: bold;
+      font-size: 15px;
+    }
   </style>
 </head>
 
@@ -101,15 +104,21 @@ if(isset($_POST['submit'])){
                 <form action="login.php" method="POST">
                   <h3 class="fw-bold mb-2 text-uppercase">Log in to</h3>
                   <h2 class="text-login-mop text-uppercase">MOP Green</h2>
-                  <p class="text-white-50 mb-4">Silahkan Masukkan Email dan Password !</p>
-
+                  <p class="text-white-50 mb-2">Silahkan Masukkan Email dan Password !</p>
+                  <div class="text-error mb-2">
+                    <?php 
+                    if (isset($_COOKIE["message"])) {
+                      echo $_COOKIE["message"];
+                    }
+                    ?>
+                  </div>
                   <div class="form-outline form-white mb-4">
                     <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" required />
                     <label class="form-label" for="typeEmailX">Email</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
-                    
+
                     <!-- <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i> -->
                     <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" required />
                     <label class="form-label" for="typePasswordX">Password</label>
@@ -142,12 +151,12 @@ if(isset($_POST['submit'])){
 
     togglePassword.addEventListener('click', function (e) {
     // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
     // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-  });
-</script>
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
 </body>
 
 </html>
