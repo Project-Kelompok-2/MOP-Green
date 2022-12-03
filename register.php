@@ -9,10 +9,20 @@ if (isset($_POST['register'])) {
   $userEmail = $_POST['txt_email'];
   $userPass = $_POST['txt_password'];
 
+  if (!empty($_POST['txt_email'])) {
+    $query2 = mysqli_query($koneksi, "SELECT * FROM user_detail WHERE email = '$userEmail'");
+    if (mysqli_num_rows($query2)>0) {
+      setcookie("message","Maaf, Email Sudah Pernah Didaftarkan",time()+1);
+      header('location:register.php');
+    }else{
+      $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
+      $result = mysqli_query($koneksi, $query);
+      header('location:login.php');
+    }
+  }
 
-  $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
-  $result = mysqli_query($koneksi, $query);
-  header('location:login.php');
+
+  
 }
 ?>
 <!DOCTYPE html>
@@ -33,7 +43,7 @@ if (isset($_POST['register'])) {
   <link rel="stylesheet" href="css/bootstrap-login-form.min.css" />
   <style type="text/css">
     .bg-img{
-      background-image: url("img/bg2.jpg");
+      background-image: url("img/bg3.jpg");
       /*filter: blur(8px);*/
       /*-webkit-filter: blur(8px);*/
       height: 100%;
@@ -52,6 +62,10 @@ if (isset($_POST['register'])) {
       background: white;
       font-weight: bold;
     }
+    .text-error{
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 
@@ -65,30 +79,36 @@ if (isset($_POST['register'])) {
             <div class="card-body p-5 text-center">
               <img style="margin-left: 3px; height: 130px; width: 140px; margin-top: -20px;" src="img/logo2.png">
               <form onsubmit="return validate();" action="register.php" method="POST">
-                <div class="mb-md-4 mt-md-2">
+                <div class="mb-md-4 mt-md-2 mb2">
                   <h3 class="fw-bold mb-2 text-uppercase">Register to</h3>
                   <h2 class="text-login-mop text-uppercase">MOP Green</h2>
                 </h4>
-
+                <div class="text-error mb-2">
+                  <?php 
+                  if (isset($_COOKIE["message"])) {
+                    echo $_COOKIE["message"];
+                  }
+                  ?>
+                </div>
                 <div class="row">
 
                   <div class="col">
                     <div class="form-outline form-white mb-4">
-                      <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
+                      <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" required />
                       <label class="form-label" for="typeNamaDepan">Nama Depan</label>
                     </div>
                   </div>
 
                   <div class="col">
                     <div class="form-outline form-white mb-4">
-                      <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" />
+                      <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" />
                       <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" required />
+                  <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,50}" title="tidak boleh lebih dari 50 karakter dan hanya huruf" required />
                   <label class="form-label" for="typeUsername">Asal Institusi</label>
                 </div>
 

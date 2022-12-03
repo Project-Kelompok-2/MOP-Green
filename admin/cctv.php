@@ -164,29 +164,31 @@ $sesLvl = $_SESSION['level'];
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
         <div class="card bg-dark">
-          <div class="card-body">
-
+          <div class="card-body text-white">
+            <h3><strong>CCTV 1</strong></h3>
+            <img src="http://20.20.0.235:81/stream" class="img-fluid" width="1600" height="1200">
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
         <div class="card bg-dark">
-          <div class="card-body">
-            
+          <div class="card-body text-white">
+            <h3><strong>CCTV 2</strong></h3>
+            <img src="http://20.20.0.234:81/stream" class="img-fluid" width="1920" height="768">
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
         <div class="card bg-dark">
-          <div class="card-body">
-            
+          <div class="card-body text-white">
+            <h3><strong>CCTV 3</strong></h3>
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
         <div class="card bg-dark">
-          <div class="card-body">
-            
+          <div class="card-body text-white">
+            <h3><strong>CCTV 4</strong></h3>
           </div>
         </div>
       </div>

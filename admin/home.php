@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $temp2 = $data["temp2"];
   $hum2 = $data["humadity2"];
 
-  $sql = "INSERT INTO data_sensor (temp1, hum1, temp2, hum2) VALUES ('$temp', '$hum', '$temp2', '$hum2')";
+  $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp2', '$hum', '$hum2')";
   mysqli_query($koneksi, $sql);
   // result
   header('Content-type: application/json');
@@ -272,43 +272,13 @@ id="sidebar"
         // $row2 = $query->fetch_assoc();
         // $hum1avg[''] = isset($row2['hum1avg']) ? $row2['hum1avg'] : '';
         ?>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6 text-center sht">
-              <h7>Suhu Tertinggi</h7>
-              <h5><?php echo max($temp1max); ?>&deg;</h5>
-            </div>
-            <div class="col-md-6 text-center klt">
-              <h7>Kelembapan Tertinggi</h7>
-              <h5><?php echo max($hum1max); ?> <span>HR</span></h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 text-center sht">
-              <h7>Suhu Terendah</h7>
-              <h5><?php echo min($temp1min); ?>&deg;</h5>
-            </div>
-            <div class="col-md-6 text-center klt">
-              <h7>Kelembapan Terendah</h7>
-              <h5><?php echo min($hum1min); ?> <span>HR</span></h5>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 text-center sht">
-              <h7>Rata - Rata Suhu</h7>
-              <h5><?php echo round($row['temp1avg']); ?>&deg;</h5>
-            </div>
-            <div class="col-md-6 text-center klt">
-              <h7>Rata - Rata Kelembapan</h7>
-              <h5>
-                <?php echo round($row['hum1avg']);?> <span>HR</span></h5>
-            </div>
+        <div class="card-body" id="today">
+          <?php include('today.php'); ?>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </main>
 <script src="js/bootstrap.bundle.min.js"></script>
 <!-- <script src="js/jquery-3.5.1.js"></script>
@@ -316,6 +286,7 @@ id="sidebar"
 <script src="js/dataTables.bootstrap5.min.js"></script> -->
 <!-- <script src="js/script.js"></script> -->
 <!-- Chart timeseries -->
+
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.9.0"></script>
@@ -327,6 +298,22 @@ id="sidebar"
 <!-- Paho MQTT Client -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  function loadXMLDOC() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("today").innerHTML = xhttp.responseText;
+      }
+    };
+    xhttp.open("GET", "today.php", true);
+    http.send();
+  }
+  setInterval(function(){
+    loadXMLDOC();
+  },1000);
+  window.onload = loadXMLDOC;
+</script>
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
   function refreshTime() {
@@ -342,7 +329,7 @@ id="sidebar"
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
+  var host = "10.10.22.41";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
