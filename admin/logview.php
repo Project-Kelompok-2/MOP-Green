@@ -177,20 +177,12 @@ $sesLvl = $_SESSION['level'];
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-12 mb-4">
                 <p class="text-center text-white">
-                  <strong>Suhu</strong>
+                  <strong></strong>
                 </p>
                 <div class="chart">                      
-                  <canvas id="chartTEMP" height="200" style="height: 250px;"></canvas>            
-                </div>                    
-              </div>
-              <div class="col-sm-6">
-                <p class="text-center text-white">
-                  <strong>Kelembapan</strong>
-                </p>
-                <div class="chart">                      
-                  <canvas id="chartHUM" height="200" style="height: 250px;"></canvas>           
+                  <canvas id="chartSS" height="200" style="height: 250px;"></canvas>    
                 </div>                    
               </div>
             </div>
@@ -198,7 +190,7 @@ $sesLvl = $_SESSION['level'];
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-        <div class="card bg-dark h-100">
+        <div class="card bg-dark">
           <div class="card-header text-white">
             <span class="me-2"><i class="bi bi-calendar"></i></span>
             Date Query
@@ -209,59 +201,88 @@ $sesLvl = $_SESSION['level'];
                 <h5 class="text-start text-white">Time Data</h5>
               </div>
               <div class="col-lg-4 col-md-8 col-sm-8 col-8">
-                <select class="btn btn-dark text-start" id="listRoom" onchange="getSelectedValue();">
+                <select class="btn btn-dark text-start" id="listRange" onchange="getSelectedValue();">
                   <option value="yesterday">Yesterday</option>
-                  <option value="last3days">Last 3 Days</option>
-                  <option value="last1week">Last 1 Week</option>
-                  <option value="last1month">Last 1 Month</option>
+                  <option value="last3">Last 3 Days</option>
+                  <option value="last1w">Last 1 Week</option>
+                  <option value="last1m">Last 1 Month</option>
+                  <option value="0">Custom Tanggal</option>
                 </select>
               </div>
             </div>
             <br>
             <form method="post">
-              
-            
-            <div class="row">
-              <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                <h5 class="text-start text-white">From</h5>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                  <h5 class="text-start text-white">From</h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                  <input type="date" class="form-control" id="date1" name="date1" style="cursor: pointer;" onchange="startDate(this)" disabled>
+                </div>
               </div>
-              <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                <input type="date" class="form-control" name="date1" style="cursor: pointer;">
+              <br>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4">
+                  <h5 class="text-start text-white">To</h5>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                  <input type="date" class="form-control" id="date2" name="date2" style="cursor: pointer;" onchange="endDate(this)" disabled>
+                </div>
               </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                <h5 class="text-start text-white">To</h5>
+              <br>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                  <button type="submit" class="btn btn-primary text-light" id="buttons" name="buttons" style="cursor: pointer;">Button</button>
+                </div>
               </div>
-              <div class="col-lg-8 col-md-8 col-sm-8 col-8">
-                <input type="date" class="form-control" name="date2" style="cursor: pointer;">
-              </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-                <button type="submit" class="btn btn-primary text-light" name="button" style="cursor: pointer; ">Button</button>
-              </div>
-            </div>
             </form>
             <?php
-            if (isset($_POST['button'])) {
-              if (isset($_GET['date1']) && isset($_GET['date2'])) {
-                $from = $_GET['date1'];
-                $to = $_GET['date2'];
-                $data = mysqli_query($koneksi, "SELECT * FROM data_sensor WHERE waktu BETWEEN '$from' AND '$to'");
-                if (mysqli_num_rows($data)>0) {
-                  foreach ($data as $key) {
-                    echo 'HALO'.$key['temp1'];
-                  }
-                }else{
-                  echo 'No Record Data';
+            try{
+              $sql = mysqli_query($koneksi, "SELECT * FROM data_sensor");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $t1[] = $row['temp1'];
+                  $h1[] = $row['hum1'];
+                  $waktu[] = $row['waktu'];
                 }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
               }
-            } 
+            }catch(Exception $e){
+              die("error");
+            }
             ?>
-
+            <?php 
+            try{
+              $sql = mysqli_query($koneksi, "SELECT waktu FROM data_sensor ORDER BY waktu desc");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $waktuTerbaru[] = $row['waktu'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
+            <?php 
+            try{
+              $sql = mysqli_query($koneksi, "SELECT waktu FROM data_sensor ORDER BY waktu asc");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $waktuLama[] = $row['waktu'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -274,21 +295,87 @@ $sesLvl = $_SESSION['level'];
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap5.min.js"></script>
 <script src="js/script.js"></script>
-<!-- Date -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<!-- Chart timeseries -->
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.9.0"></script>
-<!-- Chart Speed DHT11 -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>  
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/dataviz.js"></script>  
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-<!-- Paho MQTT Client -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+
+<script>
+  const waktuOutput = <?php echo json_encode($waktu);?>;
+  console.log(waktuOutput);
+
+  const dateChartJS = waktuOutput.map((day, index) => {
+    let dayjs = new Date(day);
+    console.log(dayjs);
+    return dayjs.setHours(0, 0, 0, 0);
+  });
+    // setup 
+  const data = {
+    labels: dateChartJS,
+    datasets: [{
+      label: 'Suhu ',
+      data: <?php echo json_encode($t1);?>,
+      backgroundColor: [
+        'rgba(0, 8, 250, 1)',
+        ],
+      borderColor: [
+        'rgba(0, 8, 250, 1)',
+        ],
+      borderWidth: 2
+    }, {
+      label: ' Kelembaban',
+      data: <?php echo json_encode($h1);?>,
+      backgroundColor: [
+        'rgba(255, 0, 0, 1)',
+        ],
+      borderColor: [
+        'rgba(255, 0, 0, 1)',
+        ],
+      borderWidth: 2
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data,
+    options: {
+      scales: {
+        x: {
+          min: <?php echo json_encode($waktuLama);?>,
+          max: <?php echo json_encode($waktuTerbaru);?>,
+          type: 'time',
+          time: {
+            unit: 'day',
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  };
+
+    // render init block
+  const chartSS = new Chart(
+    document.getElementById('chartSS'),
+    config
+    );
+
+  function startDate(date){
+    const startDatee = new Date(date.value);
+    console.log(startDatee.setHours(0, 0, 0, 0));
+    chartSS.config.options.scales.x.min = startDatee.setHours(0, 0, 0, 0);
+    chartSS.update();
+  }
+  function endDate(date){
+    const endDatee = new Date(date.value);
+    console.log(endDatee.setHours(0, 0, 0, 0));
+    chartSS.config.options.scales.x.max = endDatee.setHours(0, 0, 0, 0);
+    chartSS.update();
+  }
+</script>
+
 <script type="text/javascript">
   $(function() {
     $('#datepicker').datepicker();
@@ -304,293 +391,19 @@ $sesLvl = $_SESSION['level'];
 
   setInterval(refreshTime, 1000);
 </script>
-<script>
-    /*-----------------------------------------------------
-  BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
-  -----------------------------------------------------*/
-    // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
-  var port = 9001;
-
-    // Konstruktor koneksi antara client dan message broker
-  var client = new Paho.MQTT.Client(host, port, "/ws",
-    "myclientid_" + parseInt(Math.random() * 100, 10));
-
-    // Menjalin koneksi antara client dan message broker
-  client.onConnectionLost = function (responseObject) {
-    document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
-  };
-
-    // variabel global data sensor IoT Development Board
-    // website berposisi sebagai subscriber
-  var humadity1 = 0;
-  var temp1 = 0;
-
-    // Mendapatkan payload dari transimisi data IoT Development Board
-    // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-  client.onMessageArrived = function (message) {
-    console.log(message)
-    if (message.destinationName == "sensor") {
-     console.log(message.payloadString)
-     const data = JSON.parse(message.payloadString)
-     humadity1 = data["humadity1"]
-     temp1 = data["temp1"]
-   }
-      // if (message.destinationName == "ldr") {
-      //  ldr = message.payloadString;
-      // } else if (message.destinationName == "sr04") {
-      //  sr04 = message.payloadString; 
-      // // else if (message.destinationName == "dht") {
-      // //   var dht = JSON.parse(message.payloadString);
-      // //   humi = dht.kelembaban;
-      // //   temp = dht.suhu;
-      // } else if (message.destinationName == "temp") {
-      //  temp = message.payloadString;
-
-
-      // } else if (message.destinationName == "humadity") {
-      //  humadity = message.payloadString;
-      // }
-
-      // else if (message.destinationName == "/remoteir") {
-      //  keypad = message.payloadString;
-
-
-   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-   document.getElementById("hitHUM").innerHTML = humadity1 + " HR";
-      //document.write(temp);
-      //console.log(temp);
-      //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
-      //now = {"temp&humadity": [
-      //{"temp": "25", "humadity": "45"},
-      //{"temp": "26", "humadity": "44"}
-        //]};
-      //var x=2; var y='am';
-      //k={"temp":"'+temp+'","humadity":"'+humadity+'"};
-      //now.events.push(k);
-      //console.log(now);
-      //JSONObject.temp = temp;
-   var obj = {"temp1":temp1, "humadity1":humadity1};
-   console.log(obj);
-      //const data = { username: 'example' };
-
-   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
-              method: 'POST', // or 'PUT'
-            //   headers: {
-            //     'Content-Type': 'application/json',
-            //   },
-              body: JSON.stringify(obj),
-            })
-   .then((response) => response.json())
-   .then((data) => {
-    console.log('Success:', data);
-  })
-            //   .catch((error) => {
-            //     console.error('Error:', error);
-            //   });
-      //require('fs').writeFile('file.json', JSON.stringify(obj), (error) => {
-              //    if (error) {
-                //      throw error;
-                  // }
-              // });
-        //var datas = obj;
-        //var txtFile = "/tmp/test.txt";
-              //var file = new File(txtFile,"write");
-              //var datas = JSON.stringify(JsonExport);
-
-              //log("opening file...");
-              //file.open(); 
-              //log("writing file..");
-              //file.writeline(datas);
-              //file.close();
- };
-    // Option mqtt dengan mode subscribe dan qos diset 1
- var options = {
-  timeout: 60,
-  keepAliveInterval: 30,
-  onSuccess: function () {
-    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-    client.subscribe("sensor", {
-      qos: 1
-    });
-  },
-
-  onFailure: function (message) {
-    document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
-  },
-
-  userName: "",
-  password: ""
-};
-
-if (location.protocol == "https:") {
-  options.useSSL = true;
-}
-
-document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-client.connect(options);
-</script>
-
-<script>
-    /*------------------------------------------------------------
-  BAGIAN CHART CANVAS
-  https://nagix.github.io/chartjs-plugin-streaming/latest/
-  ------------------------------------------------------------*/
-    // Enumerasi tipe warna  
-  var chartColors = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-  };
-
-  var color = Chart.helpers.color;
-  var saiki = new Date();
-  var dinoiki = saiki.toString();
-
-    /*--------------------------
-      CHART TEMPERATUR DHT11
-      --------------------------*/
-    // Update data sensor dht11
-  function onRefreshTEMP(chart) {
-    chart.data.datasets[0].data.push({
-      x: Date.now(),
-      y: temp1
-    });
-  }
-
-  var configTEMP = {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: 'Temperatur (°C)',
-        backgroundColor: color(chartColors.red).alpha(0.6).rgbString(),
-        borderColor: chartColors.red,
-        borderWidth: 1,
-        data: []
-      }]
-    },
-
-    options: {
-      title: {
-        display: true,
-        text: dinoiki
-      },
-
-      scales: {
-        xAxes: [{
-          type: 'static',
-          realtime: {
-            duration: 10000,
-            refresh: 1500,
-            delay: 2000,
-            onRefresh: onRefreshTEMP
-          }
-        }],
-
-        yAxes: [{
-          type: 'linear',
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: 'value'
-          }
-        }]
-      },
-
-      tooltips: {
-        mode: 'nearest',
-        intersect: false
-      },
-
-      hover: {
-        mode: 'nearest',
-        intersect: false
-      }
-    }
-  };
-
-    /*--------------------------
-      CHART KELEMBABAN DHT11
-      --------------------------*/
-    // Update data sensor dht11
-  function onRefreshHUM(chart) {
-    chart.data.datasets[0].data.push({
-      x: Date.now(),
-      y: humadity1
-    });
-  }
-
-  var configHUM = {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: 'Kelembaban (H)',
-        backgroundColor: color(chartColors.blue).alpha(0.6).rgbString(),
-        borderColor: chartColors.blue,
-        borderWidth: 1,
-        data: []
-      }]
-    },
-
-    options: {
-      title: {
-        display: true,
-        text: dinoiki
-      },
-
-      scales: {
-        xAxes: [{
-          type: 'static',
-          realtime: {
-            duration: 10000,
-            refresh: 1500,
-            delay: 2000,
-            onRefresh: onRefreshHUM
-          }
-        }],
-
-        yAxes: [{
-          type: 'linear',
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: 'value'
-          }
-        }]
-      },
-
-      tooltips: {
-        mode: 'nearest',
-        intersect: false
-      },
-
-      hover: {
-        mode: 'nearest',
-        intersect: false
-      }
-    }
-  };
-
-    //Onload semua Chart
-  window.onload = function () {
-      // onload chart temperatur sensor DHT11
-    var ctxTEMP = document.getElementById('chartTEMP').getContext('2d');
-    window.chartTEMP = new Chart(ctxTEMP, configTEMP);
-
-      // onload chart kelembaban sensor DHT11
-    var ctxHUM = document.getElementById('chartHUM').getContext('2d');
-    window.chartHUM = new Chart(ctxHUM, configHUM);
-  };
-
-</script>
 <script type="text/javascript">
   function getSelectedValue(){
-    var selectedValue = document.getElementById("listRoom").value;
+    var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
+    if (selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
+      document.querySelector('#buttons').disabled = false;
+    }else{
+      document.getElementById('date1').disabled = false;
+      document.getElementById('date2').disabled = false;
+      document.querySelector('#buttons').disabled = true;
+    }
   }
 </script>
 </body>
