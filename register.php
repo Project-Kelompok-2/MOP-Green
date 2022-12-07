@@ -19,10 +19,7 @@ if (isset($_POST['register'])) {
       $result = mysqli_query($koneksi, $query);
       header('location:login.php');
     }
-  }
-
-
-  
+  } 
 }
 ?>
 <!DOCTYPE html>

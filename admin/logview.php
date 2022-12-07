@@ -232,7 +232,7 @@ $sesLvl = $_SESSION['level'];
               <br>
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
-                  <button type="submit" class="btn btn-primary text-light" id="buttons" name="buttons" style="cursor: pointer;">Button</button>
+                  <button type="submit" class="btn btn-lg btn-primary text-light" id="buttons" name="buttons" style="cursor: pointer;">Apply</button>
                 </div>
               </div>
             </form>
@@ -317,20 +317,20 @@ $sesLvl = $_SESSION['level'];
       label: 'Suhu ',
       data: <?php echo json_encode($t1);?>,
       backgroundColor: [
-        'rgba(0, 8, 250, 1)',
+        'rgb(255, 99, 132)',
         ],
       borderColor: [
-        'rgba(0, 8, 250, 1)',
+        'rgb(255, 99, 132)',
         ],
       borderWidth: 2
     }, {
-      label: ' Kelembaban',
+      label: 'Kelembaban',
       data: <?php echo json_encode($h1);?>,
       backgroundColor: [
-        'rgba(255, 0, 0, 1)',
+        'rgb(54, 162, 235)',
         ],
       borderColor: [
-        'rgba(255, 0, 0, 1)',
+        'rgb(54, 162, 235)',
         ],
       borderWidth: 2
     }]

@@ -257,8 +257,8 @@ $sesLvl = $_SESSION['level'];
           <div class="card-body">
             <div class="form-check form-switch">
               <div class="row">
-                <h6 class="text-start">All Exhaust</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch1" value="yes">
+                <h6 class="text-start">Semua Fan</h6>
+                <input class="form-check-input align" type="checkbox" id="mySwitch1" value="yes" onchange="handleFirstSliderChange(event)" onclick="return confirm('Anda yakin..?')">
               </div>
               <!-- <label class="form-check-label" for="mySwitch"></label> -->
             </div>
@@ -278,220 +278,220 @@ $sesLvl = $_SESSION['level'];
             </div>
             <div class="form-check form-switch">
               <div class="row">
-       <!-- Switch fan 1 -->
-                <h6 class="text-start">Exhaust Fan 1</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch4" value="yes" onclick="return confirm('Anda yakin..?')">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+               <!-- Switch fan 1 -->
+               <h6 class="text-start">Exhaust Fan 1</h6>
+               <input class="form-check-input align" type="checkbox" id="mySwitch4" value="yes" onclick="return confirm('Anda yakin..?')">
+             </div>
+             <!-- <label class="form-check-label" for="mySwitch"></label> -->
+           </div>
+           <div class="form-check form-switch">
+            <div class="row">
+              <h6 class="text-start">Exhaust Fan 2</h6>
+              <input class="form-check-input align" type="checkbox" id="mySwitch5" value="yes" onclick="return confirm('Anda yakin..?')">
             </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h6 class="text-start">Exhaust Fan 2</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch5" value="yes" onclick="return confirm('Anda yakin..?')">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h6 class="text-start">Exhaust Fan 3</h6>
+              <input class="form-check-input align" type="checkbox" id="mySwitch6" value="yes" onclick="return confirm('Anda yakin..?')">
             </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h6 class="text-start">Exhaust Fan 3</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch6" value="yes" onclick="return confirm('Anda yakin..?')">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h6 class="text-start">Exhaust Fan 4</h6>
+              <input class="form-check-input align" type="checkbox" id="mySwitch7" value="yes" onclick="return confirm('Anda yakin..?')">
             </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h6 class="text-start">Exhaust Fan 4</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch7" value="yes" onclick="return confirm('Anda yakin..?')">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h6 class="text-start">Cooling Pad 1</h6>
+              <input class="form-check-input align" type="checkbox" id="mySwitch8" value="yes">
             </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h6 class="text-start">Cooling Pad 1</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch8" value="yes">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h6 class="text-start">Cooling Pad 2</h6>
+              <input class="form-check-input align" type="checkbox" id="mySwitch9" value="yes">
             </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h6 class="text-start">Cooling Pad 2</h6>
-                <input class="form-check-input align" type="checkbox" id="mySwitch9" value="yes">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
+      <div class="card bg-dark h-100">
+        <div class="card-header text-center">
+          <h3>Pompa Nutrisi</h3>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center text-center">
+            <h5 class="">Nutrisi 1</h5>
+            <div class="water1"></div>
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h5 class="text-start">Pompa Irigasi 1</h5>
+              <input class="form-check-input align" type="checkbox" id="mySwitch10" value="yes">
+            </div>
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+          <div class="row align-items-center text-center">
+            <h5 class="text-center">Nutrisi 2</h5>
+            <div class="water2 text-center"></div>
+          </div>
+          <div class="form-check form-switch">
+            <div class="row">
+              <h5 class="text-start">Pompa Irigasi 2</h5>
+              <input class="form-check-input align" type="checkbox" id="mySwitch11" value="yes">
+            </div>
+            <!-- <label class="form-check-label" for="mySwitch"></label> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
+      <div class="card bg-dark h-100">
+        <div class="card-header text-center">
+          <h3>Status Akuator</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak1" id="kotak" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">B Fan 1</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak2" id="kotak2" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">B Fan 2</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak3" id="kotak3" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">B Fan 3</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak4" id="kotak4" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">B Fan 4</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak5" id="kotak5" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Cooling Pad 1</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak6" id="kotak6" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Cooling Pad 2</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak7" id="kotak7" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Pengkabutan</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak8" id="kotak8" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Pompa N1</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak9" id="kotak9" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Pompa N2</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1 col-sm-1 col-1">
+              <input class="kotak10" id="kotak10" disabled></input>
+            </div>
+            <div class="col-md-10 col-sm-10 col-10">
+              <h4 class="">Fresh Water</h4>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
-        <div class="card bg-dark h-100">
-          <div class="card-header text-center">
-            <h3>Pompa Nutrisi</h3>
-          </div>
-          <div class="card-body">
-            <div class="row align-items-center text-center">
-              <h5 class="">Nutrisi 1</h5>
-              <div class="water1"></div>
-            </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h5 class="text-start">Pompa Irigasi 1</h5>
-                <input class="form-check-input align" type="checkbox" id="mySwitch10" value="yes">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
-            </div>
-            <div class="row align-items-center text-center">
-              <h5 class="text-center">Nutrisi 2</h5>
-              <div class="water2 text-center"></div>
-            </div>
-            <div class="form-check form-switch">
-              <div class="row">
-                <h5 class="text-start">Pompa Irigasi 2</h5>
-                <input class="form-check-input align" type="checkbox" id="mySwitch11" value="yes">
-              </div>
-              <!-- <label class="form-check-label" for="mySwitch"></label> -->
-            </div>
-          </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 col-12 mb-2">
+      <div class="card bg-dark h-100">
+        <div class="card-header text-center">
+          <h4>Control Otomatis</h4>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb-3">
-        <div class="card bg-dark h-100">
-          <div class="card-header text-center">
-            <h3>Status Akuator</h3>
-          </div>
-          <div class="card-body">
+        <div class="card-body">
+          <div class="form-check form-switch ">
             <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak1" id="kotak" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">B Fan 1</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak2" id="kotak2" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">B Fan 2</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak3" id="kotak3" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">B Fan 3</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak4" id="kotak4" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">B Fan 4</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak5" id="kotak5" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Cooling Pad 1</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak6" id="kotak6" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Cooling Pad 2</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak7" id="kotak7" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Pengkabutan</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak8" id="kotak8" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Pompa N1</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak9" id="kotak9" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Pompa N2</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-1 col-sm-1 col-1">
-                <input class="kotak10" id="kotak10" disabled></input>
-              </div>
-              <div class="col-md-10 col-sm-10 col-10">
-                <h4 class="">Fresh Water</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-8 col-md-8 col-sm-12 col-12 mb-2">
-        <div class="card bg-dark h-100">
-          <div class="card-header text-center">
-            <h4>Control Otomatis</h4>
-          </div>
-          <div class="card-body">
-            <div class="form-check form-switch ">
-              <div class="row">
-                <h5 class="text-start" style="margin-left: -5px;">Otomatis</h5>
+              <h5 class="text-start" style="margin-left: -5px;">Otomatis</h5>
 
-                <input class="form-check-input align-items-end" type="checkbox" id="mySwitch12" value="yes" onclick="return confirm('Anda yakin..?')">
-              </div>
+              <input class="form-check-input align-items-end" type="checkbox" id="mySwitch12" value="yes" onclick="return confirm('Anda yakin..?')">
             </div>
-            <div class="row mb-2">
-              <div class="col-lg-6">
-                <h5 class="text-start">Exhaust ON : Suhu Atas</h5>
-              </div>
-              <div class="col-lg-6 text-end">
-                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
-              </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <h5 class="text-start">Exhaust ON : Suhu Atas</h5>
             </div>
-            <div class="row mb-2">
-              <div class="col-lg-6">
-                <h5 class="text-start">Exhaust OFF : Suhu Bawah</h5>
-              </div>
-              <div class="col-lg-6 text-end">
-                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
-              </div>
+            <div class="col-lg-6 text-end">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
             </div>
-            <div class="row mb-2">
-              <div class="col-lg-6">
-                <h5 class="text-start">Kelembaban Atas - ON</h5>
-              </div>
-              <div class="col-lg-6 text-end">
-                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
-              </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <h5 class="text-start">Exhaust OFF : Suhu Bawah</h5>
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <h5 class="text-start">Kelembaban Bawah - ON</h5>
-              </div>
-              <div class="col-lg-6 text-end">
-                <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
-              </div>
+            <div class="col-lg-6 text-end">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-lg-6">
+              <h5 class="text-start">Kelembaban Atas - ON</h5>
+            </div>
+            <div class="col-lg-6 text-end">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <h5 class="text-start">Kelembaban Bawah - ON</h5>
+            </div>
+            <div class="col-lg-6 text-end">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </main>
 
 <!-- Paho MQTT Client -->
@@ -510,166 +510,166 @@ $sesLvl = $_SESSION['level'];
   var port = 9001;
   var client = new Paho.MQTT.Client(host, port, "/ws",
     "myclientid_" + parseInt(Math.random() * 100, 10));
-</script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
-<script src="js/jquery-3.5.1.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap5.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="js/water.js"></script>
-<script src="js/script.js"></script>
-<script type="text/javascript">
-  var timeDisplay = document.getElementById("time");
-  function refreshTime() {
-    var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
-    var formattedString = dateString.replace(", ", " - ");
-    timeDisplay.innerHTML = formattedString;
-  }
+  </script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+  <script src="js/jquery-3.5.1.js"></script>
+  <script src="js/jquery.dataTables.min.js"></script>
+  <script src="js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/water.js"></script>
+  <script src="js/script.js"></script>
+  <script type="text/javascript">
+    var timeDisplay = document.getElementById("time");
+    function refreshTime() {
+      var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
+      var formattedString = dateString.replace(", ", " - ");
+      timeDisplay.innerHTML = formattedString;
+    }
 
-  setInterval(refreshTime, 1000);
-</script>
-<script>
-  var loadingEle = $(".water1");
-  var loading_width = loadingEle.width(),
-  loading_height = loadingEle.height();
-  $(".water1").createWaterBall({
-    cvs_config: {
-      width: loading_width,
-      height: loading_height
-    },
-    wave_config: {
-      waveWidth: 0.02,
-      waveHeight: 5
-    },
-    data_range: [30, 70, 100],
-    isLoading: true,
-    nowRange: 70,
-    targetRange: 70
-  });
-  setTimeout(function() {
-    $(".water1").createWaterBall("updateRange", 70);
-  }, 1000);
-</script>
+    setInterval(refreshTime, 1000);
+  </script>
+  <script>
+    var loadingEle = $(".water1");
+    var loading_width = loadingEle.width(),
+    loading_height = loadingEle.height();
+    $(".water1").createWaterBall({
+      cvs_config: {
+        width: loading_width,
+        height: loading_height
+      },
+      wave_config: {
+        waveWidth: 0.02,
+        waveHeight: 5
+      },
+      data_range: [30, 70, 100],
+      isLoading: true,
+      nowRange: 70,
+      targetRange: 70
+    });
+    setTimeout(function() {
+      $(".water1").createWaterBall("updateRange", 70);
+    }, 1000);
+  </script>
 
-<script>
-  var loadingEle = $(".water2");
-  var loading_width = loadingEle.width(),
-  loading_height = loadingEle.height();
-  $(".water2").createWaterBall({
-    cvs_config: {
-      width: loading_width,
-      height: loading_height
-    },
-    wave_config: {
-      waveWidth: 0.02,
-      waveHeight: 5
-    },
-    data_range: [30, 70, 100],
-    isLoading: true,
-    nowRange: 70,
-    targetRange: 70
-  });
-  setTimeout(function() {
-    $(".water2").createWaterBall("updateRange", 20);
-  }, 1000);
-  const switch10 = document.getElementById("mySwitch10");
-  const switch11 = document.getElementById("mySwitch11");
-  const kotak8 = document.getElementById("kotak8");
-  const kotak9 = document.getElementById("kotak9");
+  <script>
+    var loadingEle = $(".water2");
+    var loading_width = loadingEle.width(),
+    loading_height = loadingEle.height();
+    $(".water2").createWaterBall({
+      cvs_config: {
+        width: loading_width,
+        height: loading_height
+      },
+      wave_config: {
+        waveWidth: 0.02,
+        waveHeight: 5
+      },
+      data_range: [30, 70, 100],
+      isLoading: true,
+      nowRange: 70,
+      targetRange: 70
+    });
+    setTimeout(function() {
+      $(".water2").createWaterBall("updateRange", 20);
+    }, 1000);
+    const switch10 = document.getElementById("mySwitch10");
+    const switch11 = document.getElementById("mySwitch11");
+    const kotak8 = document.getElementById("kotak8");
+    const kotak9 = document.getElementById("kotak9");
 
-  switch10.addEventListener("change",()=>{
-    var statusPompaN1 = "0"; 
+    switch10.addEventListener("change",()=>{
+      var statusPompaN1 = "0"; 
 
       // <!-- if (checkbox.checked) {
       // <!-- statusFan1 = "0";
       // <!--} else {
       // <!-- statusFan1 = "1";
       // <!--} -->
-    if (switch10.checked == true){    
-      statusPompaN1 = "1";
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "",
-        password: "",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-          PompaN1Pub.destinationName = "PompaN1";
-          clientPub.send(PompaN1Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
-      kotak8.style.backgroundColor="green";
-    }if (switch10.checked == false){    
-      statusPompaN1 = "0";
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "",
-        password: "",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
-          PompaN1Pub.destinationName = "PompaN1";
-          clientPub.send(PompaN1Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
-      kotak8.style.backgroundColor="red";
-    }
+      if (switch10.checked == true){    
+        statusPompaN1 = "1";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
+            PompaN1Pub.destinationName = "PompaN1";
+            clientPub.send(PompaN1Pub);
+            clientPub.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak8.style.backgroundColor="green";
+      }if (switch10.checked == false){    
+        statusPompaN1 = "0";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            PompaN1Pub = new Paho.MQTT.Message(statusPompaN1);
+            PompaN1Pub.destinationName = "PompaN1";
+            clientPub.send(PompaN1Pub);
+            clientPub.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak8.style.backgroundColor="red";
+      }
 
 
-  })
-  switch11.addEventListener("change",()=>{
-    var statusPompaN2 = "0"; 
+    })
+    switch11.addEventListener("change",()=>{
+      var statusPompaN2 = "0"; 
 
       // <!-- if (checkbox.checked) {
       // <!-- statusFan1 = "0";
       // <!--} else {
       // <!-- statusFan1 = "1";
       // <!--} -->
-    if (switch11.checked == true){    
-      statusPompaN2 = "1";
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "",
-        password: "",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-          PompaN2Pub.destinationName = "PompaN2";
-          clientPub.send(PompaN2Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
-      kotak9.style.backgroundColor="green";
-    }if (switch11.checked == false){    
-      statusPompaN2 = "0";
-      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
-      var optionsPub = {
-        userName: "",
-        password: "",
-        timeout: 3,
-        keepAliveInterval: 30,
-        onSuccess: function () {
-          PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
-          PompaN2Pub.destinationName = "PompaN2";
-          clientPub.send(PompaN2Pub);
-          clientPub.disconnect();
-        },
-      };
-      clientPub.connect(optionsPub);
-      kotak9.style.backgroundColor="red";
-    }
+      if (switch11.checked == true){    
+        statusPompaN2 = "1";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
+            PompaN2Pub.destinationName = "PompaN2";
+            clientPub.send(PompaN2Pub);
+            clientPub.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak9.style.backgroundColor="green";
+      }if (switch11.checked == false){    
+        statusPompaN2 = "0";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            PompaN2Pub = new Paho.MQTT.Message(statusPompaN2);
+            PompaN2Pub.destinationName = "PompaN2";
+            clientPub.send(PompaN2Pub);
+            clientPub.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak9.style.backgroundColor="red";
+      }
 
 
-  })
+    })
   // if(switch11==true)
   //   setTimeout(function() {
   //   $(".water2").createWaterBall("updateRange", 100);
@@ -678,18 +678,18 @@ $sesLvl = $_SESSION['level'];
   //   setTimeout(function() {
   //   $(".water2").createWaterBall("updateRange", 40);
   // }, 1000);
-</script>
-<script>
+  </script>
+  <script>
     /*-----------------------------------------------------
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
-  var port = 9001;
+    var host = "20.20.0.245";
+    var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
-  var client = new Paho.MQTT.Client(host, port, "/ws",
-    "myclientid_" + parseInt(Math.random() * 100, 10));
+    var client = new Paho.MQTT.Client(host, port, "/ws",
+      "myclientid_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
   // client.onConnectionLost = function (responseObject) {
@@ -698,19 +698,19 @@ $sesLvl = $_SESSION['level'];
 
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
-  var humadity1 = 0;
-  var temp1 = 0;
+    var humadity1 = 0;
+    var temp1 = 0;
 
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-  client.onMessageArrived = function (message) {
-    console.log(message)
-    if (message.destinationName == "sensor") {
-     console.log(message.payloadString)
-     const data = JSON.parse(message.payloadString)
-     humadity1 = data["humadity1"]
-     temp1 = data["temp1"]
-   }
+    client.onMessageArrived = function (message) {
+      console.log(message)
+      if (message.destinationName == "sensor") {
+       console.log(message.payloadString)
+       const data = JSON.parse(message.payloadString)
+       humadity1 = data["humadity1"]
+       temp1 = data["temp1"]
+     }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
       // } else if (message.destinationName == "sr04") {
@@ -745,21 +745,21 @@ $sesLvl = $_SESSION['level'];
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-   var obj = {"temp1":temp1, "humadity1":humadity1};
-   console.log(obj);
+     var obj = {"temp1":temp1, "humadity1":humadity1};
+     console.log(obj);
       //const data = { username: 'example' };
 
-   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
+     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
             //   },
               body: JSON.stringify(obj),
             })
-   .then((response) => response.json())
-   .then((data) => {
-    console.log('Success:', data);
-  })
+     .then((response) => response.json())
+     .then((data) => {
+      console.log('Success:', data);
+    })
             //   .catch((error) => {
             //     console.error('Error:', error);
             //   });
@@ -778,7 +778,7 @@ $sesLvl = $_SESSION['level'];
               //log("writing file..");
               //file.writeline(datas);
               //file.close();
- };
+   };
     // Option mqtt dengan mode subscribe dan qos diset 1
 //  var options = {
 //   timeout: 60,
@@ -804,8 +804,8 @@ $sesLvl = $_SESSION['level'];
 
 // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
 // client.connect(options);
-</script>
-<script>
+ </script>
+ <script>
   const switch1 = document.getElementById("mySwitch1");
   const switch2 = document.getElementById("mySwitch2");
   const switch3 = document.getElementById("mySwitch3");
@@ -815,8 +815,9 @@ $sesLvl = $_SESSION['level'];
   const switch7 = document.getElementById("mySwitch7");
   const switch8 = document.getElementById("mySwitch8");
   const switch9 = document.getElementById("mySwitch9");
-  // const switch9 = document.getElementById("mySwitch10");
-  // const switch9 = document.getElementById("mySwitch11");
+  // const switch10 = document.getElementById("mySwitch10");
+  // const switch11 = document.getElementById("mySwitch11");
+  const switch12 = document.getElementById("mySwitch12");
 
   const kotak = document.getElementById("kotak");
   const kotak2 = document.getElementById("kotak2");
@@ -828,6 +829,62 @@ $sesLvl = $_SESSION['level'];
   // const kotak7 = document.getElementById("kotak8");
   // const kotak7 = document.getElementById("kotak9");
   const kotak10 = document.getElementById("kotak10");
+
+  function handleFirstSliderChange(event) {
+    if (event.target.checked && !switch4.checked && !switch5.checked && !switch6.checked && !switch7.checked) {
+      switch4.checked = true;
+
+      switch5.checked = true;
+      switch6.checked = true;
+      switch7.checked = true;
+    }else{
+      switch4.checked = false;
+      switch5.checked = false;
+      switch6.checked = false;
+      switch7.checked = false;
+    }
+  }
+  // switch1.addEventListener('click', function(){
+  //   if (switch1.checked == true) {
+  //     switch2.checked == true;
+  //     switch5.checked == true;
+  //     switch6.checked == true;
+  //     switch7.checked == true;
+  //   }else{
+  //     switch4.checked == false;
+  //     switch5.checked == false;
+  //     switch6.checked == false;
+  //     switch7.checked == false;
+  //   }
+  // });
+
+  switch12.addEventListener("change",()=>{
+    if (switch12.checked == true) {
+      switch1.disabled = true;
+      switch2.disabled = true;
+      switch3.disabled = true;
+      switch4.disabled = true;
+      switch5.disabled = true;
+      switch6.disabled = true;
+      switch7.disabled = true;
+      switch8.disabled = true;
+      switch9.disabled = true;
+      switch10.disabled = true;
+      switch11.disabled = true;
+    }else{
+      switch1.disabled = false;
+      switch2.disabled = false;
+      switch3.disabled = false;
+      switch4.disabled = false;
+      switch5.disabled = false;
+      switch6.disabled = false;
+      switch7.disabled = false;
+      switch8.disabled = false;
+      switch9.disabled = false;
+      switch10.disabled = false;
+      switch11.disabled = false;
+    }
+  })
 
   switch2.addEventListener("change",()=>{
     var statusFreshWater = "0"; 
@@ -922,14 +979,14 @@ $sesLvl = $_SESSION['level'];
 
   })
   switch4.addEventListener("change",()=>{
-  var statusFan1 = "0"; 
+    var statusFan1 = "0"; 
 
       // <!-- if (checkbox.checked) {
       // <!-- statusFan1 = "0";
       // <!--} else {
       // <!-- statusFan1 = "1";
       // <!--} -->
-  if (switch4.checked == true){    
+    if (switch4.checked == true){    
       statusFan1 = "1";
       var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
       var optionsPub = {
