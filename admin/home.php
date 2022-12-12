@@ -158,7 +158,7 @@ id="sidebar"
       <li>
         <a href="cctv.php" class="nav-link px-3">
           <span class="me-2"><i class="bi bi-camera"></i></span>
-          <span>CCTV Controling</span>
+          <span>CCTV View</span>
         </a>
       </li>
       <?php if ($sesLvl==1): ?>
@@ -210,9 +210,9 @@ id="sidebar"
     <div class="row">
       <div class="col-sm-3">
         <select class="btn btn-dark text-start" id="listRoom" onchange="getSelectedValue();">
-          <option value="Room 1">Room 1</option>
-          <option value="Room 2">Room 2</option>
-          <option value="Room 3">Room 3</option>
+          <option value="Room_1">Room 1</option>
+          <option value="Room_2">Room 2</option>
+          <option value="Room_3">Room 3</option>
         </select>
       </div>
     </div>
@@ -259,8 +259,10 @@ id="sidebar"
         <div class="card-header">
           <!-- <span class="me-2"><i class="bi bi-speedometer"></i></span> -->
           <h4 class="text-center" style="margin-bottom: -4px; font-weight: bold;">TODAY</h4>
+
         </div>
         <?php 
+        include ('../koneksi.php');
         $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(temp2), max(hum1) as hum1max, max(hum2), avg(temp1) as temp1avg, avg(temp2), avg(hum1) as hum1avg, avg(hum2), min(temp1) as temp1min, min(temp2), min(hum1) as hum1min, min(hum2) FROM data_sensor WHERE weekday(waktu)=weekday(current_date)");
         //weekday(waktu)=weekday(current_date)
         $row = mysqli_fetch_assoc($query);
@@ -269,11 +271,40 @@ id="sidebar"
         $hum1max[''] = isset($row['hum1max']) ? $row['hum1max'] : '';
         $hum1min[''] = isset($row['hum1min']) ? $row['hum1min'] : '';
         $temp1avg[''] = isset($row['temp1avg']) ? $row['temp1avg'] : '';
-        // $row2 = $query->fetch_assoc();
-        // $hum1avg[''] = isset($row2['hum1avg']) ? $row2['hum1avg'] : '';
         ?>
+
         <div class="card-body" id="today">
-          <?php include('today.php'); ?>
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h7>Suhu Tertinggi</h7>
+              <h5><?php echo max($temp1max); ?>&deg;</h5>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Kelembapan Tertinggi</h7>
+              <h5><?php echo max($hum1max); ?> <span>HR</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h7>Suhu Terendah</h7>
+              <h5><?php echo min($temp1min); ?>&deg;</h5>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Kelembapan Terendah</h7>
+              <h5><?php echo min($hum1min); ?> <span>HR</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 text-center sht">
+              <h7>Rata - Rata Suhu</h7>
+              <h5><?php echo round($row['temp1avg']); ?>&deg;</h5>
+            </div>
+            <div class="col-md-6 text-center klt">
+              <h7>Rata - Rata Kelembapan</h7>
+              <h5>
+                <?php echo round($row['hum1avg']);?> <span>HR</span></h5>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -298,6 +329,9 @@ id="sidebar"
 <!-- Paho MQTT Client -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  
+</script>
 <script>
   function loadXMLDOC() {
     var xhttp = new XMLHttpRequest();
@@ -329,7 +363,7 @@ id="sidebar"
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "10.10.22.41";
+  var host = "20.20.0.245";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
@@ -379,9 +413,9 @@ id="sidebar"
 
 
    document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-   document.getElementById("hitHUM").innerHTML = humadity1 + " HR";
+   document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
    document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
-   document.getElementById("hitHUM2").innerHTML = humadity2 + " HR";
+   document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});

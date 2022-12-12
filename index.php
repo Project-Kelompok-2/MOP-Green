@@ -135,54 +135,29 @@
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Akbar Ramadhani Firdaus</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Project Leader, Web Programmer
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>David Arrozaqi</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Mobile Programmer, UI/UX Designer
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Restu Fahimuroid</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Embeded System, System Analyst
 			</div>
 		</div>
 		<div class="row text-center text-white">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Yunanta Dwi Kristanto</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Embeded System, System Analyst
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-3">
 				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
 				<h2>Khofifah Ainurrohmah</h2>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				Embeded System, System Analyst
 			</div>
 		</div>
 		</div>
@@ -198,7 +173,7 @@
 
 		function activeMenu(){
 			let len=sec.length;
-			while(--len && window.scrollY + 100 < sec[len].offsetTop){}
+			while(--len && window.scrollY + 200 < sec[len].offsetTop){}
 				a.forEach(ltx => ltx.classList.remove("active"));
 			a[len].classList.add("active");
 			a.forEach(ltx => ltx.classList.remove("active2",'text-white'));

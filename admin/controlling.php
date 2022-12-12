@@ -3,6 +3,25 @@
 require("../koneksi.php");
 
 session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $data = json_decode(file_get_contents('php://input'), true);
+  // var_dump($data);
+  // die();
+  if (mysqli_connect_errno()) {
+    echo "Koneksi Gagal :".mysqli_connect_error();
+  }
+  $temp = $data["temp1"];
+  $hum = $data["humadity1"];
+  $temp2 = $data["temp2"];
+  $hum2 = $data["humadity2"];
+
+  $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp2', '$hum', '$hum2')";
+  mysqli_query($koneksi, $sql);
+  // result
+  header('Content-type: application/json');
+  echo json_encode([]);
+  die();
+}
 
 if(!isset($_SESSION['id'])){
   $_SESSION['msg'] = 'anda harus log in  untuk mengakses halaman ini';
@@ -116,6 +135,14 @@ $sesLvl = $_SESSION['level'];
     body{
       background-color: #2e3338;
     }
+    .sht h3{
+      color: #3751FF;
+      font-weight: bold;
+    }
+    .klt h3{
+      color: #FF0000;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -222,7 +249,7 @@ $sesLvl = $_SESSION['level'];
         <li>
           <a href="cctv.php" class="nav-link px-3">
             <span class="me-2"><i class="bi bi-camera"></i></span>
-            <span>CCTV Controling</span>
+            <span>CCTV View</span>
           </a>
         </li>
         <?php if ($sesLvl==1): ?>
@@ -448,6 +475,16 @@ $sesLvl = $_SESSION['level'];
           <h4>Control Otomatis</h4>
         </div>
         <div class="card-body">
+          <div class="row text-white text-center">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12 sht">
+              <strong>Suhu 1</strong>
+              <h3 id="hitTEMP">&deg;</h3>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-12 klt">
+              <strong>Kelembapan 1</strong>
+              <h3 id="hitHUM"> <span>HR</span></h3>
+            </div>
+          </div>
           <div class="form-check form-switch ">
             <div class="row">
               <h5 class="text-start" style="margin-left: -5px;">Otomatis</h5>
@@ -692,9 +729,9 @@ $sesLvl = $_SESSION['level'];
       "myclientid_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
-  // client.onConnectionLost = function (responseObject) {
-  //   document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
-  // };
+    client.onConnectionLost = function (responseObject) {
+      document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+    };
 
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
@@ -731,8 +768,8 @@ $sesLvl = $_SESSION['level'];
       //  keypad = message.payloadString;
 
 
-  //  document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-  //  document.getElementById("hitHUM").innerHTML = humadity1 + " HR";
+     document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+     document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -749,7 +786,7 @@ $sesLvl = $_SESSION['level'];
      console.log(obj);
       //const data = { username: 'example' };
 
-     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
+     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
@@ -780,32 +817,32 @@ $sesLvl = $_SESSION['level'];
               //file.close();
    };
     // Option mqtt dengan mode subscribe dan qos diset 1
-//  var options = {
-//   timeout: 60,
-//   keepAliveInterval: 30,
-//   onSuccess: function () {
-//     document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-//     client.subscribe("sensor", {
-//       qos: 1
-//     });
-//   },
+   var options = {
+    timeout: 60,
+    keepAliveInterval: 30,
+    onSuccess: function () {
+      document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+      client.subscribe("sensor", {
+        qos: 1
+      });
+    },
 
-//   onFailure: function (message) {
-//     document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
-//   },
+    onFailure: function (message) {
+      document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
+    },
 
-//   userName: "",
-//   password: ""
-// };
+    userName: "",
+    password: ""
+  };
 
-// if (location.protocol == "https:") {
-//   options.useSSL = true;
-// }
+  if (location.protocol == "https:") {
+    options.useSSL = true;
+  }
 
-// document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-// client.connect(options);
- </script>
- <script>
+  document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+  client.connect(options);
+</script>
+<script>
   const switch1 = document.getElementById("mySwitch1");
   const switch2 = document.getElementById("mySwitch2");
   const switch3 = document.getElementById("mySwitch3");
@@ -833,15 +870,113 @@ $sesLvl = $_SESSION['level'];
   function handleFirstSliderChange(event) {
     if (event.target.checked && !switch4.checked && !switch5.checked && !switch6.checked && !switch7.checked) {
       switch4.checked = true;
-
+      var statusFan1 = "0";
       switch5.checked = true;
+      var statusFan2 = "0"; 
       switch6.checked = true;
+      var statusFan3 = "0"; 
       switch7.checked = true;
+      var statusFan4 = "0";  
+      // <!-- if (checkbox.checked) {
+      // <!-- statusFan1 = "0";
+      // <!--} else {
+      // <!-- statusFan1 = "1";
+      // <!--} -->
+      if (switch4.checked == true && switch5.checked == true && switch6.checked == true && switch7.checked == true){    
+        statusFan1 = "1";
+        statusFan2 = "1";
+        statusFan3 = "1";
+        statusFan4 = "1";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub2 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub3 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub4 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            Fan1Pub = new Paho.MQTT.Message(statusFan1);
+            Fan1Pub.destinationName = "Fan1";
+            clientPub.send(Fan1Pub);
+            clientPub.disconnect();
+            Fan2Pub = new Paho.MQTT.Message(statusFan2);
+            Fan2Pub.destinationName = "Fan2";
+            clientPub2.send(Fan2Pub);
+            clientPub2.disconnect();
+            Fan3Pub = new Paho.MQTT.Message(statusFan3);
+            Fan3Pub.destinationName = "Fan3";
+            clientPub3.send(Fan3Pub);
+            clientPub3.disconnect();
+            Fan4Pub = new Paho.MQTT.Message(statusFan4);
+            Fan4Pub.destinationName = "Fan4";
+            clientPub4.send(Fan4Pub);
+            clientPub4.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak.style.backgroundColor="green";
+        clientPub2.connect(optionsPub);
+        kotak2.style.backgroundColor="green";
+        clientPub3.connect(optionsPub);
+        kotak3.style.backgroundColor="green";
+        clientPub4.connect(optionsPub);
+        kotak4.style.backgroundColor="green";
+      }
+
     }else{
       switch4.checked = false;
+      var statusFan1 = "0";
       switch5.checked = false;
+      var statusFan2 = "0"; 
       switch6.checked = false;
+      var statusFan3 = "0"; 
       switch7.checked = false;
+      var statusFan4 = "0";
+
+      if (switch4.checked == false && switch5.checked == false && switch6.checked == false && switch7.checked == false){    
+        statusFan1 = "0";
+        statusFan2 = "0";
+        statusFan3 = "0";
+        statusFan4 = "0";
+        var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub2 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub3 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var clientPub4 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+        var optionsPub = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
+            Fan1Pub = new Paho.MQTT.Message(statusFan1);
+            Fan1Pub.destinationName = "Fan1";
+            clientPub.send(Fan1Pub);
+            clientPub.disconnect();
+            Fan2Pub = new Paho.MQTT.Message(statusFan2);
+            Fan2Pub.destinationName = "Fan2";
+            clientPub2.send(Fan2Pub);
+            clientPub2.disconnect();
+            Fan3Pub = new Paho.MQTT.Message(statusFan3);
+            Fan3Pub.destinationName = "Fan3";
+            clientPub3.send(Fan3Pub);
+            clientPub3.disconnect();
+            Fan4Pub = new Paho.MQTT.Message(statusFan4);
+            Fan4Pub.destinationName = "Fan4";
+            clientPub4.send(Fan4Pub);
+            clientPub4.disconnect();
+          },
+        };
+        clientPub.connect(optionsPub);
+        kotak.style.backgroundColor="red";
+        clientPub2.connect(optionsPub);
+        kotak2.style.backgroundColor="red";
+        clientPub3.connect(optionsPub);
+        kotak3.style.backgroundColor="red";
+        clientPub4.connect(optionsPub);
+        kotak4.style.backgroundColor="red";
+      }      
     }
   }
   // switch1.addEventListener('click', function(){

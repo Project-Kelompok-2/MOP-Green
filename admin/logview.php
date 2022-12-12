@@ -142,7 +142,7 @@ $sesLvl = $_SESSION['level'];
         <li>
           <a href="cctv.php" class="nav-link px-3">
             <span class="me-2"><i class="bi bi-camera"></i></span>
-            <span>CCTV Controling</span>
+            <span>CCTV View</span>
           </a>
         </li>
         <?php if ($sesLvl==1): ?>
@@ -198,20 +198,21 @@ $sesLvl = $_SESSION['level'];
           <div class="card-body">
             <div class="row">
               <div class="col-lg-5 col-md-4 col-sm-4 col-4">
-                <h5 class="text-start text-white">Time Data</h5>
+                <form method="post">
+                  <h5 class="text-start text-white">Time Data</h5>
+                </div>
+                <div class="col-lg-4 col-md-8 col-sm-8 col-8">
+                  <select class="btn btn-dark text-start" id="listRange" onchange="getSelectedValue();">
+                    <option value="today">Today</option>
+                    <option value="yesterday">Yesterday</option>
+                    <option value="last3">Last 3 Days</option>
+                    <option value="last1w">Last 1 Week</option>
+                    <option value="last1m">Last 1 Month</option>
+                    <option value="0">Custom Tanggal</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-lg-4 col-md-8 col-sm-8 col-8">
-                <select class="btn btn-dark text-start" id="listRange" onchange="getSelectedValue();">
-                  <option value="yesterday">Yesterday</option>
-                  <option value="last3">Last 3 Days</option>
-                  <option value="last1w">Last 1 Week</option>
-                  <option value="last1m">Last 1 Month</option>
-                  <option value="0">Custom Tanggal</option>
-                </select>
-              </div>
-            </div>
-            <br>
-            <form method="post">
+              <br>
               <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-4">
                   <h5 class="text-start text-white">From</h5>
@@ -300,7 +301,6 @@ $sesLvl = $_SESSION['level'];
 
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
-
 <script>
   const waktuOutput = <?php echo json_encode($waktu);?>;
   console.log(waktuOutput);
@@ -374,6 +374,43 @@ $sesLvl = $_SESSION['level'];
     chartSS.config.options.scales.x.max = endDatee.setHours(0, 0, 0, 0);
     chartSS.update();
   }
+
+  
+  // var dataSelect = document.getElementById("listRange");
+  // dataSelect.addEventListener("change", function() {
+  // // get the selected option from the dropdown menu
+  //   var selectedOption = this.options[this.selectedIndex].value;
+
+  // // fetch the data for the selected option using AJAX
+  //   fetch("/path/to/logview.php?option=" + selectedOption)
+  //   .then(function(response) {
+  //     return response.json();
+  //   })
+  //   .then(function(data) {
+  //     // update the chart with the new data
+  //     chartSS.data.labels = data.dateChartJS;
+  //     chartSS.data.datasets[0].data = data.values;
+  //     chartSS.update();
+  //   });
+  // });
+  var mysql = require("mysql");
+  var connection = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "mop_green"
+  });
+  connection.connect();
+  document.getElementById('listRange').addEventListener('change', function() {
+    var timePeriod = this.value;
+    if (timePeriod == 'yesterday') {
+      connection.query("SELECT * FROM data_sensor WHERE weekday(waktu)=weekday(current_date-1)", function(err, results) {
+        if (err) throw err;
+        console.log(results);
+        chartSS.update();
+      }
+    }
+  });
 </script>
 
 <script type="text/javascript">
@@ -395,7 +432,7 @@ $sesLvl = $_SESSION['level'];
   function getSelectedValue(){
     var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
-    if (selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
+    if (selectedValue == 'today' || selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
       document.getElementById('date1').disabled = true;
       document.getElementById('date2').disabled = true;
       document.querySelector('#buttons').disabled = false;

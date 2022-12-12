@@ -153,7 +153,7 @@ $sesLvl = $_SESSION['level'];
         <li>
           <a href="cctv.php" class="nav-link px-3">
             <span class="me-2"><i class="bi bi-camera"></i></span>
-            <span>CCTV Controling</span>
+            <span>CCTV View</span>
           </a>
         </li>
         <?php if ($sesLvl==1): ?>
@@ -207,21 +207,21 @@ $sesLvl = $_SESSION['level'];
                 <div class="col">
                   <div class="form-outline form-white mb-4">
                     <label class="form-label" for="typeNamaDepan">Nama Depan</label>
-                    <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" required />
+                    <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" required />
                   </div>
                 </div>
 
                 <div class="col">
                   <div class="form-outline form-white mb-4">
                     <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
-                    <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" />
+                    <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" />
                   </div>
                 </div>
               </div>
 
               <div class="form-outline form-white mb-4">
                 <label class="form-label" for="typeUsername">Asal Institusi</label>
-                <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" required />
+                <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,50}" title="tidak boleh lebih dari 50 karakter dan hanya huruf" required />
               </div>
 
               <div class="form-outline form-white mb-4">
@@ -352,21 +352,21 @@ $sesLvl = $_SESSION['level'];
                               <div class="col">
                                 <div class="form-outline form-white mb-4">
                                   <label class="form-label" for="typeNamaDepan">Nama Depan</label>
-                                  <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" value="<?=$row['nama_depan'];?>" required />
+                                  <input type="text" id="typeNamaDepan" name="txt_nama_depan" class="form-control form-control-lg" value="<?=$row['nama_depan'];?>" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" required />
                                 </div>
                               </div>
 
                               <div class="col">
                                 <div class="form-outline form-white mb-4">
                                   <label class="form-label" for="typeNamaBelakang">Nama Belakang</label>
-                                  <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" value="<?=$row['nama_belakang'];?>" />
+                                  <input type="text" id="typeNamaBelakang" name="txt_nama_belakang" class="form-control form-control-lg" value="<?=$row['nama_belakang'];?>" pattern="^[a-zA-Z\s'-].{1,15}" title="tidak boleh lebih dari 15 karakter dan hanya huruf" />
                                 </div>
                               </div>
                             </div>
 
                             <div class="form-outline form-white mb-4">
                               <label class="form-label" for="typeUsername">Asal Institusi</label>
-                              <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" value="<?=$row['asal_institusi'];?>" required />
+                              <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" value="<?=$row['asal_institusi'];?>" pattern="^[a-zA-Z\s'-].{1,50}" title="tidak boleh lebih dari 50 karakter dan hanya huruf" required />
                             </div>
 
                             <div class="form-outline form-white mb-4">
