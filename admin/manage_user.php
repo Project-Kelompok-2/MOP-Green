@@ -34,11 +34,12 @@ $sesLvl = $_SESSION['level'];
     body{
       background-color: #2e3338;
     }
-    .pagination{
+    .pagination a{
       text-decoration: none;
-      color: black;
+      color: white;
       font-weight: bold;
-      padding: 5px;
+      border-style: groove;
+      padding: 2px;
     }
     .inpt-pass{
       color: white;
@@ -55,6 +56,13 @@ $sesLvl = $_SESSION['level'];
     .klt h3{
       color: #FF0000;
       font-weight: bold;
+    }
+    .iconn{
+      float: right;
+      margin-right: 10px;
+      margin-top: -30px;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
@@ -266,12 +274,14 @@ $sesLvl = $_SESSION['level'];
 
               <div class="form-outline form-white mb-4">
                 <label class="form-label" for="typePasswordX">Password</label>
-                <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
+                <input type="password" id="inpt-pass" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
+                <span class="far fa-eye iconn" id="togglePassword" style="cursor: pointer;"></span>
               </div>
 
               <div class="form-outline form-white mb-4">
                 <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
-                <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
+                <input type="password" id="inpt-pass2" class="form-control form-control-lg" />
+                <span class="far fa-eye iconn" id="togglePassword2" style="cursor: pointer;"></span>
               </div>
               <div class="mt-4 mb-0">
                 <div class="d-grid">
@@ -315,20 +325,29 @@ $sesLvl = $_SESSION['level'];
                 </tr>
               </thead>
               <?php
-              $results_per_page = 5;  
-              $query = "SELECT * FROM user_detail WHERE level=2";
-              $result = mysqli_query($koneksi,$query);
-              $number_of_result = mysqli_num_rows($result);
-              $number_of_page = ceil ($number_of_result / $results_per_page);
-              if (!isset ($_GET['page']) ) {  
-                $page = 1;  
-              } else {  
-                $page = $_GET['page'];  
-              }
-              $page_first_result = ($page-1) * $results_per_page;
-              $query2 = "SELECT * FROM user_detail".$page_first_result . ',' . $results_per_page;
-              $result2 = mysqli_query($koneksi, $query);   
-              $no = 1;
+              $halaman = 5;
+              $page = isset($_GET["halaman"]) ? (int)$_GET["halaman"] : 1;
+              $mulai = ($page>1) ? ($page * $halaman) - $halaman : 0;
+              $result = mysqli_query($koneksi, "SELECT * FROM user_detail WHERE level=2");
+              $total = mysqli_num_rows($result);
+              $pages = ceil($total/$halaman);
+              $no =$mulai+1;
+
+              // $results_per_page = 5;  
+              // $query = "SELECT * FROM user_detail WHERE level=2";
+              // $result = mysqli_query($koneksi,$query);
+              // $number_of_result = mysqli_num_rows($result);
+              // $number_of_page = ceil ($number_of_result / $results_per_page);
+              // if (!isset ($_GET['page']) ) {  
+              //   $page = 1;  
+              // } else {  
+              //   $page = $_GET['page'];  
+              // }
+              // $page_first_result = ($page-1) * $results_per_page;
+              // $query2 = "SELECT * FROM user_detail".$page_first_result . ',' . $results_per_page;
+              // $result2 = mysqli_query($koneksi, $query);   
+              // $no = 1;
+              $result2 = mysqli_query($koneksi, "SELECT * FROM user_detail WHERE level=2 LIMIT $mulai, $halaman")or die(mysqli_error);
               while($row = mysqli_fetch_array($result2)){
                 $nama_depan = $row['nama_depan'];
                 $nama_belakang = $row['nama_belakang'];
@@ -411,12 +430,14 @@ $sesLvl = $_SESSION['level'];
 
                             <div class="form-outline form-white mb-4">
                               <label class="form-label" for="typePasswordX">Password</label>
-                              <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" value="<?=$row['password'];?>" required />
+                              <input type="password" id="inpt-pass3" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" value="<?=$row['password'];?>" required />
+                              <span class="far fa-eye iconn" id="togglePassword3" style="cursor: pointer;"></span>
                             </div>
 
                             <div class="form-outline form-white mb-4">
                               <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
-                              <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
+                              <input type="password" id="inpt-pass4" class="form-control form-control-lg" />
+                              <span class="far fa-eye iconn" id="togglePassword4" style="cursor: pointer;"></span>
                             </div>
                             <div class="mt-4 mb-0">
                               <div class="d-grid">
@@ -443,20 +464,32 @@ $sesLvl = $_SESSION['level'];
 
               </tbody>
             </table>
-            <?php 
-            for($page = 1; $page<= $number_of_page; $page++) {
-              echo '<nav aria-label="Page navigation">';
-              echo '<ul class="pagination">';  
-              echo '<li class="page-item bg-light"><a class="pagination" href = "manage_user.php?page=' . $page . '">' . $page . ' </a></li>';
-              echo '</ul>';
-              echo '</nav>';  
-            }
-            ?>
+            <!-- <?php 
+            // for($page = 1; $page<= $number_of_page; $page++) {
+            //   echo '<nav aria-label="Page navigation">';
+            //   echo '<ul class="pagination">';  
+            //   echo '<li class="page-item bg-light"><a class="pagination" href = "manage_user.php?page=' . $page . '">' . $page . ' </a></li>';
+            //   echo '</ul>';
+            //   echo '</nav>';  
+            // }
+          ?> -->
+          <div class="pagination">
+
+            <?php for ($i=1; $i<=$pages ; $i++){ ?>
+              <?php if ($i == $page) : ?>
+                <a class="bg-success" style="font-weight: bold; color: white;" href="?halaman=<?php echo $i; ?>">&nbsp;<?php echo $i; ?>&nbsp;</a>&nbsp;&nbsp; 
+              <?php else : ?>
+                <a href="?halaman=<?php echo $i; ?>">&nbsp;<?php echo $i; ?>&nbsp;</a>&nbsp;&nbsp;
+              <?php endif; ?>
+              <?php } ?>&emsp;
+              
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </main>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
@@ -606,6 +639,42 @@ client.connect(options);
   }
 
   setInterval(refreshTime, 1000);
+</script>
+<script>
+  const togglePassword2 = document.querySelector('#togglePassword4');
+  const password2 = document.querySelector('#inpt-pass4');
+
+  togglePassword2.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
+<script>
+  const togglePassword = document.querySelector('#togglePassword3');
+  const password = document.querySelector('#inpt-pass3');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
+<script>
+  const togglePassword2 = document.querySelector('#togglePassword2');
+  const password2 = document.querySelector('#inpt-pass2');
+
+  togglePassword2.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
 </script>
 <script>
   const togglePassword = document.querySelector('#togglePassword');

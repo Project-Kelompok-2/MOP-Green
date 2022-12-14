@@ -333,6 +333,22 @@ $sesLvl = $_SESSION['level'];
               die("error");
             }
             ?>
+            <?php 
+            try{
+              $sql = mysqli_query($koneksi, "SELECT temp1,hum1 FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $Ytemp1[] = $row['temp1'];
+                  $Yhum1[] = $row['hum1'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -486,6 +502,7 @@ client.connect(options);
 </script>
 
 <script>
+  
   const waktuOutput = <?php echo json_encode($waktu);?>;
   console.log(waktuOutput);
 
@@ -506,7 +523,11 @@ client.connect(options);
       borderColor: [
         'rgb(255, 99, 132)',
         ],
-      borderWidth: 2
+      borderWidth: 2,
+      parsing: {
+        xAxisKey: 'waktu',
+        // yAxisKey: 'dataaa.Yt1';
+      }
     }, {
       label: 'Kelembaban',
       data: <?php echo json_encode($h1);?>,
@@ -516,7 +537,11 @@ client.connect(options);
       borderColor: [
         'rgb(54, 162, 235)',
         ],
-      borderWidth: 2
+      borderWidth: 2,
+      parsing: {
+        xAxisKey: 'waktu',
+        // yAxisKey: 'dataaa.Yh1';
+      }
     }]
   };
 
@@ -589,37 +614,50 @@ client.connect(options);
   function getSelectedValue(){
     var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
-    selectedValue.onchange = function(){
-      if (selectedValue == 'today' || selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
-        document.getElementById('date1').disabled = true;
-        document.getElementById('date2').disabled = true;
-        document.querySelector('#buttons').disabled = false;
-      }else{
-        document.getElementById('date1').disabled = false;
-        document.getElementById('date2').disabled = false;
-        document.querySelector('#buttons').disabled = true;
-      }
+    if (selectedValue == 'today' || selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
+      document.querySelector('#buttons').disabled = false;
+    }else{
+      document.getElementById('date1').disabled = false;
+      document.getElementById('date2').disabled = false;
+      document.querySelector('#buttons').disabled = true;
     }
-    document.getElementById('listRange').addEventListener('change', function() {
-      var timePeriod = this.value;
-      var querys = 'SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()';
-      if (timePeriod == 'yesterday') {
-        connection.query("SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()", function(err, rows) {
-          if (err) throw err;
-
-      // Format the data and add it to the response object
-          rows.forEach(function(row) {
-            data.labels.push(row.labels);
-            data.datasets.data.push(row.data);
-          });
-
-      // Send the response back to the client
-          res.json(data);
-        });
-        chartSS.update();
-      }
-    });
   }
+  // function getSelectedValue(){
+  //   var selectedValue = document.getElementById("listRange").value;
+  //   console.log(selectedValue);
+  //   selectedValue.onchange = function(){
+  //     if (selectedValue == 'today' || selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
+  //       document.getElementById('date1').disabled = true;
+  //       document.getElementById('date2').disabled = true;
+  //       document.querySelector('#buttons').disabled = false;
+  //     }else{
+  //       document.getElementById('date1').disabled = false;
+  //       document.getElementById('date2').disabled = false;
+  //       document.querySelector('#buttons').disabled = true;
+  //     }
+  //   }
+    // document.getElementById('listRange').addEventListener('change', function() {
+    //   var timePeriod = this.value;
+    //   var querys = 'SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()';
+    //   if (timePeriod == 'yesterday') {
+    //     connection.query("SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()", function(err, rows) {
+    //       if (err) throw err;
+
+    //   // Format the data and add it to the response object
+    //       rows.forEach(function(row) {
+    //         data.labels.push(row.labels);
+    //         data.datasets.data.push(row.data);
+    //       });
+
+    //   // Send the response back to the client
+    //       res.json(data);
+    //     });
+    //     chartSS.update();
+    //   }
+    // });
+  // }
 </script>
 
 <script type="text/javascript">

@@ -63,6 +63,14 @@ if (isset($_POST['register'])) {
       color: red;
       font-weight: bold;
     }
+    .iconn{
+      float: right;
+      margin-right: 10px;
+      margin-top: 20px;
+      margin-bottom: -30px;
+      position: relative;
+      z-index: 2;
+    }
   </style>
 </head>
 
@@ -120,11 +128,13 @@ if (isset($_POST['register'])) {
                 </div>
 
                 <div class="form-outline form-white mb-4">
+                  <span class="far fa-eye iconn" id="togglePassword" style="cursor: pointer;"></span>
                   <input type="password" id="typePasswordX" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
                   <label class="form-label" for="typePasswordX">Password</label>
                 </div>
 
                 <div class="form-outline form-white mb-4">
+                  <span class="far fa-eye iconn" id="typeTogglePassword" style="cursor: pointer;"></span>
                   <input type="password" id="typeConfirmPassword" class="form-control form-control-lg" />
                   <label class="form-label" for="typeConfirmPassword">Confirm Password</label>
                 </div>
@@ -149,6 +159,30 @@ if (isset($_POST['register'])) {
 <!-- MDB -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
 <!-- Custom scripts -->
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#typePasswordX');
+
+    togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+    // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+  <script>
+    const togglePassword2 = document.querySelector('#typeTogglePassword');
+    const password2 = document.querySelector('#typeConfirmPassword');
+
+    togglePassword2.addEventListener('click', function (e) {
+    // toggle the type attribute
+      const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+      password2.setAttribute('type', type);
+    // toggle the eye slash icon
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
 <script>
   function validate(){
 

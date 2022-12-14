@@ -87,6 +87,14 @@ if(isset($_POST['submit'])){
       font-weight: bold;
       font-size: 15px;
     }
+    .iconn{
+      float: right;
+      margin-right: 10px;
+      margin-top: 20px;
+      margin-bottom: -30px;
+      position: relative;
+      z-index: 2;
+    }
   </style>
 </head>
 
@@ -119,7 +127,7 @@ if(isset($_POST['submit'])){
 
                   <div class="form-outline form-white mb-4">
 
-                    <!-- <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i> -->
+                    <span class="far fa-eye iconn" id="togglePassword" style="cursor: pointer;"></span>
                     <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" required />
                     <label class="form-label" for="typePasswordX">Password</label>
                   </div>

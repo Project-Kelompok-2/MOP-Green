@@ -497,7 +497,7 @@ $sesLvl = $_SESSION['level'];
               <h5 class="text-start">Exhaust ON : Suhu Atas</h5>
             </div>
             <div class="col-lg-6 text-end">
-              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;" id="suhuatas">
             </div>
           </div>
           <div class="row mb-2">
@@ -505,7 +505,7 @@ $sesLvl = $_SESSION['level'];
               <h5 class="text-start">Exhaust OFF : Suhu Bawah</h5>
             </div>
             <div class="col-lg-6 text-end">
-              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;" id="suhubawah">
             </div>
           </div>
           <div class="row mb-2">
@@ -513,7 +513,7 @@ $sesLvl = $_SESSION['level'];
               <h5 class="text-start">Kelembaban Atas - ON</h5>
             </div>
             <div class="col-lg-6 text-end">
-              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;" id="kelembabanatas">
             </div>
           </div>
           <div class="row">
@@ -521,7 +521,7 @@ $sesLvl = $_SESSION['level'];
               <h5 class="text-start">Kelembaban Bawah - ON</h5>
             </div>
             <div class="col-lg-6 text-end">
-              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;">
+              <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;" id="kelembabanbawah">
             </div>
           </div>
         </div>
@@ -866,6 +866,10 @@ $sesLvl = $_SESSION['level'];
   // const kotak7 = document.getElementById("kotak8");
   // const kotak7 = document.getElementById("kotak9");
   const kotak10 = document.getElementById("kotak10");
+  const suhuatas = document.getElementById("suhuatas");
+  const suhubawah = document.getElementById("suhubawah");
+  const kelembabanatas = document.getElementById("kelembabanatas");
+  const kelembabanbawah = document.getElementById("kelembabanbawah");
 
   function handleFirstSliderChange(event) {
     if (event.target.checked && !switch4.checked && !switch5.checked && !switch6.checked && !switch7.checked) {
@@ -1006,6 +1010,10 @@ $sesLvl = $_SESSION['level'];
       switch9.disabled = true;
       switch10.disabled = true;
       switch11.disabled = true;
+      suhuatas.disabled = true;
+      suhubawah.disabled = true;
+      kelembabanatas.disabled = true;
+      kelembabanbawah.disabled = true;
     }else{
       switch1.disabled = false;
       switch2.disabled = false;
@@ -1018,6 +1026,10 @@ $sesLvl = $_SESSION['level'];
       switch9.disabled = false;
       switch10.disabled = false;
       switch11.disabled = false;
+      suhuatas.disabled = false;
+      suhubawah.disabled = false;
+      kelembabanatas.disabled = false;
+      kelembabanbawah.disabled = false;
     }
   })
 
