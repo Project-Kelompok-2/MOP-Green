@@ -133,29 +133,29 @@
 		<div class="container">
 		<div class="row text-center text-white">
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
+				<img class="rounded-circle" src="img/Akbar.jpg" alt="Out Team" height="100" width="100">
 				<h2>Akbar Ramadhani Firdaus</h2>
 				Project Leader, Web Programmer
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
+				<img class="rounded-circle" src="img/David.png" alt="Out Team" height="100" width="100">
 				<h2>David Arrozaqi</h2>
 				Mobile Programmer, UI/UX Designer
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12 col-12">
-				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
+				<img class="rounded-circle" src="img/fahim.jpg" alt="Out Team" height="100" width="100">
 				<h2>Restu Fahimuroid</h2>
 				Embeded System, System Analyst
 			</div>
 		</div>
 		<div class="row text-center text-white">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12">
-				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
+				<img class="rounded-circle" src="img/Yunanta.jpg" alt="Out Team" height="100" width="100">
 				<h2>Yunanta Dwi Kristanto</h2>
 				Embeded System, System Analyst
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-12 mb-3">
-				<img class="rounded-circle" src="img/logo2.png" alt="Out Team" height="100" width="100">
+				<img class="rounded-circle" src="img/khofifah.jpg" alt="Out Team" height="100" width="100">
 				<h2>Khofifah Ainurrohmah</h2>
 				Embeded System, System Analyst
 			</div>

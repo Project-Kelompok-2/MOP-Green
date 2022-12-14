@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   $temp = $data["temp1"];
   $hum = $data["humadity1"];
-  $temp2 = $data["temp2"];
-  $hum2 = $data["humadity2"];
+  // $temp2 = $data["temp2"];
+  // $hum2 = $data["humadity2"];
 
-  $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp2', '$hum', '$hum2')";
+  $sql = "INSERT INTO data_sensor (temp1, hum1) VALUES ('$temp', '$hum')";
   mysqli_query($koneksi, $sql);
   // result
   header('Content-type: application/json');

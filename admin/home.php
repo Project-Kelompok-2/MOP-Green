@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   $temp = $data["temp1"];
   $hum = $data["humadity1"];
-  $temp2 = $data["temp2"];
-  $hum2 = $data["humadity2"];
+  // $temp2 = $data["temp2"];
+  // $hum2 = $data["humadity2"];
 
-  $sql = "INSERT INTO data_sensor (temp1, temp2, hum1, hum2) VALUES ('$temp', '$temp2', '$hum', '$hum2')";
+  $sql = "INSERT INTO data_sensor (temp1, hum1) VALUES ('$temp', '$hum')";
   mysqli_query($koneksi, $sql);
   // result
   header('Content-type: application/json');
@@ -184,38 +184,29 @@ id="sidebar"
         <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
-    <div class="card col-lg-7 col-md-7 col-sm-7 bg-dark">
+    <div class="card col-lg-4 col-md-4 col-sm-4 bg-dark">
       <div class="card-body">
         <div class="row text-white">
-          <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-12 sht">
             <strong>Suhu 1</strong>
             <h3 id="hitTEMP">&deg;</h3>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3 col-12 klt">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-12 klt">
             <strong>Kelembapan 1</strong>
             <h3 id="hitHUM"> <span>HR</span></h3>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
+<!--           <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
             <strong>Suhu 2</strong>
             <h3 id="hitTEMP2">&deg;</h3>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-3 col-12 klt">
             <strong>Kelembapan 2</strong>
             <h3 id="hitHUM2"> <span>HR</span></h3>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <br>
-    <div class="row">
-      <div class="col-sm-3">
-        <select class="btn btn-dark text-start" id="listRoom" onchange="getSelectedValue();">
-          <option value="Room_1">Room 1</option>
-          <option value="Room_2">Room 2</option>
-          <option value="Room_3">Room 3</option>
-        </select>
-      </div>
-    </div>
     <br>
     <div class="row">
       <div class="col-md-12">
@@ -230,7 +221,7 @@ id="sidebar"
       <div class="card h-100 bg-dark text-white">
         <div class="card-header">
           <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
-          Chart Data Room 1
+          Chart Data
         </div>
         <div class="card-body">
           <div class="row">
@@ -263,7 +254,7 @@ id="sidebar"
         </div>
         <?php 
         include ('../koneksi.php');
-        $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(temp2), max(hum1) as hum1max, max(hum2), avg(temp1) as temp1avg, avg(temp2), avg(hum1) as hum1avg, avg(hum2), min(temp1) as temp1min, min(temp2), min(hum1) as hum1min, min(hum2) FROM data_sensor WHERE weekday(waktu)=weekday(current_date)");
+        $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(hum1) as hum1max, avg(temp1) as temp1avg, avg(hum1) as hum1avg, min(temp1) as temp1min, min(hum1) as hum1min FROM data_sensor WHERE weekday(waktu)=weekday(current_date)");
         //weekday(waktu)=weekday(current_date)
         $row = mysqli_fetch_assoc($query);
         $temp1max[''] = isset($row['temp1max']) ? $row['temp1max'] : '';
@@ -340,7 +331,7 @@ id="sidebar"
         document.getElementById("today").innerHTML = xhttp.responseText;
       }
     };
-    xhttp.open("GET", "today.php", true);
+    xhttp.open("GET", "home.php", true);
     http.send();
   }
   setInterval(function(){
@@ -389,8 +380,8 @@ id="sidebar"
      const data = JSON.parse(message.payloadString)
      humadity1 = data["humadity1"]
      temp1 = data["temp1"]
-     humadity2 = data["humadity2"]
-     temp2 = data["temp2"]
+     // humadity2 = data["humadity2"]
+     // temp2 = data["temp2"]
    }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
@@ -414,8 +405,8 @@ id="sidebar"
 
    document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
    document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
-   document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
-   document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
+   // document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
+   // document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -428,7 +419,7 @@ id="sidebar"
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-   var obj = {"temp1":temp1, "humadity1":humadity1,"temp2":temp2, "humadity2":humadity2};
+   var obj = {"temp1":temp1, "humadity1":humadity1};
    console.log(obj);
       //const data = { username: 'example' };
 

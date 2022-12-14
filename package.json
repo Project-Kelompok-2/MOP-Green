@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/mdbootstrap/bootstrap-login-form/issues"
   },
-  "homepage": "https://mdbootstrap.com/docs/standard/extended/login/"
+  "homepage": "https://mdbootstrap.com/docs/standard/extended/login/",
+  "dependencies": {
+    "mysql2": "^2.3.3"
+  }
 }

@@ -36,8 +36,9 @@ $sesLvl = $_SESSION['level'];
     }
     .pagination{
       text-decoration: none;
-      color: white;
+      color: black;
       font-weight: bold;
+      padding: 5px;
     }
     .inpt-pass{
       color: white;
@@ -46,6 +47,14 @@ $sesLvl = $_SESSION['level'];
       height: 100%;
       background-color: #212529;
       outline: none;
+    }
+    .sht h3{
+      color: #3751FF;
+      font-weight: bold;
+    }
+    .klt h3{
+      color: #FF0000;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -179,7 +188,28 @@ $sesLvl = $_SESSION['level'];
         <h5 class="text-end text-white" id="time"></h5>
       </div>
     </div>
-
+    <div class="card col-lg-4 col-md-4 col-sm-4 bg-dark mb-3">
+      <div class="card-body">
+        <div class="row text-white">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-12 sht">
+            <strong>Suhu 1</strong>
+            <h3 id="hitTEMP">&deg;</h3>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-12 klt">
+            <strong>Kelembapan 1</strong>
+            <h3 id="hitHUM"> <span>HR</span></h3>
+          </div>
+<!--           <div class="col-lg-3 col-md-3 col-sm-3 col-12 sht">
+            <strong>Suhu 2</strong>
+            <h3 id="hitTEMP2">&deg;</h3>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-12 klt">
+            <strong>Kelembapan 2</strong>
+            <h3 id="hitHUM2"> <span>HR</span></h3>
+          </div> -->
+        </div>
+      </div>
+    </div>
     <div class="row mb-2">
       <div class="text-end">
         <button class="btn btn-success" type="button" data-bs-toggle='modal' data-bs-target='#tmbh'>
@@ -285,7 +315,7 @@ $sesLvl = $_SESSION['level'];
                 </tr>
               </thead>
               <?php
-              $results_per_page = 10;  
+              $results_per_page = 5;  
               $query = "SELECT * FROM user_detail WHERE level=2";
               $result = mysqli_query($koneksi,$query);
               $number_of_result = mysqli_num_rows($result);
@@ -417,7 +447,7 @@ $sesLvl = $_SESSION['level'];
             for($page = 1; $page<= $number_of_page; $page++) {
               echo '<nav aria-label="Page navigation">';
               echo '<ul class="pagination">';  
-              echo '<li class="page-item"><a class="pagination" href = "manage_user.php?page=' . $page . '">' . $page . ' </a></li>';
+              echo '<li class="page-item bg-light"><a class="pagination" href = "manage_user.php?page=' . $page . '">' . $page . ' </a></li>';
               echo '</ul>';
               echo '</nav>';  
             }
@@ -434,6 +464,139 @@ $sesLvl = $_SESSION['level'];
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap5.min.js"></script>
 <script src="js/script.js"></script>
+<!-- Paho MQTT Client -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    /*-----------------------------------------------------
+  BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
+  -----------------------------------------------------*/
+    // Menentuan alamat IP dan PORT message broker
+  var host = "20.20.0.245";
+  var port = 9001;
+
+    // Konstruktor koneksi antara client dan message broker
+  var client = new Paho.MQTT.Client(host, port, "/ws",
+    "myclientid_" + parseInt(Math.random() * 100, 10));
+
+    // Menjalin koneksi antara client dan message broker
+  client.onConnectionLost = function (responseObject) {
+    document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+  };
+
+    // variabel global data sensor IoT Development Board
+    // website berposisi sebagai subscriber
+  var humadity1 = 0;
+  var temp1 = 0;
+
+    // Mendapatkan payload dari transimisi data IoT Development Board
+    // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
+  client.onMessageArrived = function (message) {
+    console.log(message)
+    if (message.destinationName == "sensor") {
+     console.log(message.payloadString)
+     const data = JSON.parse(message.payloadString)
+     humadity1 = data["humadity1"]
+     temp1 = data["temp1"]
+     // humadity2 = data["humadity2"]
+     // temp2 = data["temp2"]
+   }
+      // if (message.destinationName == "ldr") {
+      //  ldr = message.payloadString;
+      // } else if (message.destinationName == "sr04") {
+      //  sr04 = message.payloadString; 
+      // // else if (message.destinationName == "dht") {
+      // //   var dht = JSON.parse(message.payloadString);
+      // //   humi = dht.kelembaban;
+      // //   temp = dht.suhu;
+      // } else if (message.destinationName == "temp") {
+      //  temp = message.payloadString;
+
+
+      // } else if (message.destinationName == "humadity") {
+      //  humadity = message.payloadString;
+      // }
+
+      // else if (message.destinationName == "/remoteir") {
+      //  keypad = message.payloadString;
+
+
+   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+   document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
+   // document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
+   // document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
+      //document.write(temp);
+      //console.log(temp);
+      //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
+      //now = {"temp&humadity": [
+      //{"temp": "25", "humadity": "45"},
+      //{"temp": "26", "humadity": "44"}
+        //]};
+      //var x=2; var y='am';
+      //k={"temp":"'+temp+'","humadity":"'+humadity+'"};
+      //now.events.push(k);
+      //console.log(now);
+      //JSONObject.temp = temp;
+   var obj = {"temp1":temp1, "humadity1":humadity1};
+   console.log(obj);
+      //const data = { username: 'example' };
+
+   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
+              method: 'POST', // or 'PUT'
+            //   headers: {
+            //     'Content-Type': 'application/json',
+            //   },
+              body: JSON.stringify(obj),
+            })
+   .then((response) => response.json())
+   .then((data) => {
+    console.log('Success:', data);
+  })
+            //   .catch((error) => {
+            //     console.error('Error:', error);
+            //   });
+      //require('fs').writeFile('file.json', JSON.stringify(obj), (error) => {
+              //    if (error) {
+                //      throw error;
+                  // }
+              // });
+        //var datas = obj;
+        //var txtFile = "/tmp/test.txt";
+              //var file = new File(txtFile,"write");
+              //var datas = JSON.stringify(JsonExport);
+
+              //log("opening file...");
+              //file.open(); 
+              //log("writing file..");
+              //file.writeline(datas);
+              //file.close();
+ };
+    // Option mqtt dengan mode subscribe dan qos diset 1
+ var options = {
+  timeout: 60,
+  keepAliveInterval: 30,
+  onSuccess: function () {
+    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+    client.subscribe("sensor", {
+      qos: 1
+    });
+  },
+
+  onFailure: function (message) {
+    document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
+  },
+
+  userName: "",
+  password: ""
+};
+
+if (location.protocol == "https:") {
+  options.useSSL = true;
+}
+
+document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+client.connect(options);
+</script>
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
   function refreshTime() {
