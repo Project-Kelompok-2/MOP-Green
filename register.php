@@ -15,7 +15,7 @@ if (isset($_POST['register'])) {
       setcookie("message","Maaf, Email Sudah Pernah Didaftarkan",time()+1);
       header('location:register.php');
     }else{
-      $query = "INSERT INTO user_detail VALUES ('', '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
+      $query = "INSERT INTO user_detail VALUES (NULL, '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
       $result = mysqli_query($koneksi, $query);
       header('location:login.php');
     }

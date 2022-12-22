@@ -370,38 +370,39 @@ $sesLvl = $_SESSION['level'];
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script src="test.js"></script>
 <script>
     /*-----------------------------------------------------
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-    var host = "20.20.0.245";
-    var port = 9001;
+  var host = "20.20.0.245";
+  var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
-    var client = new Paho.MQTT.Client(host, port, "/ws",
-      "myclientid2_" + parseInt(Math.random() * 100, 10));
+  var client = new Paho.MQTT.Client(host, port, "/ws",
+    "myclientid2_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
-    client.onConnectionLost = function (responseObject) {
+  client.onConnectionLost = function (responseObject) {
       //document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
-    };
-    
+  };
+
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
-    var humadity1 = 0;
-    var temp1 = 0;
+  var humadity1 = 0;
+  var temp1 = 0;
 
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-    client.onMessageArrived = function (message) {
-      console.log(message)
-      if (message.destinationName == "sensor") {
-       console.log(message.payloadString)
-       const data = JSON.parse(message.payloadString)
-       humadity1 = data["humadity1"]
-       temp1 = data["temp1"]
-     }
+  client.onMessageArrived = function (message) {
+    console.log(message)
+    if (message.destinationName == "sensor") {
+     console.log(message.payloadString)
+     const data = JSON.parse(message.payloadString)
+     humadity1 = data["humadity1"]
+     temp1 = data["temp1"]
+   }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
       // } else if (message.destinationName == "sr04") {
@@ -422,8 +423,8 @@ $sesLvl = $_SESSION['level'];
       //  keypad = message.payloadString;
 
 
-     document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-     document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
+   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+   document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -436,21 +437,21 @@ $sesLvl = $_SESSION['level'];
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-     var obj = {"temp1":temp1, "humadity1":humadity1};
-     console.log(obj);
+   var obj = {"temp1":temp1, "humadity1":humadity1};
+   console.log(obj);
       //const data = { username: 'example' };
 
-     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
+   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
             //   },
               body: JSON.stringify(obj),
             })
-     .then((response) => response.json())
-     .then((data) => {
-      console.log('Success:', data);
-    })
+   .then((response) => response.json())
+   .then((data) => {
+    console.log('Success:', data);
+  })
             //   .catch((error) => {
             //     console.error('Error:', error);
             //   });
@@ -469,33 +470,33 @@ $sesLvl = $_SESSION['level'];
               //log("writing file..");
               //file.writeline(datas);
               //file.close();
-   };
+ };
     // Option mqtt dengan mode subscribe dan qos diset 1
-   var options = {
-    timeout: 60,
-    keepAliveInterval: 30,
-    onSuccess: function () {
+ var options = {
+  timeout: 60,
+  keepAliveInterval: 30,
+  onSuccess: function () {
       //document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-      client.subscribe("sensor", {
-        qos: 1
-      });
-    },
+    client.subscribe("sensor", {
+      qos: 1
+    });
+  },
 
-    onFailure: function (message) {
+  onFailure: function (message) {
       //document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
-    },
+  },
 
-    userName: "",
-    password: ""
-  };
+  userName: "",
+  password: ""
+};
 
-  if (location.protocol == "https:") {
-    options.useSSL = true;
-  }
+if (location.protocol == "https:") {
+  options.useSSL = true;
+}
 
 
  // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-  client.connect(options);
+client.connect(options);
 </script>
 
 <script>
@@ -601,18 +602,23 @@ $sesLvl = $_SESSION['level'];
   //   });
   // });
   // SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE();
-  var mysql = require("mysql2");
-  var connection = mysql.createConnection({
+  var mysql = require('mysql2');
+
+  var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "mop_green"
+    database : "mop_green"
   });
-  connection.connect();
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
   function getSelectedValue(months){
     var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
     chartSS.update();
+
     if (selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
       document.getElementById('date1').disabled = true;
       document.getElementById('date2').disabled = true;
@@ -658,7 +664,6 @@ $sesLvl = $_SESSION['level'];
     // });
   // }
 </script>
-
 <script type="text/javascript">
   $(function() {
     $('#datepicker').datepicker();
