@@ -1,11 +1,20 @@
 <?php 
 require('koneksi.php');
 session_start();
+// session_destroy();
 
-if(isset($_POST['submit'])){
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  // var_dump($_SERVER['HTTP_REFERER'], $_SERVER["HTTP_HOST"], $_SERVER["REQUEST_URI"], $_SERVER['HTTP_X_REQUESTED_WITH']);
+  // die;
+  // var_dump($_SESSION);
+  if(!isset($_SESSION['samepage'])){
+    $data = json_decode(file_get_contents('php://input'), true);
+    $email = $data['email'];
+    $pass = $data['password'];
+  }else{
   $email = $_POST['txt_email'];
   $pass = $_POST['txt_pass'];
-
+}
   if(!empty(trim($email)) && !empty(trim($pass))){
     $query = "SELECT * FROM user_detail WHERE email='$email'";
     $result = mysqli_query($koneksi,$query);
@@ -24,24 +33,47 @@ if(isset($_POST['submit'])){
 
     if($num != 0){
       if($logEmail==$email && $password==$pass){
+        if(!isset($_SESSION['samepage'])){
+          header('Content-type: application/json');
+		      http_response_code(200);
+          echo json_encode(['nama_depan' => $namaDepan, 'nama_belakang' => $namaBelakang, 'asal_institusi' => $asalInstitusi, 'kegiatan' => $kegiatan, 'email' => $logEmail, 'passsword' => $password, 'level' => $lvl]);
+          die;
+        }
                 // header('Location: dashboard.php?user_fullname='.urlencode($username));
+        // unset($_SESSION['samepage']);
         $_SESSION['id'] = $id;
         $_SESSION['nama_depan'] = $namaDepan;
         $_SESSION['nama_belakang'] = $namaBelakang;
+        $_SESSION['email'] = $email;
         $_SESSION['level'] = $lvl;
         header('Location:admin/home.php');
+        die;
       }else{
-        setcookie("message","Maaf, Email Atau Password Salah",time()+1);
+		  if(!isset($_SESSION['samepage'])){
+          header('Content-type: application/json');
+		  http_response_code(403);
+          die;
+        }
+        $error = 'user atau password salah!!';
         header('Location:login.php');
+        die;
       }
     }else{
-      setcookie("message","Maaf, User Tidak Ditemukan",time()+1);
+		if(!isset($_SESSION['samepage'])){
+          header('Content-type: application/json');
+		  http_response_code(403);
+          die;
+        }
+      $error = 'user tidak ditemukan!!';
       header('Location:login.php');
+      die;
     }
   }else{
     $error = 'Data tidak boleh kosong!!';
     echo $error;
   }
+}else{
+$_SESSION['samepage'] = True;
 }
 ?>
 
@@ -82,11 +114,6 @@ if(isset($_POST['submit'])){
       background: white;
       font-weight: bold;
     }
-    .text-error{
-      color: red;
-      font-weight: bold;
-      font-size: 15px;
-    }
     .iconn{
       float: right;
       margin-right: 10px;
@@ -112,21 +139,15 @@ if(isset($_POST['submit'])){
                 <form action="login.php" method="POST">
                   <h3 class="fw-bold mb-2 text-uppercase">Log in to</h3>
                   <h2 class="text-login-mop text-uppercase">MOP Green</h2>
-                  <p class="text-white-50 mb-2">Silahkan Masukkan Email dan Password !</p>
-                  <div class="text-error mb-2">
-                    <?php 
-                    if (isset($_COOKIE["message"])) {
-                      echo $_COOKIE["message"];
-                    }
-                    ?>
-                  </div>
+                  <p class="text-white-50 mb-4">Silahkan Masukkan Email dan Password !</p>
+
                   <div class="form-outline form-white mb-4">
                     <input type="email" id="typeEmailX" class="form-control form-control-lg" name="txt_email" required />
                     <label class="form-label" for="typeEmailX">Email</label>
                   </div>
 
                   <div class="form-outline form-white mb-4">
-
+                    
                     <span class="far fa-eye iconn" id="togglePassword" style="cursor: pointer;"></span>
                     <input type="password" id="typePasswordX" class="form-control form-control-lg" name="txt_pass" required />
                     <label class="form-label" for="typePasswordX">Password</label>

@@ -534,7 +534,7 @@ $sesLvl = $_SESSION['level'];
 <!-- Paho MQTT Client -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
   function refreshTime() {
     var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
@@ -547,7 +547,7 @@ $sesLvl = $_SESSION['level'];
   var port = 9001;
   var client = new Paho.MQTT.Client(host, port, "/ws",
     "myclientid_" + parseInt(Math.random() * 100, 10));
-  </script>
+  </script> -->
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
   <script src="js/jquery-3.5.1.js"></script>
@@ -556,7 +556,7 @@ $sesLvl = $_SESSION['level'];
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="js/water.js"></script>
   <script src="js/script.js"></script>
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     var timeDisplay = document.getElementById("time");
     function refreshTime() {
       var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Jakarta"});
@@ -565,8 +565,69 @@ $sesLvl = $_SESSION['level'];
     }
 
     setInterval(refreshTime, 1000);
-  </script>
+  </script> -->
   <script>
+
+  var host = "20.20.0.245";
+  var port = 9001;
+
+    // Konstruktor koneksi antara client dan message broker
+  var client = new Paho.MQTT.Client(host, port, "/ws",
+    "myclientid_" + parseInt(Math.random() * 100, 10));
+
+    // Menjalin koneksi antara client dan message broker
+  client.onConnectionLost = function (responseObject) {
+    //document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+  };
+
+    // variabel global data sensor IoT Development Board
+    // website berposisi sebagai subscriber
+  var twater1 = 0;
+  var twater2 = 0;
+  
+    // Mendapatkan payload dari transimisi data IoT Development Board
+    // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
+  client.onMessageArrived = function (message) {
+    console.log(message)
+    if (message.destinationName == "twater") {
+     console.log(message.payloadString)
+     const data = JSON.parse(message.payloadString)
+     twater1 = data["twater1"]
+     twater2 = data["twater2"]
+      var objwater = {"twater1": twater1, "twater2": twater2};
+      console.log(objwater);
+     // console.log(twater1);
+   }}
+
+   //subscribe topic twater
+  var options = {
+    timeout: 60,
+    keepAliveInterval: 30,
+    onSuccess: function () {
+      //document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+      client.subscribe("twater", {
+        qos: 1
+      });
+    },
+
+    onFailure: function (message) {
+      //document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
+    },
+
+    userName: "",
+    password: ""
+  };
+
+  if (location.protocol == "https:") {
+    options.useSSL = true;
+  }
+  // var objwater = {"twater1": twater1, "twater2": twater2};
+  //    console.log(objwater);
+  client.connect(options);
+ // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+  
+
+   //
     var loadingEle = $(".water1");
     var loading_width = loadingEle.width(),
     loading_height = loadingEle.height();
@@ -587,6 +648,7 @@ $sesLvl = $_SESSION['level'];
     setTimeout(function() {
       $(".water1").createWaterBall("updateRange", 70);
     }, 1000);
+
   </script>
 
   <script>
@@ -726,13 +788,13 @@ $sesLvl = $_SESSION['level'];
 
     // Konstruktor koneksi antara client dan message broker
     var client = new Paho.MQTT.Client(host, port, "/ws",
-      "myclientid_" + parseInt(Math.random() * 100, 10));
+      "myclientid2_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
     client.onConnectionLost = function (responseObject) {
-      document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+      //document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
     };
-
+    
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
     var humadity1 = 0;
@@ -769,7 +831,7 @@ $sesLvl = $_SESSION['level'];
 
 
      document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-     document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
+     document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -821,14 +883,14 @@ $sesLvl = $_SESSION['level'];
     timeout: 60,
     keepAliveInterval: 30,
     onSuccess: function () {
-      document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+      //document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
       client.subscribe("sensor", {
         qos: 1
       });
     },
 
     onFailure: function (message) {
-      document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
+      //document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
     },
 
     userName: "",
@@ -839,7 +901,8 @@ $sesLvl = $_SESSION['level'];
     options.useSSL = true;
   }
 
-  document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+
+ // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
   client.connect(options);
 </script>
 <script>

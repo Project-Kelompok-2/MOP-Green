@@ -216,8 +216,8 @@ id="sidebar"
       </div>      
     </div>          
   </div>
-  <div class="row mb-3">
-    <div class="col-lg-9 col-md-6 col-sm-6 col-6 mb-8">
+  <div class="row">
+    <div class="col-lg-9 col-md-12 col-sm-12 col-12 mb-3">
       <div class="card h-100 bg-dark text-white">
         <div class="card-header">
           <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
@@ -245,7 +245,7 @@ id="sidebar"
         </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-6 mb-4">
+    <div class="col-lg-3 col-md-12 col-sm-12 col-12 mb-4">
       <div class="card h-100 bg-dark text-white">
         <div class="card-header">
           <!-- <span class="me-2"><i class="bi bi-speedometer"></i></span> -->
@@ -254,7 +254,7 @@ id="sidebar"
         </div>
         <?php 
         include ('../koneksi.php');
-        $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(hum1) as hum1max, avg(temp1) as temp1avg, avg(hum1) as hum1avg, min(temp1) as temp1min, min(hum1) as hum1min FROM data_sensor WHERE weekday(waktu)=weekday(current_date)");
+        $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(hum1) as hum1max, avg(temp1) as temp1avg, avg(hum1) as hum1avg, min(temp1) as temp1min, min(hum1) as hum1min FROM data_sensor WHERE waktu >= curdate()");
         //weekday(waktu)=weekday(current_date)
         $row = mysqli_fetch_assoc($query);
         $temp1max[''] = isset($row['temp1max']) ? $row['temp1max'] : '';
@@ -404,7 +404,7 @@ id="sidebar"
 
 
    document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-   document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
+   document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
    // document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
    // document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
       //document.write(temp);

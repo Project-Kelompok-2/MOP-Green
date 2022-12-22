@@ -375,9 +375,9 @@ $sesLvl = $_SESSION['level'];
                           <a href='#editlogin' data-bs-target='#editlogin<?php echo $row['id'];?>' id='<?php echo $row['id'];?>' data-bs-toggle='modal' data-id="<?php echo $row['id'];?>" class="btn btn-info btn-sm"><i class="bi bi-pencil" style="cursor: pointer;"></i></a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                          <button class="btn btn-light btn-sm">
+                          <a class="btn btn-light btn-sm">
                             <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
-                          </button>
+                          </a>
                         </div>
                       </div>
                     </td>
@@ -505,35 +505,33 @@ $sesLvl = $_SESSION['level'];
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
-  var port = 9001;
+    var host = "20.20.0.245";
+    var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
-  var client = new Paho.MQTT.Client(host, port, "/ws",
-    "myclientid_" + parseInt(Math.random() * 100, 10));
+    var client = new Paho.MQTT.Client(host, port, "/ws",
+      "myclientid2_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
-  client.onConnectionLost = function (responseObject) {
-    document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
-  };
-
+    client.onConnectionLost = function (responseObject) {
+      //document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
+    };
+    
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
-  var humadity1 = 0;
-  var temp1 = 0;
+    var humadity1 = 0;
+    var temp1 = 0;
 
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-  client.onMessageArrived = function (message) {
-    console.log(message)
-    if (message.destinationName == "sensor") {
-     console.log(message.payloadString)
-     const data = JSON.parse(message.payloadString)
-     humadity1 = data["humadity1"]
-     temp1 = data["temp1"]
-     // humadity2 = data["humadity2"]
-     // temp2 = data["temp2"]
-   }
+    client.onMessageArrived = function (message) {
+      console.log(message)
+      if (message.destinationName == "sensor") {
+       console.log(message.payloadString)
+       const data = JSON.parse(message.payloadString)
+       humadity1 = data["humadity1"]
+       temp1 = data["temp1"]
+     }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
       // } else if (message.destinationName == "sr04") {
@@ -554,10 +552,8 @@ $sesLvl = $_SESSION['level'];
       //  keypad = message.payloadString;
 
 
-   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-   document.getElementById("hitHUM").innerHTML = (humadity1+13) + " HR";
-   // document.getElementById("hitTEMP2").innerHTML = temp2 + " °C";
-   // document.getElementById("hitHUM2").innerHTML = (humadity2+6) + " HR";
+     document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+     document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -570,21 +566,21 @@ $sesLvl = $_SESSION['level'];
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-   var obj = {"temp1":temp1, "humadity1":humadity1};
-   console.log(obj);
+     var obj = {"temp1":temp1, "humadity1":humadity1};
+     console.log(obj);
       //const data = { username: 'example' };
 
-   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
+     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
             //   },
               body: JSON.stringify(obj),
             })
-   .then((response) => response.json())
-   .then((data) => {
-    console.log('Success:', data);
-  })
+     .then((response) => response.json())
+     .then((data) => {
+      console.log('Success:', data);
+    })
             //   .catch((error) => {
             //     console.error('Error:', error);
             //   });
@@ -603,32 +599,33 @@ $sesLvl = $_SESSION['level'];
               //log("writing file..");
               //file.writeline(datas);
               //file.close();
- };
+   };
     // Option mqtt dengan mode subscribe dan qos diset 1
- var options = {
-  timeout: 60,
-  keepAliveInterval: 30,
-  onSuccess: function () {
-    document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-    client.subscribe("sensor", {
-      qos: 1
-    });
-  },
+   var options = {
+    timeout: 60,
+    keepAliveInterval: 30,
+    onSuccess: function () {
+      //document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
+      client.subscribe("sensor", {
+        qos: 1
+      });
+    },
 
-  onFailure: function (message) {
-    document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
-  },
+    onFailure: function (message) {
+      //document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
+    },
 
-  userName: "",
-  password: ""
-};
+    userName: "",
+    password: ""
+  };
 
-if (location.protocol == "https:") {
-  options.useSSL = true;
-}
+  if (location.protocol == "https:") {
+    options.useSSL = true;
+  }
 
-document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-client.connect(options);
+
+ // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
+  client.connect(options);
 </script>
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
