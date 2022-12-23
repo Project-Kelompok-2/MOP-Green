@@ -227,9 +227,9 @@ $sesLvl = $_SESSION['level'];
           <div class="card-body">
             <div class="row">
               <div class="col-sm-12 mb-4">
-                <p class="text-center text-white">
-                  <strong></strong>
-                </p>
+                <!-- <p class="text-center text-white">
+                  <strong>Data</strong>
+                </p> -->
                 <div class="chart">                      
                   <canvas id="chartSS" height="200" style="height: 250px;"></canvas>    
                 </div>                    
@@ -280,11 +280,11 @@ $sesLvl = $_SESSION['level'];
                 </div>
               </div>
               <br>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-center">
                   <button type="submit" class="btn btn-lg btn-primary text-light" id="buttons" name="buttons" style="cursor: pointer;">Apply</button>
                 </div>
-              </div>
+              </div> -->
             </form>
             <?php
             try{
@@ -333,13 +333,65 @@ $sesLvl = $_SESSION['level'];
               die("error");
             }
             ?>
-            <?php 
+            <?php
             try{
-              $sql = mysqli_query($koneksi, "SELECT temp1,hum1 FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE()");
+              $sql = mysqli_query($koneksi, "SELECT * FROM data_sensor WHERE waktu >= CURDATE() - INTERVAL 1 DAY");
               if ($sql->num_rows>0) {
                 while ($row = $sql->fetch_assoc()) {
                   $Ytemp1[] = $row['temp1'];
                   $Yhum1[] = $row['hum1'];
+                  $Ywaktu[] = $row['waktu'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
+            <?php
+            try{
+              $sql = mysqli_query($koneksi, "SELECT * FROM data_sensor WHERE waktu >= CURDATE() - INTERVAL 3 DAY");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $l3temp1[] = $row['temp1'];
+                  $l3hum1[] = $row['hum1'];
+                  $l3waktu[] = $row['waktu'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
+            <?php
+            try{
+              $sql = mysqli_query($koneksi, "SELECT * FROM data_sensor WHERE waktu >= CURDATE() - INTERVAL 1 WEEK");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $l1wtemp1[] = $row['temp1'];
+                  $l1whum1[] = $row['hum1'];
+                  $l1wwaktu[] = $row['waktu'];
+                }
+                unset($sql);
+              }else{
+                echo 'Ga ada';
+              }
+            }catch(Exception $e){
+              die("error");
+            }
+            ?>
+            <?php
+            try{
+              $sql = mysqli_query($koneksi, "SELECT * FROM data_sensor WHERE waktu >= CURDATE() - INTERVAL 1 MONTH");
+              if ($sql->num_rows>0) {
+                while ($row = $sql->fetch_assoc()) {
+                  $l1mtemp1[] = $row['temp1'];
+                  $l1mhum1[] = $row['hum1'];
+                  $l1mwaktu[] = $row['waktu'];
                 }
                 unset($sql);
               }else{
@@ -370,7 +422,7 @@ $sesLvl = $_SESSION['level'];
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="test.js"></script>
+<script src="path/to/test.js"></script>
 <script>
     /*-----------------------------------------------------
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
@@ -602,32 +654,90 @@ client.connect(options);
   //   });
   // });
   // SELECT * FROM data_sensor WHERE waktu BETWEEN CURDATE() - INTERVAL 1 DAY AND CURDATE();
-  var mysql = require('mysql2');
+  
+  function getSelectedValue(option){
+    // var mysql = require('mysql2');
 
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database : "mop_green"
-  });
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-  function getSelectedValue(months){
+    // var con = mysql.createConnection({
+    //   host: "localhost",
+    //   user: "root",
+    //   password: "",
+    //   database : "mop_green"
+    // });
     var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
-    chartSS.update();
 
-    if (selectedValue == 'yesterday' || selectedValue == 'last3' || selectedValue == 'last1w' || selectedValue == 'last1m') {
+
+    let sqlQuery = '';
+    if (selectedValue == 'yesterday') {
+      const ywaktu2 = <?php echo json_encode($Ywaktu);?>;
+      const dateChartJSS = ywaktu2.map((day, index) => {
+        let dayjss = new Date(day);
+        console.log(dayjss);
+        return dayjss.setHours(0, 0, 0, 0);
+      });
       document.getElementById('date1').disabled = true;
       document.getElementById('date2').disabled = true;
-      document.querySelector('#buttons').disabled = false;
+      chartSS.data.datasets[0].data = <?php echo json_encode($Ytemp1);?>;
+      chartSS.data.datasets[1].data = <?php echo json_encode($Yhum1);?>;
+      chartSS.data.labels = dateChartJSS;
+      chartSS.update();
+    }else if(selectedValue == 'last3'){
+      const ywaktu2 = <?php echo json_encode($l3waktu);?>;
+      const dateChartJSS = ywaktu2.map((day, index) => {
+        let dayjss = new Date(day);
+        console.log(dayjss);
+        return dayjss.setHours(0, 0, 0, 0);
+      });
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
+      chartSS.data.datasets[0].data = <?php echo json_encode($l3temp1);?>;
+      chartSS.data.datasets[1].data = <?php echo json_encode($l3hum1);?>;
+      chartSS.data.labels = dateChartJSS;
+      chartSS.update();
+    }else if(selectedValue == 'last1w'){
+      const ywaktu2 = <?php echo json_encode($l1wwaktu);?>;
+      const dateChartJSS = ywaktu2.map((day, index) => {
+        let dayjss = new Date(day);
+        console.log(dayjss);
+        return dayjss.setHours(0, 0, 0, 0);
+      });
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
+      chartSS.data.datasets[0].data = <?php echo json_encode($l1wtemp1);?>;
+      chartSS.data.datasets[1].data = <?php echo json_encode($l1whum1);?>;
+      chartSS.data.labels = dateChartJSS;
+      chartSS.update();
+    }else if(selectedValue == 'last1m'){
+      const ywaktu2 = <?php echo json_encode($l1mwaktu);?>;
+      const dateChartJSS = ywaktu2.map((day, index) => {
+        let dayjss = new Date(day);
+        console.log(dayjss);
+        return dayjss.setHours(0, 0, 0, 0);
+      });
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
+      chartSS.data.datasets[0].data = <?php echo json_encode($l1mtemp1);?>;
+      chartSS.data.datasets[1].data = <?php echo json_encode($l1mhum1);?>;
+      chartSS.data.labels = dateChartJSS;
+      chartSS.update();
     }else{
+      const ywaktu2 = <?php echo json_encode($waktu);?>;
+      const dateChartJSS = ywaktu2.map((day, index) => {
+        let dayjss = new Date(day);
+        console.log(dayjss);
+        return dayjss.setHours(0, 0, 0, 0);
+      });
       document.getElementById('date1').disabled = false;
       document.getElementById('date2').disabled = false;
-      document.querySelector('#buttons').disabled = true;
+      chartSS.data.datasets[0].data = <?php echo json_encode($t1);?>;
+      chartSS.data.datasets[1].data = <?php echo json_encode($h1);?>;
+      chartSS.data.labels = dateChartJSS;
+      chartSS.update();
     }
+    // function selectedValue2(){
+    //   if () {}
+    // }
   }
   // function getSelectedValue(){
   //   var selectedValue = document.getElementById("listRange").value;
@@ -664,6 +774,7 @@ client.connect(options);
     // });
   // }
 </script>
+
 <script type="text/javascript">
   $(function() {
     $('#datepicker').datepicker();
