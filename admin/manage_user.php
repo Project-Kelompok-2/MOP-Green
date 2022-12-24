@@ -274,8 +274,8 @@ $sesLvl = $_SESSION['level'];
 
               <div class="form-outline form-white mb-4">
                 <label class="form-label" for="typePasswordX">Password</label>
-                <input type="password" id="inpt-pass" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
-                <span class="far fa-eye iconn" id="togglePassword" style="cursor: pointer;"></span>
+                <input type="password" id="inpt-pass5" name="txt_password" class="form-control form-control-lg" pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Password Harus Memiliki 6 Karakter dan Minimal Mengandung Huruf Dan Angka" required />
+                <span class="far fa-eye iconn" id="togglePassword5" style="cursor: pointer;"></span>
               </div>
 
               <div class="form-outline form-white mb-4">
@@ -365,7 +365,7 @@ $sesLvl = $_SESSION['level'];
                     <td><?php echo $asalInstitusi; ?></td>
                     <td><?php echo $kegiatan; ?></td>
                     <td><?php echo $email; ?></td>
-                    <td><input class="inpt-pass text-center" id="inpt-pass" type="password" value="<?php echo $password; ?>" disabled></input></td>
+                    <td><input class="inpt-pass text-center" id="inpt-pass-<?= $no; ?>" type="password" value="<?php echo $password; ?>" disabled></input></td>
                     <td>
                       <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
@@ -375,9 +375,9 @@ $sesLvl = $_SESSION['level'];
                           <a href='#editlogin' data-bs-target='#editlogin<?php echo $row['id'];?>' id='<?php echo $row['id'];?>' data-bs-toggle='modal' data-id="<?php echo $row['id'];?>" class="btn btn-info btn-sm"><i class="bi bi-pencil" style="cursor: pointer;"></i></a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                          <a class="btn btn-light btn-sm">
-                            <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i>
-                          </a>
+                          <button class="btn btn-light btn-sm" onclick="changePass(<?= $no; ?>)">
+                            <i class="far fa-eye" id="togglePassword-<?= $no; ?>" style="cursor: pointer;"></i>
+                          </button>
                         </div>
                       </div>
                     </td>
@@ -505,33 +505,33 @@ $sesLvl = $_SESSION['level'];
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-    var host = "20.20.0.245";
-    var port = 9001;
+  var host = "20.20.0.245";
+  var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
-    var client = new Paho.MQTT.Client(host, port, "/ws",
-      "myclientid2_" + parseInt(Math.random() * 100, 10));
+  var client = new Paho.MQTT.Client(host, port, "/ws",
+    "myclientid2_" + parseInt(Math.random() * 100, 10));
 
     // Menjalin koneksi antara client dan message broker
-    client.onConnectionLost = function (responseObject) {
+  client.onConnectionLost = function (responseObject) {
       //document.getElementById("messages").innerHTML = "Koneksi Ke Broker MQTT Putus - " + responseObject.errorMessage + "<br/>";
-    };
-    
+  };
+
     // variabel global data sensor IoT Development Board
     // website berposisi sebagai subscriber
-    var humadity1 = 0;
-    var temp1 = 0;
+  var humadity1 = 0;
+  var temp1 = 0;
 
     // Mendapatkan payload dari transimisi data IoT Development Board
     // kemudian memilah dan melimpahkanya ke varibael berdasarkan TOPIC.
-    client.onMessageArrived = function (message) {
-      console.log(message)
-      if (message.destinationName == "sensor") {
-       console.log(message.payloadString)
-       const data = JSON.parse(message.payloadString)
-       humadity1 = data["humadity1"]
-       temp1 = data["temp1"]
-     }
+  client.onMessageArrived = function (message) {
+    console.log(message)
+    if (message.destinationName == "sensor") {
+     console.log(message.payloadString)
+     const data = JSON.parse(message.payloadString)
+     humadity1 = data["humadity1"]
+     temp1 = data["temp1"]
+   }
       // if (message.destinationName == "ldr") {
       //  ldr = message.payloadString;
       // } else if (message.destinationName == "sr04") {
@@ -552,8 +552,8 @@ $sesLvl = $_SESSION['level'];
       //  keypad = message.payloadString;
 
 
-     document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
-     document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
+   document.getElementById("hitTEMP").innerHTML = temp1 + " °C";
+   document.getElementById("hitHUM").innerHTML = (humadity1) + " HR";
       //document.write(temp);
       //console.log(temp);
       //$.post('http:/localhost/iot/insert.php', { "temp" : temp});
@@ -566,21 +566,21 @@ $sesLvl = $_SESSION['level'];
       //now.events.push(k);
       //console.log(now);
       //JSONObject.temp = temp;
-     var obj = {"temp1":temp1, "humadity1":humadity1};
-     console.log(obj);
+   var obj = {"temp1":temp1, "humadity1":humadity1};
+   console.log(obj);
       //const data = { username: 'example' };
 
-     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
+   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
             //   },
               body: JSON.stringify(obj),
             })
-     .then((response) => response.json())
-     .then((data) => {
-      console.log('Success:', data);
-    })
+   .then((response) => response.json())
+   .then((data) => {
+    console.log('Success:', data);
+  })
             //   .catch((error) => {
             //     console.error('Error:', error);
             //   });
@@ -599,33 +599,33 @@ $sesLvl = $_SESSION['level'];
               //log("writing file..");
               //file.writeline(datas);
               //file.close();
-   };
+ };
     // Option mqtt dengan mode subscribe dan qos diset 1
-   var options = {
-    timeout: 60,
-    keepAliveInterval: 30,
-    onSuccess: function () {
+ var options = {
+  timeout: 60,
+  keepAliveInterval: 30,
+  onSuccess: function () {
       //document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT Sukses" + "<br/>";
-      client.subscribe("sensor", {
-        qos: 1
-      });
-    },
+    client.subscribe("sensor", {
+      qos: 1
+    });
+  },
 
-    onFailure: function (message) {
+  onFailure: function (message) {
       //document.getElementById("messages").innerHTML += "Koneksi ke Broker MQTT Gagal - " + message.errorMessage + "<br/>";
-    },
+  },
 
-    userName: "",
-    password: ""
-  };
+  userName: "",
+  password: ""
+};
 
-  if (location.protocol == "https:") {
-    options.useSSL = true;
-  }
+if (location.protocol == "https:") {
+  options.useSSL = true;
+}
 
 
  // document.getElementById("messages").innerHTML += "Koneksi Ke Broker MQTT - Alamat: " + host + ":" + port + "<br/>";
-  client.connect(options);
+client.connect(options);
 </script>
 <script type="text/javascript">
   var timeDisplay = document.getElementById("time");
@@ -638,25 +638,37 @@ $sesLvl = $_SESSION['level'];
   setInterval(refreshTime, 1000);
 </script>
 <script>
-  const togglePassword2 = document.querySelector('#togglePassword4');
-  const password2 = document.querySelector('#inpt-pass4');
+  const togglePassword5 = document.querySelector('#togglePassword5');
+  const password5 = document.querySelector('#inpt-pass5');
 
-  togglePassword2.addEventListener('click', function (e) {
+  togglePassword5.addEventListener('click', function (e) {
     // toggle the type attribute
-    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
-    password2.setAttribute('type', type);
+    const type5 = password4.getAttribute('type') === 'password' ? 'text' : 'password';
+    password5.setAttribute('type', type5);
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
   });
 </script>
 <script>
-  const togglePassword = document.querySelector('#togglePassword3');
-  const password = document.querySelector('#inpt-pass3');
+  const togglePassword4 = document.querySelector('#togglePassword4');
+  const password4 = document.querySelector('#inpt-pass4');
 
-  togglePassword.addEventListener('click', function (e) {
+  togglePassword4.addEventListener('click', function (e) {
     // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
+    const type4 = password4.getAttribute('type') === 'password' ? 'text' : 'password';
+    password4.setAttribute('type', type4);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+</script>
+<script>
+  const togglePassword3 = document.querySelector('#togglePassword3');
+  const password3 = document.querySelector('#inpt-pass3');
+
+  togglePassword3.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type3 = password3.getAttribute('type') === 'password' ? 'text' : 'password';
+    password3.setAttribute('type', type3);
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
   });
@@ -667,23 +679,24 @@ $sesLvl = $_SESSION['level'];
 
   togglePassword2.addEventListener('click', function (e) {
     // toggle the type attribute
-    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
-    password2.setAttribute('type', type);
+    const type2 = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type2);
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
   });
 </script>
 <script>
-  const togglePassword = document.querySelector('#togglePassword');
-  const password = document.querySelector('#inpt-pass');
-
-  togglePassword.addEventListener('click', function (e) {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-  });
+  function changePass(id){
+    console.log(id);
+    const togglePassword = document.querySelector('#togglePassword-'+id);
+    const password = document.querySelector('#inpt-pass-'+id);
+    if (password.getAttribute('type')=='password') {
+      password.setAttribute('type', 'text');
+    }else{
+      password.setAttribute('type', 'password');
+    }
+    togglePassword.classList.toggle('fa-eye-slash');
+  }
 </script>
 <script>
   function validate(){

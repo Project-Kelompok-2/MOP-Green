@@ -252,7 +252,7 @@ $sesLvl = $_SESSION['level'];
                 </div>
                 <div class="col-lg-4 col-md-8 col-sm-8 col-8">
                   <select class="btn btn-dark text-start" id="listRange" onchange="getSelectedValue(this);">
-                    <option value="">Please Select</option>
+                    <option value="please">Please Select</option>
                     <option value="yesterday">Yesterday</option>
                     <option value="last3">Last 3 Days</option>
                     <option value="last1w">Last 1 Week</option>
@@ -720,6 +720,10 @@ client.connect(options);
       chartSS.data.datasets[0].data = <?php echo json_encode($l1mtemp1);?>;
       chartSS.data.datasets[1].data = <?php echo json_encode($l1mhum1);?>;
       chartSS.data.labels = dateChartJSS;
+      chartSS.update();
+    }else if(selectedValue == 'please'){
+      document.getElementById('date1').disabled = true;
+      document.getElementById('date2').disabled = true;
       chartSS.update();
     }else{
       const ywaktu2 = <?php echo json_encode($waktu);?>;

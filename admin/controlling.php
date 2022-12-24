@@ -1211,6 +1211,7 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      switch1.disabled = true;
       clientPub.connect(optionsPub);
       kotak.style.backgroundColor="green";
     }if (switch4.checked == false){    
@@ -1228,6 +1229,11 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      if (switch5.checked == true || switch6.checked == true || switch7.checked == true) {
+        switch1.disabled = true;  
+      }else{
+        switch1.disabled = false;
+      }
       clientPub.connect(optionsPub);
       kotak.style.backgroundColor="red";
     }
@@ -1256,6 +1262,7 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      switch1.disabled = true;
       clientPub.connect(optionsPub);
       kotak2.style.backgroundColor="green";
     }if (switch5.checked == false){    
@@ -1273,6 +1280,11 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      if (switch4.checked == true || switch6.checked == true || switch7.checked == true) {
+        switch1.disabled = true;  
+      }else{
+        switch1.disabled = false;
+      }
       clientPub.connect(optionsPub);
       kotak2.style.backgroundColor="red";
     }
@@ -1300,6 +1312,7 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      switch1.disabled = true;
       clientPub.connect(optionsPub);
       kotak3.style.backgroundColor="green";
     }if (switch6.checked == false){    
@@ -1317,6 +1330,11 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      if (switch4.checked == true || switch5.checked == true || switch7.checked == true) {
+        switch1.disabled = true;  
+      }else{
+        switch1.disabled = false;
+      }
       clientPub.connect(optionsPub);
       kotak3.style.backgroundColor="red";
     }
@@ -1346,6 +1364,7 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      switch1.disabled = true;
       clientPub.connect(optionsPub);
       kotak4.style.backgroundColor="green";
     }if (switch7.checked == false){    
@@ -1363,6 +1382,11 @@ $sesLvl = $_SESSION['level'];
           clientPub.disconnect();
         },
       };
+      if (switch4.checked == true || switch5.checked == true || switch6.checked == true) {
+        switch1.disabled = true;  
+      }else{
+        switch1.disabled = false;
+      }
       clientPub.connect(optionsPub);
       kotak4.style.backgroundColor="red";
     }
