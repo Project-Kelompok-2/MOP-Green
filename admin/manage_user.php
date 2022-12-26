@@ -375,7 +375,7 @@ $sesLvl = $_SESSION['level'];
                           <a href='#editlogin' data-bs-target='#editlogin<?php echo $row['id'];?>' id='<?php echo $row['id'];?>' data-bs-toggle='modal' data-id="<?php echo $row['id'];?>" class="btn btn-info btn-sm"><i class="bi bi-pencil" style="cursor: pointer;"></i></a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                          <button class="btn btn-light btn-sm" onclick="changePass(<?= $no; ?>)">
+                          <button class="btn btn-light btn-sm" onclick="changePass(<?= $no; ?>); return confirm('Anda yakin ingin melihat password <?= $nama_depan; ?> ?')">
                             <i class="far fa-eye" id="togglePassword-<?= $no; ?>" style="cursor: pointer;"></i>
                           </button>
                         </div>
@@ -505,7 +505,7 @@ $sesLvl = $_SESSION['level'];
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
+  var host = "159.223.72.149";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker

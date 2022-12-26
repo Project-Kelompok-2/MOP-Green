@@ -518,7 +518,7 @@ $sesLvl = $_SESSION['level'];
           </div>
           <div class="row">
             <div class="col-lg-6">
-              <h5 class="text-start">Kelembaban Bawah - ON</h5>
+              <h5 class="text-start">Kelembaban Bawah - OFF</h5>
             </div>
             <div class="col-lg-6 text-end">
               <input class="input-group-field text-center" type="number" value="0" min="0" oninput="this.value = Math.abs(this.value);" style="width: 20%;" id="kelembabanbawah">
@@ -543,7 +543,8 @@ $sesLvl = $_SESSION['level'];
   }
 
   setInterval(refreshTime, 1000);
-  var host = "20.20.0.245";
+  var host = "
+  ";
   var port = 9001;
   var client = new Paho.MQTT.Client(host, port, "/ws",
     "myclientid_" + parseInt(Math.random() * 100, 10));
@@ -568,7 +569,7 @@ $sesLvl = $_SESSION['level'];
   </script> -->
   <script>
 
-  var host = "20.20.0.245";
+  var host = "159.223.72.149";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
@@ -783,7 +784,7 @@ $sesLvl = $_SESSION['level'];
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-    var host = "20.20.0.245";
+    var host = "159.223.72.149";
     var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
@@ -968,14 +969,38 @@ $sesLvl = $_SESSION['level'];
             Fan1Pub.destinationName = "Fan1";
             clientPub.send(Fan1Pub);
             clientPub.disconnect();
+          },
+        };
+        var optionsPub2 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan2Pub = new Paho.MQTT.Message(statusFan2);
             Fan2Pub.destinationName = "Fan2";
             clientPub2.send(Fan2Pub);
             clientPub2.disconnect();
+          },
+        };
+        var optionsPub3 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan3Pub = new Paho.MQTT.Message(statusFan3);
             Fan3Pub.destinationName = "Fan3";
             clientPub3.send(Fan3Pub);
             clientPub3.disconnect();
+          },
+        };
+        var optionsPub4 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan4Pub = new Paho.MQTT.Message(statusFan4);
             Fan4Pub.destinationName = "Fan4";
             clientPub4.send(Fan4Pub);
@@ -984,11 +1009,11 @@ $sesLvl = $_SESSION['level'];
         };
         clientPub.connect(optionsPub);
         kotak.style.backgroundColor="green";
-        clientPub2.connect(optionsPub);
+        clientPub2.connect(optionsPub2);
         kotak2.style.backgroundColor="green";
-        clientPub3.connect(optionsPub);
+        clientPub3.connect(optionsPub3);
         kotak3.style.backgroundColor="green";
-        clientPub4.connect(optionsPub);
+        clientPub4.connect(optionsPub4);
         kotak4.style.backgroundColor="green";
       }
 
@@ -1021,14 +1046,38 @@ $sesLvl = $_SESSION['level'];
             Fan1Pub.destinationName = "Fan1";
             clientPub.send(Fan1Pub);
             clientPub.disconnect();
+          },
+        };
+        var optionsPub2 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan2Pub = new Paho.MQTT.Message(statusFan2);
             Fan2Pub.destinationName = "Fan2";
             clientPub2.send(Fan2Pub);
             clientPub2.disconnect();
+          },
+        };
+        var optionsPub3 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan3Pub = new Paho.MQTT.Message(statusFan3);
             Fan3Pub.destinationName = "Fan3";
             clientPub3.send(Fan3Pub);
             clientPub3.disconnect();
+          },
+        };
+        var optionsPub4 = {
+          userName: "",
+          password: "",
+          timeout: 3,
+          keepAliveInterval: 30,
+          onSuccess: function () {
             Fan4Pub = new Paho.MQTT.Message(statusFan4);
             Fan4Pub.destinationName = "Fan4";
             clientPub4.send(Fan4Pub);
@@ -1037,11 +1086,11 @@ $sesLvl = $_SESSION['level'];
         };
         clientPub.connect(optionsPub);
         kotak.style.backgroundColor="red";
-        clientPub2.connect(optionsPub);
+        clientPub2.connect(optionsPub2);
         kotak2.style.backgroundColor="red";
-        clientPub3.connect(optionsPub);
+        clientPub3.connect(optionsPub3);
         kotak3.style.backgroundColor="red";
-        clientPub4.connect(optionsPub);
+        clientPub4.connect(optionsPub4);
         kotak4.style.backgroundColor="red";
       }      
     }

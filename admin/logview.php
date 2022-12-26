@@ -242,7 +242,7 @@ $sesLvl = $_SESSION['level'];
         <div class="card bg-dark">
           <div class="card-header text-white">
             <span class="me-2"><i class="bi bi-calendar"></i></span>
-            Date Query
+            Date Picker
           </div>
           <div class="card-body">
             <div class="row">
@@ -428,7 +428,7 @@ $sesLvl = $_SESSION['level'];
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
+  var host = "159.223.72.149";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
@@ -666,8 +666,6 @@ client.connect(options);
     // });
     var selectedValue = document.getElementById("listRange").value;
     console.log(selectedValue);
-
-
     let sqlQuery = '';
     if (selectedValue == 'yesterday') {
       const ywaktu2 = <?php echo json_encode($Ywaktu);?>;

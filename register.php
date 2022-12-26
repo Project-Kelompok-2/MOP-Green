@@ -113,7 +113,7 @@ if (isset($_POST['register'])) {
                 </div>
 
                 <div class="form-outline form-white mb-4">
-                  <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,50}" title="tidak boleh lebih dari 50 karakter dan hanya huruf" required />
+                  <input type="text" id="typeAsalInstitusi" name="txt_asal_institusi" class="form-control form-control-lg" pattern="^[a-zA-Z\s'-].{1,50}" title="tidak boleh lebih dari 50 karakter" required />
                   <label class="form-label" for="typeUsername">Asal Institusi</label>
                 </div>
 

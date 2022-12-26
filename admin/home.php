@@ -29,6 +29,16 @@ $sesID = $_SESSION['id'];
 $sesFN = $_SESSION['nama_depan'];
 $sesLN = $_SESSION['nama_belakang'];
 $sesLvl = $_SESSION['level'];
+// if ($sesLvl == 2) {
+//   // server should keep session data for AT LEAST 1 hour
+//   ini_set('session.gc_maxlifetime', 60);
+
+// // each client should remember their session id for EXACTLY 1 hour
+//   session_set_cookie_params(60);
+//   session_start();
+// }else{
+//   session_start();
+// }
 ?>
 
 <!DOCTYPE html>
@@ -257,11 +267,11 @@ id="sidebar"
         $query = mysqli_query($koneksi, "SELECT waktu, max(temp1) as temp1max, max(hum1) as hum1max, avg(temp1) as temp1avg, avg(hum1) as hum1avg, min(temp1) as temp1min, min(hum1) as hum1min FROM data_sensor WHERE waktu >= curdate()");
         //weekday(waktu)=weekday(current_date)
         $row = mysqli_fetch_assoc($query);
-        $temp1max[''] = isset($row['temp1max']) ? $row['temp1max'] : '';
-        $temp1min[''] = isset($row['temp1min']) ? $row['temp1min'] : '';
-        $hum1max[''] = isset($row['hum1max']) ? $row['hum1max'] : '';
-        $hum1min[''] = isset($row['hum1min']) ? $row['hum1min'] : '';
-        $temp1avg[''] = isset($row['temp1avg']) ? $row['temp1avg'] : '';
+        $temp1max[''] = isset($row['temp1max']) ? $row['temp1max'] : '-';
+        $temp1min[''] = isset($row['temp1min']) ? $row['temp1min'] : '-';
+        $hum1max[''] = isset($row['hum1max']) ? $row['hum1max'] : '-';
+        $hum1min[''] = isset($row['hum1min']) ? $row['hum1min'] : '-';
+        $temp1avg[''] = isset($row['temp1avg']) ? $row['temp1avg'] : '-';
         ?>
 
         <div class="card-body" id="today">
@@ -321,7 +331,7 @@ id="sidebar"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-  
+
 </script>
 <script>
   function loadXMLDOC() {
@@ -354,7 +364,7 @@ id="sidebar"
   BAGIAN MQTT YANG TERKONEKSI DENGAN MESSAGE BROKER
   -----------------------------------------------------*/
     // Menentuan alamat IP dan PORT message broker
-  var host = "20.20.0.245";
+  var host = "159.223.72.149";
   var port = 9001;
 
     // Konstruktor koneksi antara client dan message broker
