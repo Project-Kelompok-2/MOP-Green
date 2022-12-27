@@ -489,7 +489,7 @@ $sesLvl = $_SESSION['level'];
             <div class="row">
               <h5 class="text-start" style="margin-left: -5px;">Otomatis</h5>
 
-              <input class="form-check-input align-items-end" type="checkbox" id="mySwitch12" value="yes" onclick="return confirm('Anda yakin..?')">
+              <input class="form-check-input align-items-end" type="checkbox" id="mySwitch12" value="yes" >
             </div>
           </div>
           <div class="row mb-2">
@@ -567,6 +567,12 @@ $sesLvl = $_SESSION['level'];
 
     setInterval(refreshTime, 1000);
   </script> -->
+  <script>
+//     const switch12 = document.getElementById("mySwitch12");
+//     setInterval(function() {
+//   switch12.click();
+// }, 5000);
+  </script>
   <script>
 
   var host = "159.223.72.149";
@@ -1108,7 +1114,9 @@ $sesLvl = $_SESSION['level'];
   //     switch7.checked == false;
   //   }
   // });
-
+// setInterval(function() {
+//   switch12.click();
+// }, 5000);
   switch12.addEventListener("change",()=>{
     if (switch12.checked == true) {
       switch1.disabled = true;
@@ -1143,7 +1151,7 @@ $sesLvl = $_SESSION['level'];
       kelembabanatas.disabled = false;
       kelembabanbawah.disabled = false;
     }
-  })
+  });
 
   switch2.addEventListener("change",()=>{
     var statusFreshWater = "0"; 
