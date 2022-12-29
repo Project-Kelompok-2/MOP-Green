@@ -493,7 +493,7 @@ $sesLvl = $_SESSION['level'];
    console.log(obj);
       //const data = { username: 'example' };
 
-   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
+   fetch('http://localhost/1.%20Kuliah/MOP-Green-newest/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',

@@ -855,7 +855,7 @@ $sesLvl = $_SESSION['level'];
      console.log(obj);
       //const data = { username: 'example' };
 
-     fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/controlling.php', {
+     fetch('http://localhost/1.%20Kuliah/MOP-Green-newest/admin/controlling.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',
@@ -1119,6 +1119,31 @@ $sesLvl = $_SESSION['level'];
 // }, 5000);
   switch12.addEventListener("change",()=>{
     if (switch12.checked == true) {
+      var suhu_atas = document.getElementById("suhuatas").value;
+      var suhu_bawah = document.getElementById("suhubawah").value;
+      var kelembapan_atas = document.getElementById("kelembabanatas").value;
+      var kelembapan_bawah = document.getElementById("kelembabanbawah").value;
+
+      // Store JSON data in a JS variable
+      var json = {"suhu_atas": suhu_atas, "suhu_bawah": suhu_bawah, "kelembapan_atas": kelembapan_atas, "kelembapan_bawah": kelembapan_bawah};
+ 
+      // Converting JSON-encoded string to JS object
+       var objautocontrol = JSON.stringify(json);
+      console.log(json)
+      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+      var optionsPub = {
+        userName: "",
+        password: "",
+        timeout: 3,
+        keepAliveInterval: 30,
+        onSuccess: function () {
+          autocontrolPub = new Paho.MQTT.Message(objautocontrol);
+          autocontrolPub.destinationName = "auto_control";
+          clientPub.send(autocontrolPub);
+          clientPub.disconnect();
+        },
+      };
+      clientPub.connect(optionsPub);
       switch1.disabled = true;
       switch2.disabled = true;
       switch3.disabled = true;
@@ -1135,6 +1160,30 @@ $sesLvl = $_SESSION['level'];
       kelembabanatas.disabled = true;
       kelembabanbawah.disabled = true;
     }else{
+      var suhu_atas = "0";
+    var suhu_bawah = "0";
+    var kelembapan_atas = "0";
+    var kelembapan_bawah = "0"; 
+    var json = {"suhu_atas": suhu_atas, "suhu_bawah": suhu_bawah, "kelembapan_atas": kelembapan_atas, "kelembapan_bawah": kelembapan_bawah};
+ 
+      // Converting JSON-encoded string to JS object
+    var objautocontrol = JSON.stringify(json);
+    console.log(json)
+
+      var clientPub = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+      var optionsPub = {
+        userName: "",
+        password: "",
+        timeout: 3,
+        keepAliveInterval: 30,
+        onSuccess: function () {
+          autocontrolPub = new Paho.MQTT.Message(objautocontrol);
+          autocontrolPub.destinationName = "auto_control";
+          clientPub.send(autocontrolPub);
+          clientPub.disconnect();
+        },
+      };
+      clientPub.connect(optionsPub);
       switch1.disabled = false;
       switch2.disabled = false;
       switch3.disabled = false;
@@ -1542,6 +1591,73 @@ $sesLvl = $_SESSION['level'];
 
 
   })
+  // switch12.addEventListener("change",()=>{
+  //   // var suhu_atas = "0";
+  //   // var suhu_bawah = "0";
+  //   // var kelembapan_atas = "0";
+  //   // var kelembapan_bawah = "0"; 
+
+  //     // <!-- if (checkbox.checked) {
+  //     // <!-- statusFan1 = "0";
+  //     // <!--} else {
+  //     // <!-- statusFan1 = "1";
+  //     // <!--} -->
+  //   if (switch12.checked == true){    
+  //     var suhu_atas = document.getElementById("suhuatas");
+  //     var suhu_bawah = document.getElementById("suhubawah");
+  //     var kelembapan_atas = document.getElementById("kelembabanatas");
+  //     var kelembapan_bawah = document.getElementById("kelembabanbawah");
+
+  //     // Store JSON data in a JS variable
+  //     var json = '{"suhu_atas": suhu_atas, "suhu_bawah": suhu_bawah, "kelembapan_atas": kelembapan_atas, "kelembapan_bawah": kelembapan_bawah}';
+ 
+  //     // Converting JSON-encoded string to JS object
+  //     var objautocontrol = JSON.parse(json);
+  //     console.log(json)
+  //     var clientPub100 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+  //     var optionsPub100 = {
+  //       userName: "",
+  //       password: "",
+  //       timeout: 3,
+  //       keepAliveInterval: 30,
+  //       onSuccess: function () {
+  //         autocontrolPub = new Paho.MQTT.Message(objautocontrol);
+  //         autocontrolPub.destinationName = "auto_control";
+  //         clientPub.send(autocontrolPub);
+  //         clientPub.disconnect();
+  //       },
+  //     };
+  //     clientPub100.connect(optionsPub100);
+  //     // kotak10.style.backgroundColor="green";
+  //   }if (switch12.checked == false){    
+  //     var suhu_atas = "0";
+  //   var suhu_bawah = "0";
+  //   var kelembapan_atas = "0";
+  //   var kelembapan_bawah = "0"; 
+  //   var json = '{"suhu_atas": suhu_atas, "suhu_bawah": suhu_bawah, "kelembapan_atas": kelembapan_atas, "kelembapan_bawah": kelembapan_bawah}';
+ 
+  //     // Converting JSON-encoded string to JS object
+  //     var objautocontrol = JSON.parse(json);
+
+  //     var clientPub100 = new Paho.MQTT.Client(host, port, "/ws", "myclientidPub_" + parseInt(Math.random() * 100, 10));
+  //     var optionsPub100 = {
+  //       userName: "",
+  //       password: "",
+  //       timeout: 3,
+  //       keepAliveInterval: 30,
+  //       onSuccess: function () {
+  //         autocontrolPub = new Paho.MQTT.Message(objautocontrol);
+  //         autocontrolPub.destinationName = "auto_control";
+  //         clientPub.send(autocontrolPub);
+  //         clientPub.disconnect();
+  //       },
+  //     };
+  //     clientPub100.connect(optionsPub100);
+  //     // kotak10.style.backgroundColor="red";
+  //   }
+
+
+  // })
   // switch10.addEventListener("change",()=>{
   //   var statusPompaN1 = "0"; 
 

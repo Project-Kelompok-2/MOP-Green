@@ -433,7 +433,7 @@ id="sidebar"
    console.log(obj);
       //const data = { username: 'example' };
 
-   fetch('http://localhost/1.%20Kuliah/MOP-Green/admin/home.php', {
+   fetch('http://localhost/1.%20Kuliah/MOP-Green-newest/admin/home.php', {
               method: 'POST', // or 'PUT'
             //   headers: {
             //     'Content-Type': 'application/json',

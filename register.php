@@ -1,25 +1,77 @@
 <?php 
 require ('koneksi.php');
-
-if (isset($_POST['register'])) {
+session_start();
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  // var_dump($_SESSION);
+  // die;
+  // $data = json_decode(file_get_contents('php://input'), true);
+  // var_dump($data);
+  // die();
+  if(!isset($_SESSION['samepage'])){
+    $data = json_decode(file_get_contents('php://input'), true);
+    $userFN = $data['nama_depan'];
+    $userLN = $data['nama_belakang'];
+    $userAsalInstitusi = $data['asal_institusi'];
+    $userKegiatan = $data['kegiatan'];
+    $userEmail = $data['email'];
+    $userPass = $data['password'];
+  }else{
   $userFN = $_POST['txt_nama_depan'];
   $userLN = $_POST['txt_nama_belakang'];
   $userAsalInstitusi = $_POST['txt_asal_institusi'];
   $userKegiatan = $_POST['txt_kegiatan'];
   $userEmail = $_POST['txt_email'];
   $userPass = $_POST['txt_password'];
+  }
 
-  if (!empty($_POST['txt_email'])) {
+  if (!empty(trim($userFN)) && !empty(trim($userLN)) && !empty(trim($userAsalInstitusi)) && !empty(trim($userKegiatan)) && !empty(trim($userEmail)) && !empty(trim($userPass))) {
     $query2 = mysqli_query($koneksi, "SELECT * FROM user_detail WHERE email = '$userEmail'");
-    if (mysqli_num_rows($query2)>0) {
+    // var_dump($query2, $userEmail);
+    // die;
+    if (mysqli_num_rows($query2)!=0) {
+      if(!isset($_SESSION['samepage'])){
+          header('Content-type: application/json');
+          http_response_code(409);
+          // echo json_encode(['nama_depan' => $userFN, 'nama_belakang' => $userLN, 'asal_institusi' => $userAsalInstitusi, 'kegiatan' => $userKegiatan, 'email' => $userEmail, 'password' => $userPass, 'level' => $lvl]);
+          die;
+        }
+
       setcookie("message","Maaf, Email Sudah Pernah Didaftarkan",time()+1);
       header('location:register.php');
+      die;
+
     }else{
       $query = "INSERT INTO user_detail VALUES (NULL, '$userFN', '$userLN', '$userAsalInstitusi', '$userKegiatan', '$userEmail', '$userPass', 2)";
       $result = mysqli_query($koneksi, $query);
+
+      if(!isset($_SESSION['samepage'])){  
+          header('Content-type: application/json');
+          http_response_code(200);
+          echo json_encode(['nama_depan' => $userFN, 'nama_belakang' => $userLN, 'asal_institusi' => $userAsalInstitusi, 'kegiatan' => $userKegiatan, 'email' => $userEmail, 'password' => $userPass]);
+          die;
+        }
+
+      
       header('location:login.php');
+      die;
     }
-  } 
+  }else{
+    if(!isset($_SESSION['samepage'])){
+          header('Content-type: application/json');
+          http_response_code(400);
+          // echo json_encode(['nama_depan' => $userFN, 'nama_belakang' => $userLN, 'asal_institusi' => $userAsalInstitusi, 'kegiatan' => $userKegiatan, 'email' => $userEmail, 'password' => $userPass, 'level' => $lvl]);
+          die;
+        }
+
+    setcookie("message","Maaf, data yang anda masukkan tidak lengkap",time()+1);
+      header('location:register.php');
+      die;
+  }
+
+
+  
+}else{
+$_SESSION['samepage'] = True;
 }
 ?>
 <!DOCTYPE html>
